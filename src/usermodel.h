@@ -11,6 +11,7 @@ private:
     QString mGroup;
 public:
     UserModel();
+    static UserModel* instance();
     QString getUsername();
     QString getPassword();
     QString getGroup();
