@@ -32,14 +32,7 @@ Rectangle {
         anchors.topMargin: 200
         anchors.rightMargin: 70
         text: qsTr("SIGN UP")
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        font.pixelSize: 20
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+        fontSize: 20
 
         /*Connections {
             target: registrationButton
@@ -72,6 +65,8 @@ Rectangle {
             border.color: "#6D6D6D"
             border.width: 1
         }
+        selectByMouse: true
+        selectionColor: "#9E7ECE"
     }
 
     TextField {
@@ -95,6 +90,8 @@ Rectangle {
             border.color: "#6D6D6D"
             border.width: 1
         }
+        selectByMouse: true
+        selectionColor: "#9E7ECE"
     }
 
     TextField {
@@ -118,6 +115,8 @@ Rectangle {
             border.color: "#6D6D6D"
             border.width: 1
         }
+        selectByMouse: true
+        selectionColor: "#9E7ECE"
     }
 
     TextField {
@@ -141,6 +140,8 @@ Rectangle {
             border.color: "#6D6D6D"
             border.width: 1
         }
+        selectByMouse: true
+        selectionColor: "#9E7ECE"
     }
 
     TextField {
@@ -164,6 +165,8 @@ Rectangle {
             border.color: "#6D6D6D"
             border.width: 1
         }
+        selectByMouse: true
+        selectionColor: "#9E7ECE"
     }
 
     TextField {
@@ -187,6 +190,8 @@ Rectangle {
             border.color: "#6D6D6D"
             border.width: 1
         }
+        selectByMouse: true
+        selectionColor: "#9E7ECE"
     }
 
     RegistrationButton {

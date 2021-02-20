@@ -57,6 +57,8 @@ Rectangle {
             border.color: "#6D6D6D"
             border.width: 1
         }
+        selectByMouse: true
+        selectionColor: "#9E7ECE"
     }
 
     TextField {
@@ -80,6 +82,9 @@ Rectangle {
             border.color: "#6D6D6D"
             border.width: 1
         }
+        selectByMouse: true
+        selectionColor: "#9E7ECE"
+        echoMode: TextInput.Password
     }
 
     Column {
@@ -107,10 +112,37 @@ Rectangle {
                 target: registerButton
                 function onClicked() {
                     stackView.push(registrationScreenStackComponent)
-                }
+                    rectangle.state = "clearFields"
+                    rectangle.state = "normal"
+                }  
             }
         }
     }
+
+    states: [
+        State {
+            name: "clearFields"
+            PropertyChanges {
+                target: usernameField
+                text: ""
+            }
+            PropertyChanges {
+                target: passwordField
+                text: ""
+            }
+        },
+        State {
+            name: "normal"
+            PropertyChanges {
+                target: usernameField
+                text: ""
+            }
+            PropertyChanges {
+                target: passwordField
+                text: ""
+            }
+        }
+    ]
 }
 
 

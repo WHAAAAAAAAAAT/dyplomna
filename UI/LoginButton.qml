@@ -20,13 +20,15 @@ T.Button {
 
     contentItem: textItem
 
+    property int fontSize: 16
+
     Text {
         id: textItem
         text: control.text
         opacity: enabled ? 1 : 0.3
         color: "#111111"
         font.family: LoginConstants.font.family
-        font.pixelSize: 16
+        font.pixelSize: fontSize
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.bold: true

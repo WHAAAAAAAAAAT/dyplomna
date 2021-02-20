@@ -19,9 +19,6 @@ T.Button {
     background: registrationButtonBackground
     contentItem: registrationTextItem
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
     Text {
         id: registrationTextItem
         text: controlRegistration.text
@@ -34,9 +31,6 @@ T.Button {
         font.bold: true
         elide: Text.ElideRight
     }
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
     Rectangle {
         id: registrationButtonBackground
