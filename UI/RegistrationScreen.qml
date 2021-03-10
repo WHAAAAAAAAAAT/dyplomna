@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Timeline 1.0
 
+import Controllers 1.0
+
 Rectangle {
     id: rectangle
     width: LoginConstants.width
@@ -22,6 +24,12 @@ Rectangle {
         visible: true
     }
     visible: true
+    property bool stateNormalBorder: true
+
+    LoginController
+    {
+        id: controller
+    }
 
     LoginButton {
         id: registrationButton
@@ -34,12 +42,23 @@ Rectangle {
         text: qsTr("SIGN UP")
         fontSize: 20
 
-        /*Connections {
+        Connections {
             target: registrationButton
             function onClicked() {
-                //перевірити чи поля заповнені
+                if(passwordField.text === verifyPasswordField.text)
+                {
+                    controller.registration(nameField.text, surnameField.text, groupField.text,
+                                            usernameField.text, passwordField.text);
+                }
+                else
+                {
+                    //
+                    rectangle.state = "verificationErrorOn"
+                    rectangle.state = "verificationErrorOff"
+                    //
+                }
             }
-        }*/
+        }
     }
 
     TextField {
@@ -185,6 +204,7 @@ Rectangle {
         anchors.horizontalCenter: nameField.horizontalCenter
         placeholderText: qsTr("Verify your password")
         background: Rectangle {
+            id: verifyPasswordBorder
             implicitWidth: passwordField.width
             implicitHeight: 47
             border.color: "#6D6D6D"
@@ -210,6 +230,47 @@ Rectangle {
             }
         }
     }
+
+    states: [
+        State {
+            name: "verificationErrorOn"
+            PropertyChanges {
+                target: verifyPasswordBorder
+                border.color: "#FF4C4C"
+            }
+            PropertyChanges {
+                target: verifyPasswordBorder
+                border.width: 3
+            }
+        },
+        State {
+            name: "verificationErrorOff"
+            PropertyChanges {
+                target: verifyPasswordBorder
+                border.color: "#6D6D6D"
+            }
+            PropertyChanges {
+                target: verifyPasswordBorder
+                border.width: 1
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            PropertyAnimation {
+                target: verifyPasswordBorder
+                properties: "border.color"
+                duration: 500
+            }
+            NumberAnimation {
+                target: verifyPasswordBorder
+                properties: "border.width"
+                loops: 1
+                duration: 500
+            }
+        }
+    ]
 }
 
 

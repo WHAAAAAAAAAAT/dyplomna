@@ -2,6 +2,9 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Timeline 1.0
 
+import Controllers 1.0
+
+
 Rectangle {
     id: rectangle
     width: LoginConstants.width
@@ -22,6 +25,10 @@ Rectangle {
         visible: true
     }
     visible: true
+
+    LoginController {
+        id: controller
+    }
 
     Text {
         id: pageTitle
@@ -100,6 +107,13 @@ Rectangle {
             width: 120
             opacity: 1
             text: qsTr("LOG IN")
+
+            Connections {
+                target: loginButton
+                function onClicked() {
+                    controller.login(usernameField.text, passwordField.text)
+                }
+            }
         }
 
         RegistrationButton {
@@ -114,7 +128,7 @@ Rectangle {
                     stackView.push(registrationScreenStackComponent)
                     rectangle.state = "clearFields"
                     rectangle.state = "normal"
-                }  
+                }
             }
         }
     }
@@ -144,5 +158,3 @@ Rectangle {
         }
     ]
 }
-
-
