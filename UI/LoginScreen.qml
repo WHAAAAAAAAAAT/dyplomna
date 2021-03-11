@@ -28,6 +28,9 @@ Rectangle {
 
     LoginController {
         id: controller
+        onLoginError: {
+            errorOn.start();
+        }
     }
 
     Text {
@@ -243,6 +246,9 @@ Rectangle {
             Connections {
                 target: registerButton
                 function onClicked() {
+                    errorOff.start();
+                    emptyUsernameErrorOff.start();
+                    emptyPasswordErrorOff.start();
                     stackView.push(registrationScreenStackComponent)
                     rectangle.state = "clearFields"
                     rectangle.state = "normal"

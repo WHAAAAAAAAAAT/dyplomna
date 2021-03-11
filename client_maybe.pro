@@ -8,6 +8,7 @@ CONFIG += c++17
 
 SOURCES += \
         logincontroller_c.cpp \
+        loginverificationmodel_c.cpp \
         main.cpp \
         userinfomodel_c.cpp
 
@@ -28,4 +29,5 @@ DISTFILES +=
 
 HEADERS += \
     logincontroller_c.h \
+    loginverificationmodel_c.h \
     userinfomodel_c.h

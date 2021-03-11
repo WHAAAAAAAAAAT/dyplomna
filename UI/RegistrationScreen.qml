@@ -25,9 +25,12 @@ Rectangle {
     }
     visible: true
 
-    LoginController
-    {
+    LoginController {
         id: controller
+        onRegistrationError: {
+            currentErrorText.text = verificationErrorText.text
+            errorOn.start()
+        }
     }
 
     LoginButton {
@@ -627,6 +630,11 @@ Rectangle {
     Text {
         id: verifyPasswordErrorText
         text: qsTr("Passwords don't match.")
+        opacity: 0
+    }
+    Text {
+        id: verificationErrorText
+        text: qsTr("This username is already taken.")
         opacity: 0
     }
     Text {
