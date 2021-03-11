@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Timeline 1.0
+import QtGraphicalEffects 1.15
 
 import Controllers 1.0
 
@@ -63,6 +63,51 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            radius: 10
+            Rectangle {
+                id: usernameGlowBorder
+                width: parent.width
+                height: parent.height
+                opacity: 0
+                radius: parent.radius
+                RectangularGlow {
+                    anchors.fill: usernameGlowBorder
+                    glowRadius: 10
+                    spread: 0.2
+                    color: "#FF7C7C"
+                    cornerRadius: parent.radius
+                }
+                SequentialAnimation {
+                    id: emptyUsernameErrorOn
+                    PropertyAnimation {
+                        target: usernameGlowBorder
+                        properties: "opacity"
+                        from: 0
+                        to: 0.7
+                        duration: 700
+                    }
+                }
+                SequentialAnimation {
+                    id: emptyUsernameErrorOff
+                    PropertyAnimation {
+                        target: usernameGlowBorder
+                        properties: "opacity"
+                        from: 0.7
+                        to: 0
+                        duration: 700
+                    }
+                }
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#FFFFFF"
+                    opacity: 0.7
+                    radius: parent.radius
+                }
+            }
+        }
+        validator: RegExpValidator {
+            regExp: /[a-zA-Z0-9_-.]{5,30}/
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -88,6 +133,51 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            radius: 10
+            Rectangle {
+                id: passwordGlowBorder
+                width: parent.width
+                height: parent.height
+                opacity: 0
+                radius: parent.radius
+                RectangularGlow {
+                    anchors.fill: passwordGlowBorder
+                    glowRadius: 10
+                    spread: 0.2
+                    color: "#FF7C7C"
+                    cornerRadius: parent.radius
+                }
+                SequentialAnimation {
+                    id: emptyPasswordErrorOn
+                    PropertyAnimation {
+                        target: passwordGlowBorder
+                        properties: "opacity"
+                        from: 0
+                        to: 0.7
+                        duration: 700
+                    }
+                }
+                SequentialAnimation {
+                    id: emptyPasswordErrorOff
+                    PropertyAnimation {
+                        target: passwordGlowBorder
+                        properties: "opacity"
+                        from: 0.7
+                        to: 0
+                        duration: 700
+                    }
+                }
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#FFFFFF"
+                    opacity: 0.7
+                    radius: parent.radius
+                }
+            }
+        }
+        validator: RegExpValidator {
+            regExp: /[a-zA-Z0-9_-.]{5,30}/
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -111,7 +201,35 @@ Rectangle {
             Connections {
                 target: loginButton
                 function onClicked() {
-                    controller.login(usernameField.text, passwordField.text)
+                    //checking if a username isn't empty
+                    if(usernameField.text !== "" && usernameField.acceptableInput)
+                    {
+                        //checking if a password isn't empty
+                        if(passwordField.text !== "" && passwordField.acceptableInput)
+                        {
+                            if(usernameGlowBorder.opacity !== 0 || passwordGlowBorder.opacity !== 0)
+                            {
+                                emptyUsernameErrorOff.start()
+                                emptyPasswordErrorOff.start()
+                                errorOff.start()
+                            }
+                            controller.login(usernameField.text, passwordField.text)
+                        }
+                        else
+                        {
+                            errorOn.start()
+                            emptyUsernameErrorOn.start()
+                            emptyPasswordErrorOn.start()
+                            return
+                        }
+                    }
+                    else
+                    {
+                        errorOn.start()
+                        emptyUsernameErrorOn.start()
+                        emptyPasswordErrorOn.start()
+                        return
+                    }
                 }
             }
         }
@@ -130,6 +248,32 @@ Rectangle {
                     rectangle.state = "normal"
                 }
             }
+        }
+
+        Label {
+            id: errorNameLabel
+            anchors.horizontalCenter: buttonColumn.horizontalCenter
+            /*anchors.top: registerButton.bottom
+            anchors.horizontalCenter: loginButton.horizontalCenter
+            anchors.topMargin: 20*/
+            text: "Incorrect username or password."
+            color: "#E93E3E"
+            opacity: 0
+        }
+
+        PropertyAnimation {
+            id: errorOn
+            target: errorNameLabel
+            properties: "opacity"
+            to: 1
+            duration: 700
+        }
+        PropertyAnimation {
+            id: errorOff
+            target: errorNameLabel
+            properties: "opacity"
+            to: 0
+            duration: 700
         }
     }
 

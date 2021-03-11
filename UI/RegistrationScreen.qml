@@ -46,92 +46,109 @@ Rectangle {
             function onClicked() {
 
                 //checking if a name isn't empty
-                if(nameField.text !== "")
+                if(nameField.text !== "" && nameField.acceptableInput)
                 {
                     if(nameGlowBorder.opacity !== 0)
                     {
                         emptyNameErrorOff.start()
+                        errorOff.start()
                     }
-
                 }
                 else
                 {
+                    currentErrorText.text = nameErrorText.text
+                    errorOn.start()
                     emptyNameErrorOn.start()
                     return
                 }
 
                 //checking if a surname isn't empty
-                if(surnameField.text !== "")
+                if(surnameField.text !== "" && surnameField.acceptableInput)
                 {
                     if(surnameGlowBorder.opacity !== 0)
                     {
                         emptySurnameErrorOff.start()
+                        errorOff.start()
                     }
 
                 }
                 else
                 {
+                    currentErrorText.text = surnameErrorText.text
+                    errorOn.start()
                     emptySurnameErrorOn.start()
                     return
                 }
 
                 //checking if a group isn't empty
-                if(groupField.text !== "")
+                if(groupField.text !== "" && groupField.acceptableInput)
                 {
                     if(groupGlowBorder.opacity !== 0)
                     {
                         emptyGroupErrorOff.start()
+                        errorOff.start()
                     }
 
                 }
                 else
                 {
+                    currentErrorText.text = groupErrorText.text
+                    errorOn.start()
                     emptyGroupErrorOn.start()
                     return
                 }
 
                 //checking if a username isn't empty
-                if(usernameField.text !== "")
+                if(usernameField.text !== "" && usernameField.acceptableInput)
                 {
                     if(usernameGlowBorder.opacity !== 0)
                     {
                         emptyUsernameErrorOff.start()
+                        errorOff.start()
                     }
 
                 }
                 else
                 {
+                    currentErrorText.text = usernameErrorText.text
+                    errorOn.start()
                     emptyUsernameErrorOn.start()
                     return
                 }
 
                 //checking if a password isn't empty
-                if(passwordField.text !== "")
+                if(passwordField.text !== "" && passwordField.acceptableInput)
                 {
                     if(passwordGlowBorder.opacity !== 0)
                     {
                         emptyPasswordErrorOff.start()
+                        errorOff.start()
                     }
 
                 }
                 else
                 {
+                    currentErrorText.text = passwordErrorText.text
+                    errorOn.start()
                     emptyPasswordErrorOn.start()
                     return
                 }
 
                 //checking if password and verifyPassword are identical
-                if(passwordField.text === verifyPasswordField.text)
+                if(passwordField.text === verifyPasswordField.text && verifyPasswordField.acceptableInput)
                 {
                     if(verifyPasswordGlowBorder.opacity !== 0)
                     {
                         verifyPasswordErrorOff.start()
+                        errorOff.start()
                     }
                     controller.registration(nameField.text, surnameField.text, groupField.text,
                                             usernameField.text, passwordField.text);
                 }
                 else
                 {
+                    currentErrorText.text = verifyPasswordErrorText.text
+                    errorOn.start()
                     verifyPasswordErrorOn.start()
                     return
                 }
@@ -161,17 +178,19 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            radius: 10
             Rectangle {
                 id: nameGlowBorder
                 width: parent.width
                 height: parent.height
                 opacity: 0
+                radius: parent.radius
                 RectangularGlow {
                     anchors.fill: nameGlowBorder
                     glowRadius: 10
                     spread: 0.2
                     color: "#FF7C7C"
-                    cornerRadius: 8
+                    cornerRadius: parent.radius
                 }
                 SequentialAnimation {
                     id: emptyNameErrorOn
@@ -198,8 +217,12 @@ Rectangle {
                     height: parent.height
                     color: "#FFFFFF"
                     opacity: 0.7
+                    radius: parent.radius
                 }
             }
+        }
+        validator: RegExpValidator {
+            regExp: /[А-ЯІ][а-яіА-ЯІ-]{1,49}/
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -225,17 +248,19 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            radius: 10
             Rectangle {
                 id: surnameGlowBorder
                 width: parent.width
                 height: parent.height
                 opacity: 0
+                radius: parent.radius
                 RectangularGlow {
                     anchors.fill: surnameGlowBorder
                     glowRadius: 10
                     spread: 0.2
                     color: "#FF7C7C"
-                    cornerRadius: 8
+                    cornerRadius: parent.radius
                 }
                 SequentialAnimation {
                     id: emptySurnameErrorOn
@@ -262,8 +287,12 @@ Rectangle {
                     height: parent.height
                     color: "#FFFFFF"
                     opacity: 0.7
+                    radius: parent.radius
                 }
             }
+        }
+        validator: RegExpValidator {
+            regExp: /[А-ЯІ][а-яіА-ЯІ-]{1,49}/
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -289,17 +318,19 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            radius: 10
             Rectangle {
                 id: groupGlowBorder
                 width: parent.width
                 height: parent.height
                 opacity: 0
+                radius: parent.radius
                 RectangularGlow {
                     anchors.fill: groupGlowBorder
                     glowRadius: 10
                     spread: 0.2
                     color: "#FF7C7C"
-                    cornerRadius: 8
+                    cornerRadius: parent.radius
                 }
                 SequentialAnimation {
                     id: emptyGroupErrorOn
@@ -326,8 +357,12 @@ Rectangle {
                     height: parent.height
                     color: "#FFFFFF"
                     opacity: 0.7
+                    radius: parent.radius
                 }
             }
+        }
+        validator: RegExpValidator {
+            regExp: /[А-ЯІ]{2,4}[-][0-9]{2,3}/
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -353,17 +388,19 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            radius: 10
             Rectangle {
                 id: usernameGlowBorder
                 width: parent.width
                 height: parent.height
                 opacity: 0
+                radius: parent.radius
                 RectangularGlow {
                     anchors.fill: usernameGlowBorder
                     glowRadius: 10
                     spread: 0.2
                     color: "#FF7C7C"
-                    cornerRadius: 8
+                    cornerRadius: parent.radius
                 }
                 SequentialAnimation {
                     id: emptyUsernameErrorOn
@@ -390,8 +427,12 @@ Rectangle {
                     height: parent.height
                     color: "#FFFFFF"
                     opacity: 0.7
+                    radius: parent.radius
                 }
             }
+        }
+        validator: RegExpValidator {
+            regExp: /[a-zA-Z0-9_-.]{5,30}/
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -417,17 +458,19 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            radius: 10
             Rectangle {
                 id: passwordGlowBorder
                 width: parent.width
                 height: parent.height
                 opacity: 0
+                radius: parent.radius
                 RectangularGlow {
                     anchors.fill: passwordGlowBorder
                     glowRadius: 10
                     spread: 0.2
                     color: "#FF7C7C"
-                    cornerRadius: 8
+                    cornerRadius: parent.radius
                 }
                 SequentialAnimation {
                     id: emptyPasswordErrorOn
@@ -454,11 +497,16 @@ Rectangle {
                     height: parent.height
                     color: "#FFFFFF"
                     opacity: 0.7
+                    radius: parent.radius
                 }
             }
         }
+        validator: RegExpValidator {
+            regExp: /[a-zA-Z0-9_-.]{5,30}/
+        }
         selectByMouse: true
         selectionColor: "#9E7ECE"
+        echoMode: TextInput.Password
     }
 
     TextField {
@@ -483,17 +531,19 @@ Rectangle {
             color: "#FFFFFF"
             border.color: "#6D6D6D"
             border.width: 1
+            radius: 10
             Rectangle {
                 id: verifyPasswordGlowBorder
                 width: parent.width
                 height: parent.height
                 opacity: 0
+                radius: parent.radius
                 RectangularGlow {
                     anchors.fill: verifyPasswordGlowBorder
                     glowRadius: 10
                     spread: 0.2
                     color: "#FF7C7C"
-                    cornerRadius: 8
+                    cornerRadius: parent.radius
                 }
                 SequentialAnimation {
                     id: verifyPasswordErrorOn
@@ -520,11 +570,16 @@ Rectangle {
                     height: parent.height
                     color: "#FFFFFF"
                     opacity: 0.7
+                    radius: parent.radius
                 }
             }
         }
+        validator: RegExpValidator {
+            regExp: /[a-zA-Z0-9_-.]{5,30}/
+        }
         selectByMouse: true
         selectionColor: "#9E7ECE"
+        echoMode: TextInput.Password
     }
 
     RegistrationButton {
@@ -542,6 +597,75 @@ Rectangle {
                 stackView.pop()
             }
         }
+    }
+
+    Text {
+        id: nameErrorText
+        text: qsTr("Content of name field isn't allowed.")
+        opacity: 0
+    }
+    Text {
+        id: surnameErrorText
+        text: qsTr("Content of surname field isn't allowed.")
+        opacity: 0
+    }
+    Text {
+        id: groupErrorText
+        text: qsTr("Content of group field isn't allowed.")
+        opacity: 0
+    }
+    Text {
+        id: usernameErrorText
+        text: qsTr("Content of username field isn't allowed.")
+        opacity: 0
+    }
+    Text {
+        id: passwordErrorText
+        text: qsTr("Content of password field isn't allowed.")
+        opacity: 0
+    }
+    Text {
+        id: verifyPasswordErrorText
+        text: qsTr("Passwords don't match.")
+        opacity: 0
+    }
+    Text {
+        id: currentErrorText
+        text: qsTr("")
+        opacity: 0
+    }
+
+    Label {
+        id: errorNameLabel
+        anchors.top: loginButton.bottom
+        anchors.horizontalCenter: registrationButton.horizontalCenter
+        anchors.topMargin: 20
+        text: ""
+        color: "#E93E3E"
+        opacity: 0
+    }
+
+    ParallelAnimation {
+        id: errorOn
+        PropertyAnimation {
+            target: errorNameLabel
+            properties: "text"
+            to: currentErrorText.text
+            duration: 1
+        }
+        PropertyAnimation {
+            target: errorNameLabel
+            properties: "opacity"
+            to: 1
+            duration: 700
+        }
+    }
+    PropertyAnimation {
+        id: errorOff
+        target: errorNameLabel
+        properties: "opacity"
+        to: 0
+        duration: 700
     }
 }
 
