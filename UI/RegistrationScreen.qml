@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Timeline 1.0
+import QtGraphicalEffects 1.15
 
 import Controllers 1.0
 
@@ -24,7 +24,6 @@ Rectangle {
         visible: true
     }
     visible: true
-    property bool stateNormalBorder: true
 
     LoginController
     {
@@ -45,17 +44,96 @@ Rectangle {
         Connections {
             target: registrationButton
             function onClicked() {
+
+                //checking if a name isn't empty
+                if(nameField.text !== "")
+                {
+                    if(nameGlowBorder.opacity !== 0)
+                    {
+                        emptyNameErrorOff.start()
+                    }
+
+                }
+                else
+                {
+                    emptyNameErrorOn.start()
+                    return
+                }
+
+                //checking if a surname isn't empty
+                if(surnameField.text !== "")
+                {
+                    if(surnameGlowBorder.opacity !== 0)
+                    {
+                        emptySurnameErrorOff.start()
+                    }
+
+                }
+                else
+                {
+                    emptySurnameErrorOn.start()
+                    return
+                }
+
+                //checking if a group isn't empty
+                if(groupField.text !== "")
+                {
+                    if(groupGlowBorder.opacity !== 0)
+                    {
+                        emptyGroupErrorOff.start()
+                    }
+
+                }
+                else
+                {
+                    emptyGroupErrorOn.start()
+                    return
+                }
+
+                //checking if a username isn't empty
+                if(usernameField.text !== "")
+                {
+                    if(usernameGlowBorder.opacity !== 0)
+                    {
+                        emptyUsernameErrorOff.start()
+                    }
+
+                }
+                else
+                {
+                    emptyUsernameErrorOn.start()
+                    return
+                }
+
+                //checking if a password isn't empty
+                if(passwordField.text !== "")
+                {
+                    if(passwordGlowBorder.opacity !== 0)
+                    {
+                        emptyPasswordErrorOff.start()
+                    }
+
+                }
+                else
+                {
+                    emptyPasswordErrorOn.start()
+                    return
+                }
+
+                //checking if password and verifyPassword are identical
                 if(passwordField.text === verifyPasswordField.text)
                 {
+                    if(verifyPasswordGlowBorder.opacity !== 0)
+                    {
+                        verifyPasswordErrorOff.start()
+                    }
                     controller.registration(nameField.text, surnameField.text, groupField.text,
                                             usernameField.text, passwordField.text);
                 }
                 else
                 {
-                    //
-                    rectangle.state = "verificationErrorOn"
-                    rectangle.state = "verificationErrorOff"
-                    //
+                    verifyPasswordErrorOn.start()
+                    return
                 }
             }
         }
@@ -83,6 +161,45 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            Rectangle {
+                id: nameGlowBorder
+                width: parent.width
+                height: parent.height
+                opacity: 0
+                RectangularGlow {
+                    anchors.fill: nameGlowBorder
+                    glowRadius: 10
+                    spread: 0.2
+                    color: "#FF7C7C"
+                    cornerRadius: 8
+                }
+                SequentialAnimation {
+                    id: emptyNameErrorOn
+                    PropertyAnimation {
+                        target: nameGlowBorder
+                        properties: "opacity"
+                        from: 0
+                        to: 0.7
+                        duration: 700
+                    }
+                }
+                SequentialAnimation {
+                    id: emptyNameErrorOff
+                    PropertyAnimation {
+                        target: nameGlowBorder
+                        properties: "opacity"
+                        from: 0.7
+                        to: 0
+                        duration: 700
+                    }
+                }
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#FFFFFF"
+                    opacity: 0.7
+                }
+            }
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -108,6 +225,45 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            Rectangle {
+                id: surnameGlowBorder
+                width: parent.width
+                height: parent.height
+                opacity: 0
+                RectangularGlow {
+                    anchors.fill: surnameGlowBorder
+                    glowRadius: 10
+                    spread: 0.2
+                    color: "#FF7C7C"
+                    cornerRadius: 8
+                }
+                SequentialAnimation {
+                    id: emptySurnameErrorOn
+                    PropertyAnimation {
+                        target: surnameGlowBorder
+                        properties: "opacity"
+                        from: 0
+                        to: 0.7
+                        duration: 700
+                    }
+                }
+                SequentialAnimation {
+                    id: emptySurnameErrorOff
+                    PropertyAnimation {
+                        target: surnameGlowBorder
+                        properties: "opacity"
+                        from: 0.7
+                        to: 0
+                        duration: 700
+                    }
+                }
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#FFFFFF"
+                    opacity: 0.7
+                }
+            }
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -133,6 +289,45 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            Rectangle {
+                id: groupGlowBorder
+                width: parent.width
+                height: parent.height
+                opacity: 0
+                RectangularGlow {
+                    anchors.fill: groupGlowBorder
+                    glowRadius: 10
+                    spread: 0.2
+                    color: "#FF7C7C"
+                    cornerRadius: 8
+                }
+                SequentialAnimation {
+                    id: emptyGroupErrorOn
+                    PropertyAnimation {
+                        target: groupGlowBorder
+                        properties: "opacity"
+                        from: 0
+                        to: 0.7
+                        duration: 700
+                    }
+                }
+                SequentialAnimation {
+                    id: emptyGroupErrorOff
+                    PropertyAnimation {
+                        target: groupGlowBorder
+                        properties: "opacity"
+                        from: 0.7
+                        to: 0
+                        duration: 700
+                    }
+                }
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#FFFFFF"
+                    opacity: 0.7
+                }
+            }
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -158,6 +353,45 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            Rectangle {
+                id: usernameGlowBorder
+                width: parent.width
+                height: parent.height
+                opacity: 0
+                RectangularGlow {
+                    anchors.fill: usernameGlowBorder
+                    glowRadius: 10
+                    spread: 0.2
+                    color: "#FF7C7C"
+                    cornerRadius: 8
+                }
+                SequentialAnimation {
+                    id: emptyUsernameErrorOn
+                    PropertyAnimation {
+                        target: usernameGlowBorder
+                        properties: "opacity"
+                        from: 0
+                        to: 0.7
+                        duration: 700
+                    }
+                }
+                SequentialAnimation {
+                    id: emptyUsernameErrorOff
+                    PropertyAnimation {
+                        target: usernameGlowBorder
+                        properties: "opacity"
+                        from: 0.7
+                        to: 0
+                        duration: 700
+                    }
+                }
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#FFFFFF"
+                    opacity: 0.7
+                }
+            }
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -183,6 +417,45 @@ Rectangle {
             implicitHeight: 47
             border.color: "#6D6D6D"
             border.width: 1
+            Rectangle {
+                id: passwordGlowBorder
+                width: parent.width
+                height: parent.height
+                opacity: 0
+                RectangularGlow {
+                    anchors.fill: passwordGlowBorder
+                    glowRadius: 10
+                    spread: 0.2
+                    color: "#FF7C7C"
+                    cornerRadius: 8
+                }
+                SequentialAnimation {
+                    id: emptyPasswordErrorOn
+                    PropertyAnimation {
+                        target: passwordGlowBorder
+                        properties: "opacity"
+                        from: 0
+                        to: 0.7
+                        duration: 700
+                    }
+                }
+                SequentialAnimation {
+                    id: emptyPasswordErrorOff
+                    PropertyAnimation {
+                        target: passwordGlowBorder
+                        properties: "opacity"
+                        from: 0.7
+                        to: 0
+                        duration: 700
+                    }
+                }
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#FFFFFF"
+                    opacity: 0.7
+                }
+            }
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -203,12 +476,52 @@ Rectangle {
         anchors.topMargin: 20
         anchors.horizontalCenter: nameField.horizontalCenter
         placeholderText: qsTr("Verify your password")
-        background: Rectangle {
-            id: verifyPasswordBorder
-            implicitWidth: passwordField.width
+        background: Rectangle
+        {
+            implicitWidth: parent.width
             implicitHeight: 47
+            color: "#FFFFFF"
             border.color: "#6D6D6D"
             border.width: 1
+            Rectangle {
+                id: verifyPasswordGlowBorder
+                width: parent.width
+                height: parent.height
+                opacity: 0
+                RectangularGlow {
+                    anchors.fill: verifyPasswordGlowBorder
+                    glowRadius: 10
+                    spread: 0.2
+                    color: "#FF7C7C"
+                    cornerRadius: 8
+                }
+                SequentialAnimation {
+                    id: verifyPasswordErrorOn
+                    PropertyAnimation {
+                        target: verifyPasswordGlowBorder
+                        properties: "opacity"
+                        from: 0
+                        to: 0.7
+                        duration: 700
+                    }
+                }
+                SequentialAnimation {
+                    id: verifyPasswordErrorOff
+                    PropertyAnimation {
+                        target: verifyPasswordGlowBorder
+                        properties: "opacity"
+                        from: 0.7
+                        to: 0
+                        duration: 700
+                    }
+                }
+                Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    color: "#FFFFFF"
+                    opacity: 0.7
+                }
+            }
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -230,47 +543,6 @@ Rectangle {
             }
         }
     }
-
-    states: [
-        State {
-            name: "verificationErrorOn"
-            PropertyChanges {
-                target: verifyPasswordBorder
-                border.color: "#FF4C4C"
-            }
-            PropertyChanges {
-                target: verifyPasswordBorder
-                border.width: 3
-            }
-        },
-        State {
-            name: "verificationErrorOff"
-            PropertyChanges {
-                target: verifyPasswordBorder
-                border.color: "#6D6D6D"
-            }
-            PropertyChanges {
-                target: verifyPasswordBorder
-                border.width: 1
-            }
-        }
-    ]
-
-    transitions: [
-        Transition {
-            PropertyAnimation {
-                target: verifyPasswordBorder
-                properties: "border.color"
-                duration: 500
-            }
-            NumberAnimation {
-                target: verifyPasswordBorder
-                properties: "border.width"
-                loops: 1
-                duration: 500
-            }
-        }
-    ]
 }
 
 

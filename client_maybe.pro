@@ -1,6 +1,6 @@
-QT += quick
+QT += quick qml quick quickcontrols2
 
-CONFIG += c++17 qml_debug
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -11,8 +11,7 @@ SOURCES += \
         main.cpp \
         userinfomodel_c.cpp
 
-RESOURCES += qml.qrc \
-    qml.qrc
+RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
