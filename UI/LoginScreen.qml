@@ -4,7 +4,6 @@ import QtGraphicalEffects 1.15
 
 import Controllers 1.0
 
-
 Rectangle {
     id: rectangle
     width: LoginConstants.width
@@ -25,26 +24,22 @@ Rectangle {
         visible: true
     }
     visible: true
-
     LoginController {
         id: controller
         onLoginError: {
             errorOn.start();
         }
     }
-
     Text {
         id: pageTitle
         text: qsTr("LOG IN")
         color: "#181818"
         anchors.top: parent.top
         font.pixelSize: 42
-        //font.bold: true
         anchors.topMargin: 40
         anchors.horizontalCenter: parent.horizontalCenter
         font.family: LoginConstants.font.family
     }
-
     TextField {
         id: usernameField
         x: 140
@@ -115,7 +110,6 @@ Rectangle {
         selectByMouse: true
         selectionColor: "#9E7ECE"
     }
-
     TextField {
         id: passwordField
         x: 140
@@ -186,21 +180,18 @@ Rectangle {
         selectionColor: "#9E7ECE"
         echoMode: TextInput.Password
     }
-
     Column {
         id: buttonColumn
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 60
         spacing: 25
-
         LoginButton {
             id: loginButton
             anchors.horizontalCenter: buttonColumn.horizontalCenter
             width: 120
             opacity: 1
             text: qsTr("LOG IN")
-
             Connections {
                 target: loginButton
                 function onClicked() {
@@ -236,7 +227,6 @@ Rectangle {
                 }
             }
         }
-
         RegistrationButton {
             id: registerButton
             width: 300
@@ -255,22 +245,18 @@ Rectangle {
                 }
             }
         }
-
         Label {
             id: errorNameLabel
             anchors.horizontalCenter: buttonColumn.horizontalCenter
-            /*anchors.top: registerButton.bottom
-            anchors.horizontalCenter: loginButton.horizontalCenter
-            anchors.topMargin: 20*/
             text: "Incorrect username or password."
             color: "#E93E3E"
             opacity: 0
         }
-
         PropertyAnimation {
             id: errorOn
             target: errorNameLabel
             properties: "opacity"
+            from: 0
             to: 1
             duration: 700
         }
@@ -282,7 +268,6 @@ Rectangle {
             duration: 700
         }
     }
-
     states: [
         State {
             name: "clearFields"

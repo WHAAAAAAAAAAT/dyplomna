@@ -8,30 +8,6 @@ LoginVerificationModel_c::LoginVerificationModel_c(QObject *_parent_ptr)
     : QObject(_parent_ptr)
 {}
 
-/*
-  {
-    "usersinfo": [
-        {
-            username
-            name
-            surname
-            group
-            password
-        }
-        {
-            username
-            ...
-            password
-        }
-        {
-            username
-            ...
-            password
-        }
-    ]
-  }
-*/
-
 QJsonObject createNewUser(const QString &_username, const QString &_password,
                           const QString &_name, const QString &_surname,
                           const QString &_group)
@@ -135,15 +111,11 @@ QJsonDocument LoginVerificationModel_c::loadJson(const QString &fileName)
     bool pathExists = directory.cd("CPPLearn");
     if(!pathExists)
     {
-        qDebug() << "load json, mkdir";
         directory.mkdir("CPPLearn");
     }
     directory.setPath(documents + "/CPPLearn");
     QFile jsonFile(directory.filePath(fileName));
     jsonFile.open(QFile::ReadWrite);
-
-    qDebug() << "load json: " << jsonFile.isOpen();
-
     QJsonDocument tempDocument = QJsonDocument().fromJson(jsonFile.readAll());
     jsonFile.close();
     return tempDocument;
@@ -156,15 +128,11 @@ void LoginVerificationModel_c::saveJson(const QJsonDocument &document, const QSt
     bool pathExists = directory.cd("CPPLearn");
     if(!pathExists)
     {
-        qDebug() << "save json, mkdir";
         directory.mkdir("CPPLearn");
     }
     directory.setPath(documents + "/CPPLearn");
     QFile jsonFile(directory.filePath(fileName));
     jsonFile.open(QFile::WriteOnly);
-
-    qDebug() << jsonFile.isOpen();
-
     jsonFile.write(document.toJson());
     jsonFile.close();
 }

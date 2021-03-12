@@ -24,7 +24,6 @@ Rectangle {
         visible: true
     }
     visible: true
-
     LoginController {
         id: controller
         onRegistrationError: {
@@ -32,7 +31,6 @@ Rectangle {
             errorOn.start()
         }
     }
-
     LoginButton {
         id: registrationButton
         width: 150
@@ -43,11 +41,9 @@ Rectangle {
         anchors.rightMargin: 70
         text: qsTr("SIGN UP")
         fontSize: 20
-
         Connections {
             target: registrationButton
             function onClicked() {
-
                 //checking if a name isn't empty
                 if(nameField.text !== "" && nameField.acceptableInput)
                 {
@@ -158,7 +154,6 @@ Rectangle {
             }
         }
     }
-
     TextField {
         id: nameField
         x: 40
@@ -230,7 +225,6 @@ Rectangle {
         selectByMouse: true
         selectionColor: "#9E7ECE"
     }
-
     TextField {
         id: surnameField
         x: 40
@@ -300,7 +294,6 @@ Rectangle {
         selectByMouse: true
         selectionColor: "#9E7ECE"
     }
-
     TextField {
         id: groupField
         x: 40
@@ -370,7 +363,6 @@ Rectangle {
         selectByMouse: true
         selectionColor: "#9E7ECE"
     }
-
     TextField {
         id: usernameField
         x: 40
@@ -440,7 +432,6 @@ Rectangle {
         selectByMouse: true
         selectionColor: "#9E7ECE"
     }
-
     TextField {
         id: passwordField
         x: 40
@@ -511,7 +502,6 @@ Rectangle {
         selectionColor: "#9E7ECE"
         echoMode: TextInput.Password
     }
-
     TextField {
         id: verifyPasswordField
         x: 40
@@ -584,7 +574,6 @@ Rectangle {
         selectionColor: "#9E7ECE"
         echoMode: TextInput.Password
     }
-
     RegistrationButton {
         id: loginButton
         width: 300
@@ -593,7 +582,6 @@ Rectangle {
         anchors.topMargin: 20
         text: qsTr("Already have an account? Log in!")
         font.bold: true
-
         Connections {
             target: loginButton
             function onClicked() {
@@ -601,7 +589,6 @@ Rectangle {
             }
         }
     }
-
     Text {
         id: nameErrorText
         text: qsTr("Content of name field isn't allowed.")
@@ -642,7 +629,6 @@ Rectangle {
         text: qsTr("")
         opacity: 0
     }
-
     Label {
         id: errorNameLabel
         anchors.top: loginButton.bottom
@@ -652,7 +638,6 @@ Rectangle {
         color: "#E93E3E"
         opacity: 0
     }
-
     ParallelAnimation {
         id: errorOn
         PropertyAnimation {
@@ -664,6 +649,7 @@ Rectangle {
         PropertyAnimation {
             target: errorNameLabel
             properties: "opacity"
+            from: 0
             to: 1
             duration: 700
         }
