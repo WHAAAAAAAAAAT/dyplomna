@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>UI/loginBackground.gif</file>
+        <file>UI/loginBackground6.gif</file>
+        <file>UI/ClientLoginButton.qml</file>
+        <file>UI/ClientLoginConstants.qml</file>
+        <file>UI/ClientLoginScreen.qml</file>
+        <file>UI/main.qml</file>
+        <file>UI/ClientRegistrationButton.qml</file>
+        <file>UI/ClientRegistrationScreen.qml</file>
+    </qresource>
+</RCC>

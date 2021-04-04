@@ -11,7 +11,7 @@ ApplicationWindow {
         anchors.left: windowLectures.left
         width: windowLectures.width * 0.2
         height: windowLectures.height
-        color: '#C2BEEC'
+        color: '#B9B3F5'
         visible: true
         Text {
             id: leftSidebarTitle
@@ -20,7 +20,7 @@ ApplicationWindow {
             font.bold: true
             anchors.top: parent.top
             anchors.left: parent.left
-            font.pixelSize: 26
+            font.pixelSize: 25
             anchors.topMargin: 10
             anchors.leftMargin: 20
             font.family: LoginConstants.font.family
@@ -44,12 +44,13 @@ ApplicationWindow {
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottomMargin: 40
-            width: parent.width * 0.7
+            width: parent.width * 0.75
             opacity: 1
             text: qsTr("CREATE A NEW COURSE")
             Connections {
                 target: createCourseButton
                 function onClicked() {
+
                 }
             }
         }
@@ -124,13 +125,13 @@ ApplicationWindow {
             }
         }
     }
-    Rectangle {
+    Loader {
         id: lecturesView
+        source: "TextEditor.qml";
         anchors.top: header.bottom
         anchors.bottom: footer.top
         anchors.left: listOfCourses.right
         width: header.width
-        color: '#FFFFFF'
         visible: true
     }
     Rectangle {
@@ -143,12 +144,12 @@ ApplicationWindow {
         Text {
             id:rightSidebarTitle
             text: qsTr("TEST CREATOR")
-            color: "#3C3C3C"
+            color: "#646464"
             font.bold: true
             anchors.top: testCreator.top
             anchors.left: testCreator.left
-            font.pixelSize: 25
-            anchors.topMargin: 10
+            font.pixelSize: 23
+            anchors.topMargin: 13
             anchors.leftMargin: 20
             font.family: LoginConstants.font.family
         }
@@ -159,7 +160,8 @@ ApplicationWindow {
             anchors.right: testCreator.right
             anchors.rightMargin: 20
             width: 10
-            fontSize: 25
+            fontSize: 23
+            notClickedColor: "#646464"
             clickedColor: "#FF1717"
             text: qsTr("╳")
             font.bold: true

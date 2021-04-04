@@ -1,75 +1,22 @@
-/****************************************************************************
-**
-** Copyright (C) 2017 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** BSD License Usage
-** Alternatively, you may use this file under the terms of the BSD license
-** as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Window 2.0
+import QtQuick.Window 2.12
 import Qt.labs.platform 1.0
+import QtQuick.Controls.Material 2.12
+import QtGraphicalEffects 1.15
 
-import io.qt.examples.texteditor 1.0
+import Controllers 1.0
 
-// TODO:
-// - make designer-friendly
-
-ApplicationWindow {
+Rectangle {
     id: window
-    width: 1024
-    height: 600
+    color: "#FFFFFF"
+    width: parent.width
+    height: parent.height
     visible: true
-    title: document.fileName + " - Text Editor Example"
-
-    Component.onCompleted: {
-        x = Screen.width / 2 - width / 2
-        y = Screen.height / 2 - height / 2
-    }
-
+    /*Component.onCompleted: {
+        x = width
+        y = height
+    }*/
     Shortcut {
         sequence: StandardKey.Open
         onActivated: openDialog.open()
@@ -106,11 +53,9 @@ ApplicationWindow {
         sequence: StandardKey.Underline
         onActivated: document.underline = !document.underline
     }
-
-    MenuBar {
+    /*MenuBar {
         Menu {
             title: qsTr("&File")
-
             MenuItem {
                 text: qsTr("&Open")
                 onTriggered: openDialog.open()
@@ -124,10 +69,8 @@ ApplicationWindow {
                 onTriggered: close()
             }
         }
-
         Menu {
             title: qsTr("&Edit")
-
             MenuItem {
                 text: qsTr("&Copy")
                 enabled: textArea.selectedText
@@ -144,10 +87,8 @@ ApplicationWindow {
                 onTriggered: textArea.paste()
             }
         }
-
         Menu {
             title: qsTr("F&ormat")
-
             MenuItem {
                 text: qsTr("&Bold")
                 checkable: true
@@ -167,8 +108,7 @@ ApplicationWindow {
                 onTriggered: document.underline = !document.underline
             }
         }
-    }
-
+    }*/
     FileDialog {
         id: openDialog
         fileMode: FileDialog.OpenFile
@@ -177,7 +117,6 @@ ApplicationWindow {
         folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
         onAccepted: document.load(file)
     }
-
     FileDialog {
         id: saveDialog
         fileMode: FileDialog.SaveFile
@@ -187,7 +126,6 @@ ApplicationWindow {
         folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
         onAccepted: document.saveAs(file)
     }
-
     FontDialog {
         id: fontDialog
         onAccepted: {
@@ -195,16 +133,13 @@ ApplicationWindow {
             document.fontSize = font.pointSize;
         }
     }
-
     ColorDialog {
         id: colorDialog
         currentColor: "black"
     }
-
     MessageDialog {
         id: errorDialog
     }
-
     MessageDialog {
         id : quitDialog
         title: qsTr("Quit?")
@@ -212,18 +147,32 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: Qt.quit()
     }
-
-    header: ToolBar {
+    ToolBar {
+        id: toolBarArea
+        anchors.top: parent.top
+        width: parent.width
         leftPadding: 8
-
+        background: Rectangle {
+            anchors.fill: parent
+            color: "#FFFFFF"
+            layer.enabled: true
+            layer.effect: DropShadow {
+                transparentBorder: true
+                color: "#A4A4A4"
+                radius: 15
+                samples: 1 + radius * 2
+                verticalOffset: 5
+                horizontalOffset: 1
+            }
+        }
         Flow {
             id: flow
             width: parent.width
-
             Row {
                 id: fileRow
                 ToolButton {
                     id: openButton
+                    palette.button: "white"
                     text: "\uF115" // icon-folder-open-empty
                     font.family: "fontello"
                     onClicked: openDialog.open()
@@ -232,11 +181,11 @@ ApplicationWindow {
                     contentItem.visible: fileRow.y === editRow.y
                 }
             }
-
             Row {
                 id: editRow
                 ToolButton {
                     id: copyButton
+                    palette.button: "white"
                     text: "\uF0C5" // icon-docs
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -245,6 +194,7 @@ ApplicationWindow {
                 }
                 ToolButton {
                     id: cutButton
+                    palette.button: "white"
                     text: "\uE802" // icon-scissors
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -253,6 +203,7 @@ ApplicationWindow {
                 }
                 ToolButton {
                     id: pasteButton
+                    palette.button: "white"
                     text: "\uF0EA" // icon-paste
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -263,11 +214,11 @@ ApplicationWindow {
                     contentItem.visible: editRow.y === formatRow.y
                 }
             }
-
             Row {
                 id: formatRow
                 ToolButton {
                     id: boldButton
+                    palette.button: "white"
                     text: "\uE800" // icon-bold
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -277,6 +228,7 @@ ApplicationWindow {
                 }
                 ToolButton {
                     id: italicButton
+                    palette.button: "white"
                     text: "\uE801" // icon-italic
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -286,6 +238,7 @@ ApplicationWindow {
                 }
                 ToolButton {
                     id: underlineButton
+                    palette.button: "white"
                     text: "\uF0CD" // icon-underline
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -295,6 +248,7 @@ ApplicationWindow {
                 }
                 ToolButton {
                     id: fontFamilyToolButton
+                    palette.button: "white"
                     text: qsTr("\uE808") // icon-font
                     font.family: "fontello"
                     font.bold: document.bold
@@ -308,6 +262,7 @@ ApplicationWindow {
                 }
                 ToolButton {
                     id: textColorButton
+                    palette.button: "white"
                     text: "\uF1FC" // icon-brush
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -321,7 +276,6 @@ ApplicationWindow {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.baseline: parent.baseline
                         anchors.baselineOffset: 6
-
                         TextMetrics {
                             id: aFontMetrics
                             font: textColorButton.font
@@ -333,11 +287,11 @@ ApplicationWindow {
                     contentItem.visible: formatRow.y === alignRow.y
                 }
             }
-
             Row {
                 id: alignRow
                 ToolButton {
                     id: alignLeftButton
+                    palette.button: "white"
                     text: "\uE803" // icon-align-left
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -347,6 +301,7 @@ ApplicationWindow {
                 }
                 ToolButton {
                     id: alignCenterButton
+                    palette.button: "white"
                     text: "\uE804" // icon-align-center
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -356,6 +311,7 @@ ApplicationWindow {
                 }
                 ToolButton {
                     id: alignRightButton
+                    palette.button: "white"
                     text: "\uE805" // icon-align-right
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -365,6 +321,7 @@ ApplicationWindow {
                 }
                 ToolButton {
                     id: alignJustifyButton
+                    palette.button: "white"
                     text: "\uE806" // icon-align-justify
                     font.family: "fontello"
                     focusPolicy: Qt.TabFocus
@@ -375,7 +332,6 @@ ApplicationWindow {
             }
         }
     }
-
     DocumentHandler {
         id: document
         document: textArea.textDocument
@@ -402,8 +358,10 @@ ApplicationWindow {
     Flickable {
         id: flickable
         flickableDirection: Flickable.VerticalFlick
-        anchors.fill: parent
-
+        anchors.top: toolBarArea.bottom
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20
+        width: parent.width
         TextArea.flickable: TextArea {
             id: textArea
             textFormat: Qt.RichText
@@ -411,30 +369,22 @@ ApplicationWindow {
             focus: true
             selectByMouse: true
             persistentSelection: true
-            // Different styles have different padding and background
-            // decorations, but since this editor is almost taking up the
-            // entire window, we don't need them.
             leftPadding: 6
             rightPadding: 6
-            topPadding: 0
-            bottomPadding: 0
+            topPadding: 6
+            bottomPadding: 6
             background: null
-
             MouseArea {
                 acceptedButtons: Qt.RightButton
                 anchors.fill: parent
                 onClicked: contextMenu.open()
             }
-
             onLinkActivated: Qt.openUrlExternally(link)
         }
-
         ScrollBar.vertical: ScrollBar {}
     }
-
     Menu {
         id: contextMenu
-
         MenuItem {
             text: qsTr("Copy")
             enabled: textArea.selectedText
@@ -450,24 +400,14 @@ ApplicationWindow {
             enabled: textArea.canPaste
             onTriggered: textArea.paste()
         }
-
         MenuSeparator {}
-
         MenuItem {
             text: qsTr("Font...")
             onTriggered: fontDialog.open()
         }
-
         MenuItem {
             text: qsTr("Color...")
             onTriggered: colorDialog.open()
-        }
-    }
-
-    onClosing: {
-        if (document.modified) {
-            quitDialog.open()
-            close.accepted = false
         }
     }
 }

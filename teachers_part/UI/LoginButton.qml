@@ -19,7 +19,7 @@ T.Button {
     background: buttonBackground
     contentItem: textItem
 
-    property int fontSize: 16
+    property int loginfontSize: 16
 
     Text {
         id: textItem
@@ -27,7 +27,7 @@ T.Button {
         opacity: enabled ? 1 : 0.3
         color: "#111111"
         font.family: LoginConstants.font.family
-        font.pixelSize: fontSize
+        font.pixelSize: loginfontSize
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.bold: true

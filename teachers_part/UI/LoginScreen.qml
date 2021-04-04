@@ -236,7 +236,6 @@ Rectangle {
             width: 300
             text: qsTr("Don't have an account? Let's create one!")
             font.bold: true
-
             Connections {
                 target: registerButton
                 function onClicked() {

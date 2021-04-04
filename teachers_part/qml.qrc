@@ -9,5 +9,8 @@
         <file>UI/RegistrationButton.qml</file>
         <file>UI/RegistrationScreen.qml</file>
         <file>UI/LecturesScreen.qml</file>
+        <file>UI/TextEditor.qml</file>
+        <file>fonts/fontello.ttf</file>
+        <file>texteditor.html</file>
     </qresource>
 </RCC>

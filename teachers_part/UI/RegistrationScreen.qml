@@ -40,7 +40,7 @@ Rectangle {
         anchors.topMargin: 200
         anchors.rightMargin: 70
         text: qsTr("SIGN UP")
-        fontSize: 20
+        loginfontSize: 20
         Connections {
             target: registrationButton
             function onClicked() {
