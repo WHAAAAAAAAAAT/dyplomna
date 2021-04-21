@@ -3,6 +3,7 @@
 #else
 #include <QGuiApplication>
 #endif
+#include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QFontDatabase>
 #include <QDebug>
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
 #else
     QGuiApplication app(argc, argv);
 #endif
-
+    app.setWindowIcon(QIcon(":/UI/images/windowIcon.png"));
     QFontDatabase fontDatabase;
     if (fontDatabase.addApplicationFont(":/fonts/fontello.ttf") == -1)
         qWarning() << "Failed to load fontello.ttf";

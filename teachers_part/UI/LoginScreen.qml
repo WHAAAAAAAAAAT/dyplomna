@@ -14,10 +14,10 @@ Rectangle {
         height: parent.height
         opacity: 0.8
         AnimatedImage {
-            id: animationBackground;
+            id: animationBackground
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            source: "loginBackground.gif"
+            source: "images/loginBackground.gif"
             width: parent.width
             height: parent.height
         }
@@ -31,7 +31,7 @@ Rectangle {
         }
         onLoginSuccess: {
             mainWindow.hide()
-            lecturesWindow.show()
+            menuWindow.show()
         }
     }
     Text {
@@ -296,12 +296,12 @@ Rectangle {
         }
     ]
 
-    LecturesScreen {
-        id: lecturesWindow
-        title: qsTr("CPPLearn/Lectures")
+    MenuScreen {
+        id: menuWindow
+        title: qsTr("CPPLearn/Menu")
 
-        onExitWindowLectures: {
-            lecturesWindow.hide()
+        onExitMenuWindow: {
+            menuWindow.hide()
             mainWindow.show()
         }
     }

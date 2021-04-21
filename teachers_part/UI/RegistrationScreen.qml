@@ -17,7 +17,7 @@ Rectangle {
             id: animationBackground
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            source: "loginBackground6.gif"
+            source: "images/regBackground.gif"
             width: parent.width
             height: parent.height
         }

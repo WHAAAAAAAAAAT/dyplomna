@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>UI/loginBackground.gif</file>
-        <file>UI/loginBackground6.gif</file>
         <file>UI/LoginButton.qml</file>
         <file>UI/LoginConstants.qml</file>
         <file>UI/LoginScreen.qml</file>
@@ -12,5 +10,14 @@
         <file>UI/TextEditor.qml</file>
         <file>fonts/fontello.ttf</file>
         <file>texteditor.html</file>
+        <file>UI/MenuScreen.qml</file>
+        <file>UI/images/coursesButtonIcon.png</file>
+        <file>UI/images/chatButtonIcon.png</file>
+        <file>UI/images/settingsButtonIcon.png</file>
+        <file>UI/images/preview.gif</file>
+        <file>UI/images/windowIcon.png</file>
+        <file>UI/images/menuBackgroundImage.gif</file>
+        <file>UI/images/loginBackground.gif</file>
+        <file>UI/images/regBackground.gif</file>
     </qresource>
 </RCC>
