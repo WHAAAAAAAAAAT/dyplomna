@@ -15,7 +15,7 @@ Rectangle {
 
     readonly property var textDocument: document.document
 
-    Shortcut {
+    /*Shortcut {
         sequence: StandardKey.Open
         onActivated: openDialog.open()
     }
@@ -74,7 +74,7 @@ Rectangle {
             document.fontFamily = font.family;
             document.fontSize = font.pointSize;
         }
-    }
+    }*/
     ColorDialog {
         id: colorDialog
         currentColor: "black"
@@ -97,7 +97,7 @@ Rectangle {
         background: Rectangle {
             anchors.fill: parent
             color: "#FFFFFF"
-            layer.enabled: true
+            /*layer.enabled: true
             layer.effect: DropShadow {
                 transparentBorder: true
                 color: "#A4A4A4"
@@ -105,9 +105,9 @@ Rectangle {
                 samples: 1 + radius * 2
                 verticalOffset: 5
                 horizontalOffset: 1
-            }
+            }*/
         }
-        Flow {
+        /*Flow {
             id: flow
             width: parent.width
             Row {
@@ -272,7 +272,7 @@ Rectangle {
                     onClicked: document.alignment = Qt.AlignJustify
                 }
             }
-        }
+        }*/
     }
     DocumentHandler {
         id: document
@@ -306,6 +306,7 @@ Rectangle {
         width: parent.width
         TextArea.flickable: TextArea {
             id: textArea
+            //text: "123"
             textFormat: Qt.RichText
             wrapMode: TextArea.Wrap
             focus: true
@@ -316,6 +317,7 @@ Rectangle {
             topPadding: 6
             bottomPadding: 6
             background: null
+            readOnly: true
             MouseArea {
                 acceptedButtons: Qt.RightButton
                 anchors.fill: parent
@@ -332,7 +334,7 @@ Rectangle {
             enabled: textArea.selectedText
             onTriggered: textArea.copy()
         }
-        MenuItem {
+        /*MenuItem {
             text: qsTr("Cut")
             enabled: textArea.selectedText
             onTriggered: textArea.cut()
@@ -350,6 +352,6 @@ Rectangle {
         MenuItem {
             text: qsTr("Color...")
             onTriggered: colorDialog.open()
-        }
+        }*/
     }
 }

@@ -117,5 +117,8 @@ void NetworkModel_c::parseReceivedText(const QString &_text)
     } else if (_text == message::registrationFail)
     {
         emit NotificationModel_c::instance()->registrationFail();
+    } else if (_text.startsWith(QStringLiteral("<!DOCTYPE")))
+    {
+        emit NotificationModel_c::instance()->lectureRecieved(_text);
     }
 }

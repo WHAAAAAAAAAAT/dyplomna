@@ -23,6 +23,7 @@ void LoginController_c::login(const QString &_username, const QString &_password
         qDebug() << "login send";
         UserInfoModel_c::instance()->setUsername(_username);
         UserInfoModel_c::instance()->setPassword(_password);
+        //NetworkModel_c::instance()->sendJson(LoginController_c::createLoginJson(UserInfoModel_c::instance()->username(), UserInfoModel_c::instance()->password()));
     }
     else
     {

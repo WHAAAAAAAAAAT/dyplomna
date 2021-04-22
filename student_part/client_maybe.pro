@@ -12,15 +12,16 @@ SOURCES += \
         main.cpp \
         networkmodel_c.cpp \
         notificationmodel_c.cpp \
-        userinfomodel_c.cpp
+        userinfomodel_c.cpp \
+        documenthandler.cpp
 
 HEADERS += \
     logincontroller_c.h \
     loginverificationmodel_c.h \
     networkmodel_c.h \
     notificationmodel_c.h \
-    userinfomodel_c.h
-
+    userinfomodel_c.h \
+    documenthandler.h
 
 RESOURCES += qml.qrc
 

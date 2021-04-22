@@ -18,6 +18,9 @@ public:
     static NetworkModel_c* instance();
     ~NetworkModel_c();
 
+    bool sendToAll(const QJsonObject &object);
+    bool sendToAll(const QString &text);
+
 private slots:
     void onNewConnection();
     void processTextMessage(QString message);

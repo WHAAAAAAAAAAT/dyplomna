@@ -34,7 +34,7 @@ ApplicationWindow {
             id: coursesList
             width: parent.width - 40
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: createCourseButton.top
+            anchors.bottom: findCourseButton.top
             anchors.bottomMargin: 15
             anchors.top: leftSidebarTitle.bottom
             anchors.topMargin: 15
@@ -45,15 +45,15 @@ ApplicationWindow {
             */
         }
         ClientLoginButton {
-            id: createCourseButton
+            id: findCourseButton
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottomMargin: 40
             width: parent.width * 0.75
             opacity: 1
-            text: qsTr("CREATE A NEW COURSE")
+            text: qsTr("FIND A NEW COURSE")
             Connections {
-                target: createCourseButton
+                target: findCourseButton
                 function onClicked() {
 
                 }
@@ -112,7 +112,7 @@ ApplicationWindow {
         height: 60
         color: '#FFFFFF'
         visible: true
-        ClientRegistrationButton {
+        /*ClientRegistrationButton {
             id: createTestButton
             anchors.bottom: footer.bottom
             anchors.bottomMargin: 40
@@ -129,7 +129,7 @@ ApplicationWindow {
                     createTestOn.start()
                 }
             }
-        }
+        }*/
     }
     Rectangle {
         id: lecturesOffView
@@ -137,7 +137,7 @@ ApplicationWindow {
         anchors.bottom: footer.top
         anchors.left: listOfCourses.right
         width: header.width
-        opacity: 1
+        opacity: 0
         color: "#FFFFFF"
         Text {
             id: lecturesOffText
@@ -147,19 +147,20 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             font.family: ClientLoginConstants.font.family
-            text: qsTr("Please, create a course or choose a lecture to show.")
+            text: qsTr("Please, choose a lecture to show.")
         }
     }
-    /*Loader {
+    TextEditor {
         id: lecturesView
-        source: "TextEditor.qml";
         anchors.top: header.bottom
         anchors.bottom: footer.top
         anchors.left: listOfCourses.right
         width: header.width
-        visible: false
-    }*/
-    Rectangle {
+        visible: true
+    }
+
+    //test creator
+    /*Rectangle {
         id: testCreator
         anchors.right: parent.right
         width: 0
@@ -614,5 +615,5 @@ ApplicationWindow {
                 duration: 700
             }
         }
-    }
+    }*/
 }

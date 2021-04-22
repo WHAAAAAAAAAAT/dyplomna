@@ -20,6 +20,7 @@ signals:
     void loginSuccess();
     void registrationFail();
     void registrationSuccess();
+    void lectureRecieved(const QString &lecture);
 
 private:
     static NotificationModel_c* mInstance_ptr;

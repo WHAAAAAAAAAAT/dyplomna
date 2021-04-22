@@ -6,32 +6,28 @@ import Controllers 1.0
 
 Rectangle {
     id: rectangle
-    width: ClientLoginConstants.width
-    height: ClientLoginConstants.height
+    width: LoginConstants.width
+    height: LoginConstants.height
     Rectangle {
         id: rectangleBackground
         width: parent.width
         height: parent.height
         opacity: 0.8
         AnimatedImage {
-            id: animationBackground
+            id: animationBackground;
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            source: "images/loginBackground.gif"
+            source: "loginBackground.gif"
             width: parent.width
             height: parent.height
         }
         visible: true
     }
     visible: true
-    ClientLoginController {
+    LoginController {
         id: controller
-        onLoginFail: {
-            errorOn.start()
-        }
-        onLoginSuccess: {
-            mainWindow.hide()
-            menuWindow.show()
+        onLoginError: {
+            errorOn.start();
         }
     }
     Text {
@@ -42,7 +38,7 @@ Rectangle {
         font.pixelSize: 42
         anchors.topMargin: 40
         anchors.horizontalCenter: parent.horizontalCenter
-        font.family: ClientLoginConstants.font.family
+        font.family: LoginConstants.font.family
     }
     TextField {
         id: usernameField
@@ -54,7 +50,7 @@ Rectangle {
         opacity: 0.75
         placeholderTextColor: "#3C3C3C"
         font.pixelSize: 16
-        font.family: ClientLoginConstants.font.family
+        font.family: LoginConstants.font.family
         anchors.top: parent.top
         horizontalAlignment: Text.AlignLeft
         anchors.horizontalCenter: parent.horizontalCenter
@@ -124,7 +120,7 @@ Rectangle {
         opacity: 0.75
         placeholderTextColor: "#3C3C3C"
         font.pixelSize: 16
-        font.family: ClientLoginConstants.font.family
+        font.family: LoginConstants.font.family
         anchors.top: usernameField.bottom
         anchors.horizontalCenter: usernameField.horizontalCenter
         anchors.topMargin: 10
@@ -190,7 +186,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 60
         spacing: 25
-        ClientLoginButton {
+        LoginButton {
             id: loginButton
             anchors.horizontalCenter: buttonColumn.horizontalCenter
             width: 120
@@ -212,7 +208,6 @@ Rectangle {
                                 errorOff.start()
                             }
                             controller.login(usernameField.text, passwordField.text)
-                            return
                         }
                         else
                         {
@@ -232,11 +227,12 @@ Rectangle {
                 }
             }
         }
-        ClientRegistrationButton {
+        RegistrationButton {
             id: registerButton
             width: 300
             text: qsTr("Don't have an account? Let's create one!")
             font.bold: true
+
             Connections {
                 target: registerButton
                 function onClicked() {
@@ -296,14 +292,4 @@ Rectangle {
             }
         }
     ]
-
-    ClientMenuScreen {
-        id: menuWindow
-        title: qsTr("CPPLearn/Menu")
-
-        onExitMenuWindow: {
-            menuWindow.hide()
-            mainWindow.show()
-        }
-    }
 }

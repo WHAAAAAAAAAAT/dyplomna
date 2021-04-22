@@ -136,9 +136,7 @@ ApplicationWindow {
             Connections {
                 target: saveLectureButton
                 function onClicked() {
-                    console.log(lecturesView.item);
-                    lecturesController.lectureCreation(lecturesView.item.window.document.textDocument())
-                    opacity = opacity - 0.1
+                    lecturesController.lectureCreation(lecturesView.textDocument)
                 }
             }
         }
@@ -181,9 +179,8 @@ ApplicationWindow {
             text: qsTr("Please, create a course or choose a lecture to show.")
         }
     }
-    Loader {
+    TextEditor {
         id: lecturesView
-        source: "TextEditor.qml"
         anchors.top: header.bottom
         anchors.bottom: footer.top
         anchors.left: listOfCourses.right

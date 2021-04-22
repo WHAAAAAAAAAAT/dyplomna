@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QString>
-#include <QTextDocument>
+#include <QQuickTextDocument>
 #include <qqml.h>
 
 class LecturesController_c : public QObject
@@ -15,7 +15,7 @@ public:
     explicit LecturesController_c(QObject *parent = nullptr);
 
 public slots:
-    void lectureCreation (const QTextDocument &_lecture);
+    void lectureCreation (QQuickTextDocument *_lecture);
 
 signals:
     void lectureCreationError();

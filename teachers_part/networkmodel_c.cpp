@@ -63,6 +63,38 @@ NetworkModel_c::~NetworkModel_c()
     m_pWebSocketServer->close();
 }
 
+bool NetworkModel_c::sendToAll(const QJsonObject &object)
+{
+    bool result{false};
+    for (auto client : m_clients.keys())
+        if (client)
+        {
+            if (object.isEmpty())
+                qDebug() << "Empty json";
+            else
+            {
+                QJsonDocument doc(object);
+                QByteArray data = doc.toJson();
+                result = client->sendBinaryMessage(data) > 0;
+                if (!result)
+                    break;
+            }
+        }
+    return result;
+}
+
+bool NetworkModel_c::sendToAll(const QString &text)
+{
+    if (!text.isEmpty())
+        qDebug() << "Message to send:" << text;
+
+    bool result{false};
+    for (auto client : m_clients.keys())
+        if (client)
+            result = client->sendTextMessage(text) > 0;
+    return result;
+}
+
 void NetworkModel_c::onNewConnection()
 {
     QWebSocket *pSocket = m_pWebSocketServer->nextPendingConnection();
