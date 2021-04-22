@@ -5,8 +5,8 @@ import QtQuick.Controls 2.15
 Window {
     id: mainWindow
     visible: true
-    width: LoginConstants.width
-    height: LoginConstants.height
+    width: ClientLoginConstants.width
+    height: ClientLoginConstants.height
     title: qsTr("CPPLearn")
 
     StackView {
@@ -17,7 +17,7 @@ Window {
 
         Component {
             id: loginScreenStackComponent
-            LoginScreen {
+            ClientLoginScreen {
                 id: loginScreen
                 enabled: stackView.status === stackView.Active
             }
@@ -25,7 +25,7 @@ Window {
 
         Component {
             id: registrationScreenStackComponent
-            RegistrationScreen {
+            ClientRegistrationScreen {
                 id: registrationScreen
                 enabled: stackView.status === stackView.Active
             }

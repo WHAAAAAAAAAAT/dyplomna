@@ -1,12 +1,12 @@
 import QtQuick 2.15
-import QtQuick.Templates 2.1 as T
+import QtQuick.Templates 2.15 as T
 
 T.Button {
     id: controlRegistration
     width: 300
     height: 20
 
-    font: LoginConstants.font
+    font: ClientLoginConstants.font
     implicitWidth: Math.max(
                        registrationButtonBackground ? registrationButtonBackground.implicitWidth : 0,
                        registrationTextItem.implicitWidth + leftPadding + rightPadding)
@@ -19,13 +19,17 @@ T.Button {
     background: registrationButtonBackground
     contentItem: registrationTextItem
 
+    property int fontSize: 16
+    property color notClickedColor: "#000000"
+    property color clickedColor: "#6218A3"
+
     Text {
         id: registrationTextItem
         text: controlRegistration.text
         opacity: enabled ? 1 : 0.3
-        color: "#000000"
-        font.family: LoginConstants.font.family
-        font.pixelSize: 16
+        color: notClickedColor
+        font.family: ClientLoginConstants.font.family
+        font.pixelSize: fontSize
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.bold: true
@@ -37,7 +41,7 @@ T.Button {
         implicitWidth: 300
         implicitHeight: 20
         opacity: 0
-        color: LoginConstants.backgroundColor
+        color: ClientLoginConstants.backgroundColor
         anchors.fill: parent
     }
 
@@ -54,7 +58,7 @@ T.Button {
             when: controlRegistration.down
             PropertyChanges {
                 target: registrationTextItem
-                color: "#6218A3"
+                color: clickedColor
             }
         }
     ]

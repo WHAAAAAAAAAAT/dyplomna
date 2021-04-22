@@ -1,10 +1,12 @@
 #include "logincontroller_c.h"
 
-#include "userinfomodel_c.h"
+#include "teacherinfomodel_c.h"
 #include "loginverificationmodel_c.h"
 
 LoginController_c::LoginController_c(QObject *parent) : QObject(parent)
-{}
+{
+
+}
 
 void LoginController_c::login(const QString &_username, const QString &_password)
 {
@@ -12,8 +14,8 @@ void LoginController_c::login(const QString &_username, const QString &_password
     if(LoginVerificationModel_c::instance()->loginVerificationSuccessful(_username, _password))
     {
         //якщо всьо ок, то *рядки внизу* (потім мб відкрити звідси наступне вікно)
-        UserInfoModel_c::instance()->setUsername(_username);
-        UserInfoModel_c::instance()->setPassword(_password);
+        TeacherInfoModel_c::instance()->setUsername(_username);
+        TeacherInfoModel_c::instance()->setPassword(_password);
         emit loginSuccess();
     }
     else
@@ -32,10 +34,10 @@ void LoginController_c::registration(const QString &_name, const QString &_surna
                                                                                 _name, _surname))
     {
         //якщо всьо ок
-        UserInfoModel_c::instance()->setUsername(_username);
-        UserInfoModel_c::instance()->setPassword(_password);
-        UserInfoModel_c::instance()->setName(_name);
-        UserInfoModel_c::instance()->setSurname(_surname);
+        TeacherInfoModel_c::instance()->setUsername(_username);
+        TeacherInfoModel_c::instance()->setPassword(_password);
+        TeacherInfoModel_c::instance()->setName(_name);
+        TeacherInfoModel_c::instance()->setSurname(_surname);
     }
     else
     {

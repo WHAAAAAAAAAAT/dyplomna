@@ -1,12 +1,12 @@
 import QtQuick 2.15
-import QtQuick.Templates 2.1 as T
+import QtQuick.Templates 2.15 as T
 
 T.Button {
     id: control
     width: 100
     height: 40
 
-    font: LoginConstants.font
+    font: ClientLoginConstants.font
     implicitWidth: Math.max(
                        buttonBackground ? buttonBackground.implicitWidth : 0,
                        textItem.implicitWidth + leftPadding + rightPadding)
@@ -17,18 +17,17 @@ T.Button {
     rightPadding: 4
 
     background: buttonBackground
-
     contentItem: textItem
 
-    property int fontSize: 16
+    property int loginfontSize: 16
 
     Text {
         id: textItem
         text: control.text
         opacity: enabled ? 1 : 0.3
         color: "#111111"
-        font.family: LoginConstants.font.family
-        font.pixelSize: fontSize
+        font.family: ClientLoginConstants.font.family
+        font.pixelSize: loginfontSize
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.bold: true

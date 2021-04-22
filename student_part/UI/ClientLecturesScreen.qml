@@ -2,8 +2,6 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 
-import Controllers 1.0
-
 ApplicationWindow {
     id: windowLectures
     width: 1280
@@ -12,16 +10,6 @@ ApplicationWindow {
 
     property int numberOfQuestion: 2
     property int numberOfAnswers: 4
-
-    LecturesController {
-        id: lecturesController
-        onLectureCreationSuccess: {
-
-        }
-        onLectureCreationError: {
-
-        }
-    }
 
     Rectangle {
         id: listOfCourses
@@ -40,7 +28,7 @@ ApplicationWindow {
             font.pixelSize: 25
             anchors.topMargin: 10
             anchors.leftMargin: 20
-            font.family: LoginConstants.font.family
+            font.family: ClientLoginConstants.font.family
         }
         ListView {
             id: coursesList
@@ -56,7 +44,7 @@ ApplicationWindow {
             }
             */
         }
-        LoginButton {
+        ClientLoginButton {
             id: createCourseButton
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
@@ -87,7 +75,7 @@ ApplicationWindow {
             anchors.rightMargin: 15
             spacing: 10
             layoutDirection: Qt.RightToLeft
-            RegistrationButton {
+            ClientRegistrationButton {
                 id: settingsButton
                 width: header.width * 0.1
                 fontSize: 20
@@ -100,7 +88,7 @@ ApplicationWindow {
                     }
                 }
             }
-            RegistrationButton {
+            ClientRegistrationButton {
                 id: menuButton
                 width: header.width * 0.1
                 fontSize: 20
@@ -121,29 +109,10 @@ ApplicationWindow {
         anchors.left: listOfCourses.right
         anchors.bottom: parent.bottom
         width: header.width
-        height: 70
+        height: 60
         color: '#FFFFFF'
         visible: true
-
-        LoginButton {
-            id: saveLectureButton
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 30
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: footer.width * 0.2
-            text: qsTr("SAVE THIS LECTURE")
-            opacity: 1
-            Connections {
-                target: saveLectureButton
-                function onClicked() {
-                    console.log(lecturesView.item);
-                    lecturesController.lectureCreation(lecturesView.item.window.document.textDocument())
-                    opacity = opacity - 0.1
-                }
-            }
-        }
-
-        RegistrationButton {
+        ClientRegistrationButton {
             id: createTestButton
             anchors.bottom: footer.bottom
             anchors.bottomMargin: 40
@@ -168,7 +137,7 @@ ApplicationWindow {
         anchors.bottom: footer.top
         anchors.left: listOfCourses.right
         width: header.width
-        opacity: 0
+        opacity: 1
         color: "#FFFFFF"
         Text {
             id: lecturesOffText
@@ -177,19 +146,19 @@ ApplicationWindow {
             font.bold: true
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            font.family: LoginConstants.font.family
+            font.family: ClientLoginConstants.font.family
             text: qsTr("Please, create a course or choose a lecture to show.")
         }
     }
-    Loader {
+    /*Loader {
         id: lecturesView
-        source: "TextEditor.qml"
+        source: "TextEditor.qml";
         anchors.top: header.bottom
         anchors.bottom: footer.top
         anchors.left: listOfCourses.right
         width: header.width
-        visible: true
-    }
+        visible: false
+    }*/
     Rectangle {
         id: testCreator
         anchors.right: parent.right
@@ -207,9 +176,9 @@ ApplicationWindow {
             font.pixelSize: 23
             anchors.topMargin: 13
             anchors.leftMargin: testCreator.width * 0.05
-            font.family: LoginConstants.font.family
+            font.family: ClientLoginConstants.font.family
         }
-        RegistrationButton {
+        ClientRegistrationButton {
             id: closeTestCreatorButton
             anchors.top: testCreator.top
             anchors.topMargin: 17
@@ -254,7 +223,7 @@ ApplicationWindow {
                                 color: "#6F61AE"
                                 font.bold: true
                                 font.pixelSize: 19
-                                font.family: LoginConstants.font.family
+                                font.family: ClientLoginConstants.font.family
                             }
                             TextField {
                                 id: questionNameField
@@ -266,7 +235,7 @@ ApplicationWindow {
                                 font.bold: true
                                 opacity: 0.75
                                 font.pixelSize: 16
-                                font.family: LoginConstants.font.family
+                                font.family: ClientLoginConstants.font.family
                                 horizontalAlignment: Text.AlignLeft
                                 background: Rectangle {
                                     implicitWidth: parent.width
@@ -331,7 +300,7 @@ ApplicationWindow {
                                         color: "#313131"
                                         font.bold: true
                                         font.pixelSize: 17
-                                        font.family: LoginConstants.font.family
+                                        font.family: ClientLoginConstants.font.family
                                     }
                                     TextField {
                                         id: answerField
@@ -343,7 +312,7 @@ ApplicationWindow {
                                         font.bold: true
                                         opacity: 0.75
                                         font.pixelSize: 16
-                                        font.family: LoginConstants.font.family
+                                        font.family: ClientLoginConstants.font.family
                                         horizontalAlignment: Text.AlignLeft
                                         background: Rectangle {
                                             implicitWidth: parent.width
@@ -404,7 +373,7 @@ ApplicationWindow {
                                 color: "#313131"
                                 font.bold: true
                                 font.pixelSize: 17
-                                font.family: LoginConstants.font.family
+                                font.family: ClientLoginConstants.font.family
                                 anchors.left: parent.left
                                 anchors.leftMargin: parent.width * 0.05
                             }
@@ -420,7 +389,7 @@ ApplicationWindow {
                                 font.bold: true
                                 opacity: 0.75
                                 font.pixelSize: 16
-                                font.family: LoginConstants.font.family
+                                font.family: ClientLoginConstants.font.family
                                 horizontalAlignment: Text.AlignLeft
                                 background: Rectangle {
                                     implicitWidth: parent.width
@@ -480,7 +449,7 @@ ApplicationWindow {
                                 color: "#313131"
                                 font.bold: true
                                 font.pixelSize: 17
-                                font.family: LoginConstants.font.family
+                                font.family: ClientLoginConstants.font.family
                                 anchors.left: parent.left
                                 anchors.leftMargin: parent.width * 0.05
                             }
@@ -496,7 +465,7 @@ ApplicationWindow {
                                 font.bold: true
                                 opacity: 0.75
                                 font.pixelSize: 16
-                                font.family: LoginConstants.font.family
+                                font.family: ClientLoginConstants.font.family
                                 horizontalAlignment: Text.AlignLeft
                                 background: Rectangle {
                                     implicitWidth: parent.width

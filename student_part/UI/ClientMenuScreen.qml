@@ -28,7 +28,7 @@ ApplicationWindow {
             anchors.topMargin: parent.height * 0.062
             anchors.right: parent.right
             anchors.rightMargin: parent.width * 0.046
-            font.family: LoginConstants.font.family
+            font.family: ClientLoginConstants.font.family
         }
         Column {
             id: menuButtons
@@ -62,7 +62,7 @@ ApplicationWindow {
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: 27
                     anchors.topMargin: height * 0.45
-                    font.family: LoginConstants.font.family
+                    font.family: ClientLoginConstants.font.family
                 }
                 Rectangle {
                     id: coursesMenuButtonEntered
@@ -127,7 +127,7 @@ ApplicationWindow {
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: 27
                     anchors.topMargin: height * 0.45
-                    font.family: LoginConstants.font.family
+                    font.family: ClientLoginConstants.font.family
                 }
                 Rectangle {
                     id: menuChatButtonEntered
@@ -189,7 +189,7 @@ ApplicationWindow {
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: 27
                     anchors.topMargin: height * 0.45
-                    font.family: LoginConstants.font.family
+                    font.family: ClientLoginConstants.font.family
                 }
                 Rectangle {
                     id: menuSettingsButtonEntered
@@ -226,7 +226,7 @@ ApplicationWindow {
             }
         }
     }
-    LecturesScreen {
+    ClientLecturesScreen {
         id: lecturesWindow
         title: qsTr("CPPLearn/Courses")
 
@@ -236,4 +236,3 @@ ApplicationWindow {
         }
     }
 }
-

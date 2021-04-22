@@ -1,6 +1,5 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Window 2.15
 import Qt.labs.platform 1.0
 import QtQuick.Controls.Material 2.15
 import QtGraphicalEffects 1.15
@@ -8,15 +7,12 @@ import QtGraphicalEffects 1.15
 import Controllers 1.0
 
 Rectangle {
-    id: window
+    id: textEditor
     color: "#FFFFFF"
     width: parent.width
     height: parent.height
     visible: true
-    /*Component.onCompleted: {
-        x = width
-        y = height
-    }*/
+
     Shortcut {
         sequence: StandardKey.Open
         onActivated: openDialog.open()
@@ -53,62 +49,6 @@ Rectangle {
         sequence: StandardKey.Underline
         onActivated: document.underline = !document.underline
     }
-    /*MenuBar {
-        Menu {
-            title: qsTr("&File")
-            MenuItem {
-                text: qsTr("&Open")
-                onTriggered: openDialog.open()
-            }
-            MenuItem {
-                text: qsTr("&Save As...")
-                onTriggered: saveDialog.open()
-            }
-            MenuItem {
-                text: qsTr("&Quit")
-                onTriggered: close()
-            }
-        }
-        Menu {
-            title: qsTr("&Edit")
-            MenuItem {
-                text: qsTr("&Copy")
-                enabled: textArea.selectedText
-                onTriggered: textArea.copy()
-            }
-            MenuItem {
-                text: qsTr("Cu&t")
-                enabled: textArea.selectedText
-                onTriggered: textArea.cut()
-            }
-            MenuItem {
-                text: qsTr("&Paste")
-                enabled: textArea.canPaste
-                onTriggered: textArea.paste()
-            }
-        }
-        Menu {
-            title: qsTr("F&ormat")
-            MenuItem {
-                text: qsTr("&Bold")
-                checkable: true
-                checked: document.bold
-                onTriggered: document.bold = !document.bold
-            }
-            MenuItem {
-                text: qsTr("&Italic")
-                checkable: true
-                checked: document.italic
-                onTriggered: document.italic = !document.italic
-            }
-            MenuItem {
-                text: qsTr("&Underline")
-                checkable: true
-                checked: document.underline
-                onTriggered: document.underline = !document.underline
-            }
-        }
-    }*/
     FileDialog {
         id: openDialog
         fileMode: FileDialog.OpenFile

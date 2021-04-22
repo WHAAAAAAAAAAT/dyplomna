@@ -6,7 +6,7 @@ UserInfoModel_c* UserInfoModel_c::mInstance_ptr = nullptr;
 
 void UserInfoModel_c::setUsername(const QString &_username)
 {
-    qDebug() << _username;
+    qDebug() << "setUsername" << _username;
     if ((mUsername != _username) && !_username.isEmpty())
     {
         mUsername = _username;

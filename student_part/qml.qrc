@@ -1,12 +1,23 @@
 <RCC>
     <qresource prefix="/">
-        <file>UI/loginBackground.gif</file>
-        <file>UI/loginBackground6.gif</file>
         <file>UI/ClientLoginButton.qml</file>
         <file>UI/ClientLoginConstants.qml</file>
         <file>UI/ClientLoginScreen.qml</file>
         <file>UI/main.qml</file>
         <file>UI/ClientRegistrationButton.qml</file>
         <file>UI/ClientRegistrationScreen.qml</file>
+        <file>UI/images/About-Image.png</file>
+        <file>UI/images/chatButtonIcon.png</file>
+        <file>UI/images/coursesButtonIcon.png</file>
+        <file>UI/images/loginBackground.gif</file>
+        <file>UI/images/menuBackgroundImage.gif</file>
+        <file>UI/images/online-learning-2890100-2403437.png</file>
+        <file>UI/images/preview.gif</file>
+        <file>UI/images/regBackground.gif</file>
+        <file>UI/images/settingsButtonIcon.png</file>
+        <file>UI/images/windowIcon.png</file>
+        <file>UI/images/Zi1viwT.gif</file>
+        <file>UI/ClientMenuScreen.qml</file>
+        <file>UI/ClientLecturesScreen.qml</file>
     </qresource>
 </RCC>

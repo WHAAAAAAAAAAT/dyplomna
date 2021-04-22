@@ -1,5 +1,4 @@
-#ifndef LOGINCONTROLLER_C_H
-#define LOGINCONTROLLER_C_H
+#pragma once
 
 #include <QObject>
 #include <QString>
@@ -22,5 +21,3 @@ signals:
     void registrationError();
     void loginSuccess();
 };
-
-#endif // LOGINCONTROLLER_C_H

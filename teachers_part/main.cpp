@@ -11,9 +11,12 @@
 #include <QQmlContext>
 #include <QQmlFileSelector>
 #include <QQuickStyle>
-#include "userinfomodel_c.h"
+#include "teacherinfomodel_c.h"
 #include "logincontroller_c.h"
+#include "lecturescontroller_c.h"
 #include "documenthandler.h"
+
+#include "networkmodel_c.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,14 +25,18 @@ int main(int argc, char *argv[])
     qmlRegisterType<DocumentHandler>("Controllers", 1, 0, "DocumentHandler");
 
     qmlRegisterSingletonType(QUrl("qrc:/UI/LoginConstants.qml"), "LoginPage", 1, 0, "LoginConstants");
-    qmlRegisterSingletonType<UserInfoModel_c>("Models", 1, 0, "UserInfoModel_c", &UserInfoModel_c::qmlInstance);
+    qmlRegisterSingletonType<TeacherInfoModel_c>("Models", 1, 0, "TeacherInfoModel_c", &TeacherInfoModel_c::qmlInstance);
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "LoginController");
+    qmlRegisterType<LecturesController_c>("Controllers", 1, 0, "LecturesController");
 
 #ifdef QT_WIDGETS_LIB
     QApplication app(argc, argv);
 #else
     QGuiApplication app(argc, argv);
 #endif
+
+    auto network = NetworkModel_c::instance();
+
     app.setWindowIcon(QIcon(":/UI/images/windowIcon.png"));
     QFontDatabase fontDatabase;
     if (fontDatabase.addApplicationFont(":/fonts/fontello.ttf") == -1)
