@@ -4,6 +4,8 @@
 #include <userinfomodel_c.h>
 #include <logincontroller_c.h>
 #include "documenthandler.h"
+#include "lecturecontroller_c.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +15,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<UserInfoModel_c>("Models", 1, 0, "UserInfoModel_c", &UserInfoModel_c::qmlInstance);
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "ClientLoginController");
     qmlRegisterType<DocumentHandler>("Controllers", 1, 0, "DocumentHandler");
+    qmlRegisterType<LectureController_c>("Controllers", 1, 0, "LectureController");
 
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;

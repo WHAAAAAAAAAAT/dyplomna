@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 
+import Controllers 1.0
+
 ApplicationWindow {
     id: windowLectures
     width: 1280
@@ -112,24 +114,25 @@ ApplicationWindow {
         height: 60
         color: '#FFFFFF'
         visible: true
-        /*ClientRegistrationButton {
-            id: createTestButton
+        ClientRegistrationButton {
+            id: startTestButton
             anchors.bottom: footer.bottom
             anchors.bottomMargin: 40
             anchors.right: footer.right
             anchors.rightMargin: 15
             width: footer.width * 0.15
             fontSize: 20
-            text: qsTr("Create a test")
+            text: qsTr("Start a test")
             font.bold: true
             opacity: 1                              //поставити 0 і міняти на 1, коли відрито лекцію
             Connections {
-                target: createTestButton
+                target: startTestButton
                 function onClicked() {
-                    createTestOn.start()
+                    lecturesWindow.hide()
+                    testWindow.show()
                 }
             }
-        }*/
+        }
     }
     Rectangle {
         id: lecturesOffView
@@ -150,6 +153,15 @@ ApplicationWindow {
             text: qsTr("Please, choose a lecture to show.")
         }
     }
+
+    LectureController {
+        id: controller
+
+        Component.onCompleted: {
+            setDocument(lecturesView.textDocument)
+        }
+    }
+
     TextEditor {
         id: lecturesView
         anchors.top: header.bottom
@@ -158,6 +170,9 @@ ApplicationWindow {
         width: header.width
         visible: true
     }
+
+
+
 
     //test creator
     /*Rectangle {
@@ -616,4 +631,15 @@ ApplicationWindow {
             }
         }
     }*/
+
+    ClientTestScreen {
+        id: testWindow
+        title: qsTr("CPPLearn/Courses/Test")
+
+        onExitWindowTests: {
+            testWindow.hide()
+            lecturesWindow.show()
+        }
+    }
+
 }

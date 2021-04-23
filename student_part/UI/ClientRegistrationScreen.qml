@@ -24,6 +24,7 @@ Rectangle {
         visible: true
     }
     visible: true
+
     ClientLoginController {
         id: controller
         onRegistrationFail: {

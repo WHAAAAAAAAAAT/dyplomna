@@ -89,6 +89,8 @@ bool NetworkModel_c::sendToAll(const QString &text)
         qDebug() << "Message to send:" << text;
 
     bool result{false};
+
+    qDebug() << m_clients.keys();
     for (auto client : m_clients.keys())
         if (client)
             result = client->sendTextMessage(text) > 0;

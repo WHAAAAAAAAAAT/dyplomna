@@ -7,6 +7,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        lecturecontroller_c.cpp \
         logincontroller_c.cpp \
         loginverificationmodel_c.cpp \
         main.cpp \
@@ -16,6 +17,7 @@ SOURCES += \
         documenthandler.cpp
 
 HEADERS += \
+    lecturecontroller_c.h \
     logincontroller_c.h \
     loginverificationmodel_c.h \
     networkmodel_c.h \

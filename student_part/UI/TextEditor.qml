@@ -281,12 +281,6 @@ Rectangle {
         selectionStart: textArea.selectionStart
         selectionEnd: textArea.selectionEnd
         textColor: colorDialog.color
-        Component.onCompleted: {
-            if (Qt.application.arguments.length === 2)
-                document.load("file:" + Qt.application.arguments[1]);
-            else
-                document.load("qrc:/texteditor.html")
-        }
         onLoaded: {
             textArea.textFormat = format
             textArea.text = text

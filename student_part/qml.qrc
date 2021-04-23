@@ -20,5 +20,7 @@
         <file>UI/ClientMenuScreen.qml</file>
         <file>UI/ClientLecturesScreen.qml</file>
         <file>UI/TextEditor.qml</file>
+        <file>UI/ClientAnswerButton.qml</file>
+        <file>UI/ClientTestScreen.qml</file>
     </qresource>
 </RCC>
