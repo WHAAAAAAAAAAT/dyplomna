@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
 #endif
 
     auto network = NetworkModel_c::instance();
+    Q_UNUSED(network)
 
     app.setWindowIcon(QIcon(":/UI/images/windowIcon.png"));
     QFontDatabase fontDatabase;

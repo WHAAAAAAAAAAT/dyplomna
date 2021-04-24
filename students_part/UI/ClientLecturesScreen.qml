@@ -22,7 +22,7 @@ ApplicationWindow {
         visible: true
         Text {
             id: leftSidebarTitle
-            text: qsTr("MY COURSES:")
+            text: qsTr("МОЇ КУРСИ:")
             color: "#FFFFFF"
             font.bold: true
             anchors.top: parent.top
@@ -53,7 +53,7 @@ ApplicationWindow {
             anchors.bottomMargin: 40
             width: parent.width * 0.75
             opacity: 1
-            text: qsTr("FIND A NEW COURSE")
+            text: qsTr("ЗНАЙТИ НОВИЙ КУРС")
             Connections {
                 target: findCourseButton
                 function onClicked() {
@@ -81,7 +81,7 @@ ApplicationWindow {
                 id: settingsButton
                 width: header.width * 0.1
                 fontSize: 20
-                text: qsTr("Settings")
+                text: qsTr("Профіль")
                 font.bold: true
                 Connections {
                     target: settingsButton
@@ -94,7 +94,7 @@ ApplicationWindow {
                 id: menuButton
                 width: header.width * 0.1
                 fontSize: 20
-                text: qsTr("Menu")
+                text: qsTr("Меню")
                 font.bold: true
                 Connections {
                     target: menuButton
@@ -122,7 +122,7 @@ ApplicationWindow {
             anchors.rightMargin: 15
             width: footer.width * 0.15
             fontSize: 20
-            text: qsTr("Start a test")
+            text: qsTr("Пройти тест")
             font.bold: true
             opacity: 1                              //поставити 0 і міняти на 1, коли відрито лекцію
             Connections {
@@ -150,7 +150,7 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             font.family: ClientLoginConstants.font.family
-            text: qsTr("Please, choose a lecture to show.")
+            text: qsTr("Будь ласка, оберіть лекцію.")
         }
     }
 

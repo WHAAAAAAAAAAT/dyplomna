@@ -20,7 +20,7 @@ T.Button {
     contentItem: textItem
 
     property int answerFontSize: 23
-    property color buttonColor: "#B2A1F1"
+    property color buttonColor: "#A078F1"
 
     Text {
         id: textItem

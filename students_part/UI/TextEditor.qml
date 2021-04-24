@@ -324,7 +324,7 @@ Rectangle {
     Menu {
         id: contextMenu
         MenuItem {
-            text: qsTr("Copy")
+            text: qsTr("Скопіювати")
             enabled: textArea.selectedText
             onTriggered: textArea.copy()
         }

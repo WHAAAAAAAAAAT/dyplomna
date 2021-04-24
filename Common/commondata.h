@@ -1,21 +1,12 @@
 #pragma once
 
 #include <QString>
-#include <QTextDocument>
 #include <QJsonObject>
 
 #include "jsontypes.h"
-
-struct User {
-    QString username;
-    QString password;
-    QString name;
-    QString surname;
-    QString group;
-};
-
+#include "user.h"
 struct Lecture {
-    QTextDocument lectureText;
+    QString lectureText;
 };
 
 namespace Network {

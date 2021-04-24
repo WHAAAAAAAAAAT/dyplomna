@@ -7,58 +7,58 @@ TeacherInfoModel_c* TeacherInfoModel_c::mInstance_ptr = nullptr;
 void TeacherInfoModel_c::setUsername(const QString &_username)
 {
     qDebug() << _username;
-    if ((mUsername != _username) && !_username.isEmpty())
+    if ((mTeacher.username != _username) && !_username.isEmpty())
     {
-        mUsername = _username;
+        mTeacher.username = _username;
         emit usernameChanged();
     }
 }
 
 void TeacherInfoModel_c::setPassword(const QString &_password)
 {
-    if ((mPassword != _password) && !_password.isEmpty())
+    if ((mTeacher.password != _password) && !_password.isEmpty())
     {
-        mPassword = _password;
+        mTeacher.password = _password;
         emit passwordChanged();
     }
 }
 
 void TeacherInfoModel_c::setName(const QString &_name)
 {
-    if ((mName != _name) && !_name.isEmpty())
+    if ((mTeacher.name != _name) && !_name.isEmpty())
     {
-        mName = _name;
+        mTeacher.name = _name;
         emit nameChanged();
     }
 }
 
 void TeacherInfoModel_c::setSurname(const QString &_surname)
 {
-    if ((mSurname != _surname) && !_surname.isEmpty())
+    if ((mTeacher.surname != _surname) && !_surname.isEmpty())
     {
-        mSurname = _surname;
+        mTeacher.surname = _surname;
         emit surnameChanged();
     }
 }
 
 QString TeacherInfoModel_c::username() const
 {
-    return mUsername;
+    return mTeacher.username;
 }
 
 QString TeacherInfoModel_c::password() const
 {
-    return mPassword;
+    return mTeacher.password;
 }
 
 QString TeacherInfoModel_c::name() const
 {
-    return mName;
+    return mTeacher.name;
 }
 
 QString TeacherInfoModel_c::surname() const
 {
-    return mSurname;
+    return mTeacher.surname;
 }
 
 TeacherInfoModel_c::TeacherInfoModel_c(QObject *_parent_ptr)

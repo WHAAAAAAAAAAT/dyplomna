@@ -21,7 +21,7 @@ ApplicationWindow {
         }
         Text {
             id: menuTitle
-            text: qsTr("MENU")
+            text: qsTr("МЕНЮ")
             color: "#707070"
             anchors.top: parent.top
             font.pixelSize: parent.width * 0.059
@@ -55,13 +55,13 @@ ApplicationWindow {
                 }
                 Text {
                     id: menuCoursesButtonText
-                    text: qsTr("Courses")
+                    text: qsTr("Курси")
                     font.bold: true
                     color: "#FFFFFF"
                     anchors.top: menuCoursesButtonImage.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: 27
-                    anchors.topMargin: height * 0.45
+                    anchors.topMargin: height * 0.2
                     font.family: ClientLoginConstants.font.family
                 }
                 Rectangle {
@@ -120,13 +120,13 @@ ApplicationWindow {
                 }
                 Text {
                     id: menuChatButtonText
-                    text: qsTr("Chat")
+                    text: qsTr("Чат")
                     font.bold: true
                     color: "#FFFFFF"
                     anchors.top: menuChatButtonImage.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: 27
-                    anchors.topMargin: height * 0.45
+                    anchors.topMargin: height * 0.2
                     font.family: ClientLoginConstants.font.family
                 }
                 Rectangle {
@@ -145,6 +145,9 @@ ApplicationWindow {
                     }
                     onExited: {
                         chatMouseAreaExited.start()
+                    }
+                    onClicked: {
+
                     }
                 }
                 PropertyAnimation {
@@ -182,13 +185,13 @@ ApplicationWindow {
                 }
                 Text {
                     id: menuSettingsButtonText
-                    text: qsTr("Settings")
+                    text: qsTr("Профіль")
                     font.bold: true
                     color: "#FFFFFF"
                     anchors.top: menuSettingsButtonImage.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: 27
-                    anchors.topMargin: height * 0.45
+                    anchors.topMargin: height * 0.2
                     font.family: ClientLoginConstants.font.family
                 }
                 Rectangle {
@@ -207,6 +210,9 @@ ApplicationWindow {
                     }
                     onExited: {
                         settingsMouseAreaExited.start()
+                    }
+                    onClicked: {
+
                     }
                 }
                 PropertyAnimation {

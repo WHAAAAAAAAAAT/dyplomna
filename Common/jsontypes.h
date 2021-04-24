@@ -2,7 +2,6 @@
 
 #include <QObject>
 #include <QString>
-#include <QTextDocument>
 
 namespace jsonKeys {
     static const QString title = "title";
@@ -16,8 +15,11 @@ namespace jsonKeys {
 }
 
 namespace jsonValues {
-    static const QString registration = "registration";
-    static const QString login = "login";
+    static const QString registration_student = "registration_student";
+    static const QString registration_teacher = "registration_teacher";
+
+    static const QString login_student = "login_student";
+    static const QString login_teacher = "login_teacher";
 
     static const QString lectureCreation = "lectureCreation";
 }

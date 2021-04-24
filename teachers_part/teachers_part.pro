@@ -22,8 +22,7 @@ HEADERS += \
     verificationmodel_c.h
 
 RESOURCES += \
-    qml.qrc \
-    secure.qrc
+    qml.qrc
 
 include($${_PRO_FILE_PWD_}/../Common/common.pri)
 

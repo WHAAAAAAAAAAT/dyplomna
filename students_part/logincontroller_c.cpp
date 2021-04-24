@@ -79,7 +79,7 @@ QJsonObject LoginController_c::createLoginJson(const QString &_username, const Q
 {
     return QJsonObject
     {
-        {jsonKeys::title, jsonValues::login},
+        {jsonKeys::title, jsonValues::login_student},
         {jsonKeys::username, _username},
         {jsonKeys::password, _password}
     };
@@ -90,7 +90,7 @@ QJsonObject LoginController_c::createRegistrationJson(const QString &_name, cons
 {
     return QJsonObject
     {
-        {jsonKeys::title, jsonValues::registration},
+        {jsonKeys::title, jsonValues::registration_student},
         {jsonKeys::username, _username},
         {jsonKeys::password, _password},
         {jsonKeys::name, _name},

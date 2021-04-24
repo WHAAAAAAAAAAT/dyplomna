@@ -5,7 +5,7 @@
 #include <logincontroller_c.h>
 #include "documenthandler.h"
 #include "lecturecontroller_c.h"
-
+#include "networkmodel_c.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,6 +16,9 @@ int main(int argc, char *argv[])
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "ClientLoginController");
     qmlRegisterType<DocumentHandler>("Controllers", 1, 0, "DocumentHandler");
     qmlRegisterType<LectureController_c>("Controllers", 1, 0, "LectureController");
+
+    auto network = NetworkModel_c::instance();
+    Q_UNUSED(network)
 
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;

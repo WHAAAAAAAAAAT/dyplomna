@@ -6,6 +6,8 @@
 #include <QQmlEngine>
 #include <QJSEngine>
 
+#include "user.h"
+
 class TeacherInfoModel_c : public QObject
 {
     Q_OBJECT
@@ -40,10 +42,7 @@ signals:
     void surnameChanged();
 
 private:
-    QString mUsername;
-    QString mPassword;
-    QString mName;
-    QString mSurname;
+    Teacher mTeacher;
     static TeacherInfoModel_c* mInstance_ptr;
 };
 

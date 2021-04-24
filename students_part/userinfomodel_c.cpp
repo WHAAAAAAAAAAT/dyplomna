@@ -7,72 +7,72 @@ UserInfoModel_c* UserInfoModel_c::mInstance_ptr = nullptr;
 void UserInfoModel_c::setUsername(const QString &_username)
 {
     qDebug() << "setUsername" << _username;
-    if ((mUsername != _username) && !_username.isEmpty())
+    if ((mStudent.username != _username) && !_username.isEmpty())
     {
-        mUsername = _username;
+        mStudent.username = _username;
         emit usernameChanged();
     }
 }
 
 void UserInfoModel_c::setPassword(const QString &_password)
 {
-    if ((mPassword != _password) && !_password.isEmpty())
+    if ((mStudent.password != _password) && !_password.isEmpty())
     {
-        mPassword = _password;
+        mStudent.password = _password;
         emit passwordChanged();
     }
 }
 
 void UserInfoModel_c::setName(const QString &_name)
 {
-    if ((mName != _name) && !_name.isEmpty())
+    if ((mStudent.name != _name) && !_name.isEmpty())
     {
-        mName = _name;
+        mStudent.name = _name;
         emit nameChanged();
     }
 }
 
 void UserInfoModel_c::setSurname(const QString &_surname)
 {
-    if ((mSurname != _surname) && !_surname.isEmpty())
+    if ((mStudent.surname != _surname) && !_surname.isEmpty())
     {
-        mSurname = _surname;
+        mStudent.surname = _surname;
         emit surnameChanged();
     }
 }
 
 void UserInfoModel_c::setGroup(const QString &_group)
 {
-    if ((mGroup != _group) && !_group.isEmpty())
+    if ((mStudent.mGroup != _group) && !_group.isEmpty())
     {
-        mGroup = _group;
+        mStudent.mGroup = _group;
         emit groupChanged();
     }
 }
 
 QString UserInfoModel_c::username() const
 {
-    return mUsername;
+    return mStudent.username;
 }
 
 QString UserInfoModel_c::password() const
 {
-    return mPassword;
+    return mStudent.password;
 }
 
 QString UserInfoModel_c::name() const
 {
-    return mName;
+    return mStudent.name;
 }
 
 QString UserInfoModel_c::surname() const
 {
-    return mSurname;
+    return mStudent.surname;
 }
 
 QString UserInfoModel_c::group() const
 {
-    return mGroup;
+    return mStudent.mGroup;
 }
 
 UserInfoModel_c::UserInfoModel_c(QObject *_parent_ptr)

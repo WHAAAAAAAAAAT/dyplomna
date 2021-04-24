@@ -36,10 +36,10 @@ Rectangle {
     }
     Text {
         id: pageTitle
-        text: qsTr("LOG IN")
+        text: qsTr("ВХІД")
         color: "#181818"
         anchors.top: parent.top
-        font.pixelSize: 42
+        font.pixelSize: 45
         anchors.topMargin: 40
         anchors.horizontalCenter: parent.horizontalCenter
         font.family: LoginConstants.font.family
@@ -59,7 +59,7 @@ Rectangle {
         horizontalAlignment: Text.AlignLeft
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 140
-        placeholderText: qsTr("Enter your username")
+        placeholderText: qsTr("Введіть логін")
         background: Rectangle {
             implicitWidth: parent.width
             implicitHeight: 47
@@ -128,7 +128,7 @@ Rectangle {
         anchors.top: usernameField.bottom
         anchors.horizontalCenter: usernameField.horizontalCenter
         anchors.topMargin: 10
-        placeholderText: qsTr("Enter your password")
+        placeholderText: qsTr("Введіть пароль")
         background: Rectangle {
             implicitWidth: usernameField.width
             implicitHeight: 47
@@ -188,14 +188,14 @@ Rectangle {
         id: buttonColumn
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: 60
+        anchors.bottomMargin: 50
         spacing: 25
         LoginButton {
             id: loginButton
             anchors.horizontalCenter: buttonColumn.horizontalCenter
             width: 120
             opacity: 1
-            text: qsTr("LOG IN")
+            text: qsTr("УВІЙТИ")
             Connections {
                 target: loginButton
                 function onClicked() {
@@ -234,7 +234,7 @@ Rectangle {
         RegistrationButton {
             id: registerButton
             width: 300
-            text: qsTr("Don't have an account? Let's create one!")
+            text: qsTr("Не маєте акаунту? Давайте створимо!")
             font.bold: true
             Connections {
                 target: registerButton
@@ -251,7 +251,7 @@ Rectangle {
         Label {
             id: errorNameLabel
             anchors.horizontalCenter: buttonColumn.horizontalCenter
-            text: "Incorrect username or password."
+            text: "Неправильний логін або пароль"
             color: "#E93E3E"
             opacity: 0
         }

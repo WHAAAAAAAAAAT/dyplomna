@@ -328,27 +328,27 @@ Rectangle {
     Menu {
         id: contextMenu
         MenuItem {
-            text: qsTr("Copy")
+            text: qsTr("Скопіювати")
             enabled: textArea.selectedText
             onTriggered: textArea.copy()
         }
         MenuItem {
-            text: qsTr("Cut")
+            text: qsTr("Вирізати")
             enabled: textArea.selectedText
             onTriggered: textArea.cut()
         }
         MenuItem {
-            text: qsTr("Paste")
+            text: qsTr("Вставити")
             enabled: textArea.canPaste
             onTriggered: textArea.paste()
         }
         MenuSeparator {}
         MenuItem {
-            text: qsTr("Font...")
+            text: qsTr("Шрифт...")
             onTriggered: fontDialog.open()
         }
         MenuItem {
-            text: qsTr("Color...")
+            text: qsTr("Колір...")
             onTriggered: colorDialog.open()
         }
     }

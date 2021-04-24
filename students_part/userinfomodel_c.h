@@ -6,6 +6,8 @@
 #include <QQmlEngine>
 #include <QJSEngine>
 
+#include "user.h"
+
 class UserInfoModel_c : public QObject
 {
     Q_OBJECT
@@ -44,11 +46,7 @@ signals:
     void groupChanged();
 
 private:
-    QString mUsername;
-    QString mPassword;
-    QString mName;
-    QString mSurname;
-    QString mGroup;
+    Student mStudent;
     static UserInfoModel_c* mInstance_ptr;
 };
 

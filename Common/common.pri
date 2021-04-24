@@ -1,9 +1,12 @@
+INCLUDEPATH += $$PWD
+
 HEADERS += \
     $$PWD/commondata.h \
     $$PWD/jsontypes.h \
-    $$PWD/networkmessages.h
+    $$PWD/networkmessages.h \
+    $$PWD/user.h
 
-INCLUDEPATH += $$PWD
 
 SOURCES += \
-    $$PWD/commondata.cpp
+    $$PWD/commondata.cpp \
+    $$PWD/user.cpp

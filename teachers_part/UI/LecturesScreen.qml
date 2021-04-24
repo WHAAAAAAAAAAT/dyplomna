@@ -32,7 +32,7 @@ ApplicationWindow {
         visible: true
         Text {
             id: leftSidebarTitle
-            text: qsTr("MY COURSES:")
+            text: qsTr("МОЇ КУРСИ:")
             color: "#FFFFFF"
             font.bold: true
             anchors.top: parent.top
@@ -63,7 +63,7 @@ ApplicationWindow {
             anchors.bottomMargin: 40
             width: parent.width * 0.75
             opacity: 1
-            text: qsTr("CREATE A NEW COURSE")
+            text: qsTr("СТВОРИТИ КУРС")
             Connections {
                 target: createCourseButton
                 function onClicked() {
@@ -91,7 +91,7 @@ ApplicationWindow {
                 id: settingsButton
                 width: header.width * 0.1
                 fontSize: 20
-                text: qsTr("Settings")
+                text: qsTr("Профіль")
                 font.bold: true
                 Connections {
                     target: settingsButton
@@ -104,7 +104,7 @@ ApplicationWindow {
                 id: menuButton
                 width: header.width * 0.1
                 fontSize: 20
-                text: qsTr("Menu")
+                text: qsTr("Меню")
                 font.bold: true
                 Connections {
                     target: menuButton
@@ -131,7 +131,7 @@ ApplicationWindow {
             anchors.bottomMargin: 30
             anchors.horizontalCenter: parent.horizontalCenter
             width: footer.width * 0.2
-            text: qsTr("SAVE THIS LECTURE")
+            text: qsTr("ЗБЕРЕГТИ ЛЕКЦІЮ")
             opacity: 1
             Connections {
                 target: saveLectureButton
@@ -149,7 +149,7 @@ ApplicationWindow {
             anchors.rightMargin: 15
             width: footer.width * 0.15
             fontSize: 20
-            text: qsTr("Create a test")
+            text: qsTr("Створити тест")
             font.bold: true
             opacity: 1                              //поставити 0 і міняти на 1, коли відрито лекцію
             Connections {
@@ -176,7 +176,7 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             font.family: LoginConstants.font.family
-            text: qsTr("Please, create a course or choose a lecture to show.")
+            text: qsTr("Будь ласка, оберіть лекцію або створіть курс.")
         }
     }
     TextEditor {
@@ -196,7 +196,7 @@ ApplicationWindow {
         opacity: 0
         Text {
             id:rightSidebarTitle
-            text: qsTr("TEST CREATOR")
+            text: qsTr("СТВОРЮВАЧ ТЕСТІВ")
             color: "#646464"
             font.bold: true
             anchors.top: testCreator.top
@@ -247,7 +247,7 @@ ApplicationWindow {
                             spacing: 13
                             Text {
                                 id: questionNameTitle
-                                text: qsTr("Question " + (index + 1) + ":")
+                                text: qsTr("Питання " + (index + 1) + ":")
                                 color: "#6F61AE"
                                 font.bold: true
                                 font.pixelSize: 19
@@ -259,7 +259,7 @@ ApplicationWindow {
                                 text: ""
                                 color: "#000000"
                                 placeholderTextColor: "#3C3C3C"
-                                placeholderText: qsTr("Enter a question here")
+                                placeholderText: qsTr("Введіть запитання")
                                 font.bold: true
                                 opacity: 0.75
                                 font.pixelSize: 16
@@ -324,7 +324,7 @@ ApplicationWindow {
                                     spacing: 13
                                     Text {
                                         id: answerTitle
-                                        text: qsTr("Answer " + (index + 1) + ":")
+                                        text: qsTr("Відповідь " + (index + 1) + ":")
                                         color: "#313131"
                                         font.bold: true
                                         font.pixelSize: 17
@@ -336,7 +336,7 @@ ApplicationWindow {
                                         text: ""
                                         color: "#000000"
                                         placeholderTextColor: "#3C3C3C"
-                                        placeholderText: qsTr("Enter an answer here")
+                                        placeholderText: qsTr("Введіть варіант відповіді")
                                         font.bold: true
                                         opacity: 0.75
                                         font.pixelSize: 16
@@ -397,7 +397,7 @@ ApplicationWindow {
                             }
                             Text{
                                 id: correctAnswerTitle
-                                text: qsTr("Correct answer:")
+                                text: qsTr("Правильна відповідь:")
                                 color: "#313131"
                                 font.bold: true
                                 font.pixelSize: 17
@@ -413,7 +413,7 @@ ApplicationWindow {
                                 text: ""
                                 color: "#000000"
                                 placeholderTextColor: "#3C3C3C"
-                                placeholderText: qsTr("Enter a correct answer here")
+                                placeholderText: qsTr("Введіть правильну відповідь (повністю)")
                                 font.bold: true
                                 opacity: 0.75
                                 font.pixelSize: 16
@@ -473,7 +473,7 @@ ApplicationWindow {
 
                             Text{
                                 id: correctAnswerLinkTitle
-                                text: qsTr("Link to the correct answer:")
+                                text: qsTr("Посилання на правильну відповідь:")
                                 color: "#313131"
                                 font.bold: true
                                 font.pixelSize: 17
@@ -489,7 +489,7 @@ ApplicationWindow {
                                 text: ""
                                 color: "#000000"
                                 placeholderTextColor: "#3C3C3C"
-                                placeholderText: qsTr("Enter here a text from the lecture where the correct answer is")
+                                placeholderText: qsTr("Вставте текст з лекції, котрий містить правильну відповідь")
                                 font.bold: true
                                 opacity: 0.75
                                 font.pixelSize: 16

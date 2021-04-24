@@ -33,13 +33,13 @@ Rectangle {
     }
     LoginButton {
         id: registrationButton
-        width: 150
+        width: 210
         height: 50
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.topMargin: 200
-        anchors.rightMargin: 70
-        text: qsTr("SIGN UP")
+        anchors.rightMargin: 35
+        text: qsTr("ЗАРЕЄСТРУВАТИСЬ")
         loginfontSize: 20
         Connections {
             target: registrationButton
@@ -151,7 +151,7 @@ Rectangle {
         horizontalAlignment: Text.AlignLeft
         anchors.topMargin: 70
         anchors.leftMargin: 50
-        placeholderText: qsTr("Enter your name")
+        placeholderText: qsTr("Введіть Ваше ім'я")
         background: Rectangle {
             implicitWidth: parent.width
             implicitHeight: 47
@@ -201,7 +201,7 @@ Rectangle {
             }
         }
         validator: RegExpValidator {
-            regExp: /[А-ЯІA-Z][а-яіa-zА-ЯІA-Z-]{1,49}/
+            regExp: /[А-ЯІA-Z][а-яіa-zА-ЯІA-Z-]{2,49}/
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -220,7 +220,7 @@ Rectangle {
         anchors.top: nameField.bottom
         anchors.topMargin: 20
         anchors.horizontalCenter: nameField.horizontalCenter
-        placeholderText: qsTr("Enter your surname")
+        placeholderText: qsTr("Введіть Ваше прізвище")
         background: Rectangle {
             implicitWidth: parent.width
             implicitHeight: 47
@@ -270,7 +270,7 @@ Rectangle {
             }
         }
         validator: RegExpValidator {
-            regExp: /[А-ЯІA-Z][а-яіa-zА-ЯІA-Z-]{1,49}/
+            regExp: /[А-ЯІA-Z][а-яіa-zА-ЯІA-Z-]{2,49}/
         }
         selectByMouse: true
         selectionColor: "#9E7ECE"
@@ -289,7 +289,7 @@ Rectangle {
         anchors.top: surnameField.bottom
         anchors.topMargin: 20
         anchors.horizontalCenter: nameField.horizontalCenter
-        placeholderText: qsTr("Enter a username (login)")
+        placeholderText: qsTr("Введіть логін")
         background: Rectangle {
             implicitWidth: parent.width
             implicitHeight: 47
@@ -358,7 +358,7 @@ Rectangle {
         anchors.top: usernameField.bottom
         anchors.topMargin: 20
         anchors.horizontalCenter: nameField.horizontalCenter
-        placeholderText: qsTr("Enter a password")
+        placeholderText: qsTr("Введіть пароль")
         background: Rectangle {
             implicitWidth: parent.width
             implicitHeight: 47
@@ -428,7 +428,7 @@ Rectangle {
         anchors.top: passwordField.bottom
         anchors.topMargin: 20
         anchors.horizontalCenter: nameField.horizontalCenter
-        placeholderText: qsTr("Verify your password")
+        placeholderText: qsTr("Повторіть пароль")
         background: Rectangle
         {
             implicitWidth: parent.width
@@ -492,7 +492,7 @@ Rectangle {
         anchors.top: registrationButton.bottom
         anchors.horizontalCenter: registrationButton.horizontalCenter
         anchors.topMargin: 20
-        text: qsTr("Already have an account? Log in!")
+        text: qsTr("Вже маєте акаунт? Авторизуйтесь!")
         font.bold: true
         Connections {
             target: loginButton
@@ -503,32 +503,32 @@ Rectangle {
     }
     Text {
         id: nameErrorText
-        text: qsTr("Content of name field isn't allowed.")
+        text: qsTr("Неправильний вміст імені\nМінімальна довжина - 2 символи")
         opacity: 0
     }
     Text {
         id: surnameErrorText
-        text: qsTr("Content of surname field isn't allowed.")
+        text: qsTr("Неправильний вміст прізвища\nМінімальна довжина - 2 символи")
         opacity: 0
     }
     Text {
         id: usernameErrorText
-        text: qsTr("Content of username field isn't allowed.")
+        text: qsTr("Неправильний вміст логіну\nМінімальна довжина - 5 символів")
         opacity: 0
     }
     Text {
         id: passwordErrorText
-        text: qsTr("Content of password field isn't allowed.")
+        text: qsTr("Неправильний вміст паролю\nМінімальна довжина - 5 символів")
         opacity: 0
     }
     Text {
         id: verifyPasswordErrorText
-        text: qsTr("Passwords don't match.")
+        text: qsTr("Паролі не співпадають")
         opacity: 0
     }
     Text {
         id: verificationErrorText
-        text: qsTr("This username is already taken.")
+        text: qsTr("Даний логін вже зайнято")
         opacity: 0
     }
     Text {
@@ -542,6 +542,7 @@ Rectangle {
         anchors.horizontalCenter: registrationButton.horizontalCenter
         anchors.topMargin: 20
         text: ""
+        horizontalAlignment: Label.AlignHCenter
         color: "#E93E3E"
         opacity: 0
     }

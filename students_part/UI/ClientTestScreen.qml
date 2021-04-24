@@ -14,11 +14,11 @@ ApplicationWindow {
     signal exitWindowTests
 
     property int currentQuestionNumber: 1
-    property string currentQuestion: qsTr("Here should be a question")
+    property string currentQuestion: qsTr("Тут буде питання")
     property string firstAnswer: qsTr("first");
-    property string secondAnswer: qsTr("second");
-    property string thirdAnswer: qsTr("third");
-    property string fourthAnswer: qsTr("4");
+    property string secondAnswer: qsTr("друге");
+    property string thirdAnswer: qsTr("3");
+    property string fourthAnswer: qsTr("насінг фром ебав");
 
     Rectangle {
         id: header
@@ -30,12 +30,12 @@ ApplicationWindow {
 
         ClientRegistrationButton {
             id: goBackButton
-            width: header.width * 0.25
+            width: header.width * 0.3
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: width * 0.05
             fontSize: 20
-            text: qsTr("Quit test and go back to lecture")
+            text: qsTr("Залишити тест і повернутись до лекції")
             font.bold: true
             Connections {
                 target: goBackButton
@@ -55,7 +55,7 @@ ApplicationWindow {
         width: parent.width
         Text {
             id: questionNumber
-            text: qsTr("QUESTION " + currentQuestionNumber)
+            text: qsTr("ПИТАННЯ " + currentQuestionNumber)
             color: "#0E0E0E"
             font.bold: true
             anchors.top: parent.top
@@ -96,21 +96,21 @@ ApplicationWindow {
             ClientAnswerButton {
                 id: secondAnswerButton
                 text: qsTr("➋   " + secondAnswer)
-                buttonColor: "#6EE7CC"
+                buttonColor: "#30D4AF"
                 width: answersButtons.width * 0.4
                 height: answersButtons.height * 0.45
             }
             ClientAnswerButton {
                 id: thirdAnswerButton
                 text: qsTr("➌   " + thirdAnswer)
-                buttonColor: "#F89DBE"
+                buttonColor: "#F66298"
                 width: answersButtons.width * 0.4
                 height: answersButtons.height * 0.45
             }
             ClientAnswerButton {
                 id: fourthAnswerButton
                 text: qsTr("➍   " + fourthAnswer)
-                buttonColor: "#92C4FB"
+                buttonColor: "#5DA2EE"
                 width: answersButtons.width * 0.4
                 height: answersButtons.height * 0.45
             }
@@ -130,7 +130,8 @@ ApplicationWindow {
             ClientLoginButton {
                 id: previousButton
                 width: footer.width * 0.1
-                text: qsTr("Previous")
+                text: qsTr("Назад")
+                loginfontSize: 18
                 opacity: 1
                 visible: true
                 Connections {
@@ -143,7 +144,8 @@ ApplicationWindow {
             ClientLoginButton {
                 id: nextButton
                 width: footer.width * 0.1
-                text: qsTr("Next")
+                text: qsTr("Далі")
+                loginfontSize: 18
                 opacity: 1
                 visible: true
                 Connections {
