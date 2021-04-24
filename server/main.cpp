@@ -4,6 +4,7 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    NetworkModel_c::instance();
+    auto server = NetworkModel_c::instance();
+    Q_UNUSED(server);
     return a.exec();
 }

@@ -1,37 +1,41 @@
 #include "logincontroller_c.h"
 
 #include "teacherinfomodel_c.h"
-#include "loginverificationmodel_c.h"
+
+#include "jsontypes.h"
+
+#include "networkmodel_c.h"
+#include "notificationmodel_c.h"
 
 LoginController_c::LoginController_c(QObject *parent) : QObject(parent)
 {
-
+    connect(NotificationModel_c::instance(), &NotificationModel_c::loginSuccess, this, &LoginController_c::onLoginSuccess);
+    connect(NotificationModel_c::instance(), &NotificationModel_c::loginFail, this, &LoginController_c::onLoginFail);
+    connect(NotificationModel_c::instance(), &NotificationModel_c::registrationSuccess, this, &LoginController_c::onRegistrationSuccess);
+    connect(NotificationModel_c::instance(), &NotificationModel_c::registrationFail, this, &LoginController_c::onRegistrationFail);
 }
 
 void LoginController_c::login(const QString &_username, const QString &_password)
 {
-    //передати рядки моделі верифікації
-    if(LoginVerificationModel_c::instance()->loginVerificationSuccessful(_username, _password))
+    auto json = createLoginJson(_username, _password);
+    if(NetworkModel_c::instance()->sendJson(json))
     {
-        //якщо всьо ок, то *рядки внизу* (потім мб відкрити звідси наступне вікно)
+        qDebug() << "login send";
         TeacherInfoModel_c::instance()->setUsername(_username);
         TeacherInfoModel_c::instance()->setPassword(_password);
-        emit loginSuccess();
     }
     else
     {
-        //якщо верифікація не пройшла, то даєм сигнал
-        emit loginError();
+        emit loginFail();
     }
-
 }
 
 void LoginController_c::registration(const QString &_name, const QString &_surname,
                                      const QString &_username, const QString &_password)
 {
-    //передати рядки моделі верифікації
-    if(LoginVerificationModel_c::instance()->registrationVerificationSuccessful(_username, _password,
-                                                                                _name, _surname))
+//    //передати рядки моделі верифікації
+//    if(LoginVerificationModel_c::instance()->registrationVerificationSuccessful(_username, _password,
+//                                                                                _name, _surname))
     {
         //якщо всьо ок
         TeacherInfoModel_c::instance()->setUsername(_username);
@@ -39,9 +43,53 @@ void LoginController_c::registration(const QString &_name, const QString &_surna
         TeacherInfoModel_c::instance()->setName(_name);
         TeacherInfoModel_c::instance()->setSurname(_surname);
     }
-    else
+//    else
+//    {
+//        //якщо верифікація не пройшла, то ошипка!1
+//        emit registrationFail();
+//    }
+}
+
+void LoginController_c::onLoginSuccess()
+{
+    qDebug() <<"loginSuccess";
+    emit loginSuccess();
+}
+
+void LoginController_c::onLoginFail()
+{
+    qDebug() <<"loginFail";
+    emit loginFail();
+}
+
+void LoginController_c::onRegistrationSuccess()
+{
+    emit registrationSuccess();
+}
+
+void LoginController_c::onRegistrationFail()
+{
+    emit registrationFail();
+}
+
+QJsonObject LoginController_c::createLoginJson(const QString &_username, const QString &_password)
+{
+    return QJsonObject
     {
-        //якщо верифікація не пройшла, то ошипка!1
-        emit registrationError();
-    }
+        {jsonKeys::title, jsonValues::login_teacher},
+        {jsonKeys::username, _username},
+        {jsonKeys::password, _password}
+    };
+}
+
+QJsonObject LoginController_c::createRegistrationJson(const QString &_name, const QString &_surname, const QString &_username, const QString &_password)
+{
+    return QJsonObject
+    {
+        {jsonKeys::title, jsonValues::registration_teacher},
+        {jsonKeys::username, _username},
+        {jsonKeys::password, _password},
+        {jsonKeys::name, _name},
+        {jsonKeys::surname, _surname}
+    };
 }

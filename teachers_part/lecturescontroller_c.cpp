@@ -12,5 +12,5 @@ void LecturesController_c::lectureCreation(QQuickTextDocument *_lecture)
 {
         qDebug() << ( _lecture->textDocument()->isEmpty() ? "Lecture is empty" : "Lecture is not empty");
 
-        NetworkModel_c::instance()->sendToAll(_lecture->textDocument()->toHtml());
+//        NetworkModel_c::instance()->sendToAll(_lecture->textDocument()->toHtml());
 }

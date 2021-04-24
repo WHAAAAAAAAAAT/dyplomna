@@ -1,52 +1,25 @@
 #include "networkmodel_c.h"
 
 #include <QDebug>
-#include <QFile>
-#include <QSslCertificate>
-#include <QSslKey>
 #include <QJsonDocument>
 
-#include "commondata.h"
 #include "jsontypes.h"
+#include "commondata.h"
 #include "networkmessages.h"
 
-#include "verificationmodel_c.h"
-
-QT_USE_NAMESPACE
+#include "notificationmodel_c.h"
 
 NetworkModel_c* NetworkModel_c::mInstance_ptr = nullptr;
 
-//! [constructor]
 NetworkModel_c::NetworkModel_c(QObject *parent) :
-    QObject(parent),
-    m_pWebSocketServer(nullptr)
+    QObject(parent)
 {
-    m_pWebSocketServer = new QWebSocketServer(QStringLiteral("SSL Echo Server"),
-                                              QWebSocketServer::SecureMode,
-                                              this);
-    QSslConfiguration sslConfiguration;
-    QFile certFile(QStringLiteral(":/res/localhost.cert"));
-    QFile keyFile(QStringLiteral(":/res/localhost.key"));
-    certFile.open(QIODevice::ReadOnly);
-    keyFile.open(QIODevice::ReadOnly);
-    QSslCertificate certificate(&certFile, QSsl::Pem);
-    QSslKey sslKey(&keyFile, QSsl::Rsa, QSsl::Pem);
-    certFile.close();
-    keyFile.close();
-    sslConfiguration.setPeerVerifyMode(QSslSocket::VerifyNone);
-    sslConfiguration.setLocalCertificate(certificate);
-    sslConfiguration.setPrivateKey(sslKey);
-    sslConfiguration.setProtocol(QSsl::TlsV1SslV3);
-    m_pWebSocketServer->setSslConfiguration(sslConfiguration);
+    mUrl = (Network::mIp + ":" + QString::number(Network::port));
+    connect(&mWebSocket, &QWebSocket::connected, this, &NetworkModel_c::onConnected);
+    connect(&mWebSocket, QOverload<const QList<QSslError>&>::of(&QWebSocket::sslErrors), this, &NetworkModel_c::onSslErrors);
+    mWebSocket.open(mUrl);
 
-    if (m_pWebSocketServer->listen(QHostAddress::Any, Network::port))
-    {
-        qDebug() << "SSL Echo Server listening on port" << Network::port;
-        connect(m_pWebSocketServer, &QWebSocketServer::newConnection,
-                this, &NetworkModel_c::onNewConnection);
-        connect(m_pWebSocketServer, &QWebSocketServer::sslErrors,
-                this, &NetworkModel_c::onSslErrors);
-    }
+    connect(this, &NetworkModel_c::textReceived, this, &NetworkModel_c::parseReceivedText);
 }
 
 NetworkModel_c *NetworkModel_c::instance()
@@ -58,104 +31,66 @@ NetworkModel_c *NetworkModel_c::instance()
     return mInstance_ptr;
 }
 
-NetworkModel_c::~NetworkModel_c()
+void NetworkModel_c::onConnected()
 {
-    m_pWebSocketServer->close();
+    qDebug() << "WebSocket connected";
+    connect(&mWebSocket, &QWebSocket::textMessageReceived, this, &NetworkModel_c::onTextMessageReceived);
+    connect(&mWebSocket, &QWebSocket::binaryMessageReceived, this, &NetworkModel_c::onJsonObjectsReceived);
 }
 
-bool NetworkModel_c::sendToAll(const QJsonObject &object)
+void NetworkModel_c::onTextMessageReceived(const QString &message)
+{
+    if (!message.isEmpty())
+    {
+        qDebug() << "Message received: " << message;
+        mReceivedTexts.append(message);
+        emit textReceived(message);
+    }
+}
+
+void NetworkModel_c::onJsonObjectsReceived(const QByteArray &data)
+{
+    if (!data.isEmpty())
+    {
+        auto json = convertToJson(data);
+        if (!json.isEmpty())
+        {
+            qDebug() << "Json received: " << json;
+            mReceivedJsonObjects.append(json);
+            emit jsonReceived(json);
+        }
+    }
+}
+
+void NetworkModel_c::onSslErrors(const QList<QSslError> &errors)
+{
+    qDebug() << errors;
+    mWebSocket.ignoreSslErrors();
+}
+
+bool NetworkModel_c::sendJson(const QJsonObject &object)
 {
     bool result{false};
-    for (auto client : m_clients.keys())
-        if (client)
-        {
-            if (object.isEmpty())
-                qDebug() << "Empty json";
-            else
-            {
-                QJsonDocument doc(object);
-                QByteArray data = doc.toJson();
-                result = client->sendBinaryMessage(data) > 0;
-                if (!result)
-                    break;
-            }
-        }
+    if (object.isEmpty())
+    {
+        qDebug() << "Empty json";
+    } else
+    {
+        QJsonDocument doc(object);
+        QByteArray data = doc.toJson();
+        result = mWebSocket.sendBinaryMessage(data) > 0;
+    }
     return result;
 }
 
-bool NetworkModel_c::sendToAll(const QString &text)
+bool NetworkModel_c::sendText(const QString &text)
 {
     if (!text.isEmpty())
+    {
         qDebug() << "Message to send:" << text;
-
-    bool result{false};
-
-    qDebug() << m_clients.keys();
-    for (auto client : m_clients.keys())
-        if (client)
-            result = client->sendTextMessage(text) > 0;
-    return result;
-}
-
-void NetworkModel_c::onNewConnection()
-{
-    QWebSocket *pSocket = m_pWebSocketServer->nextPendingConnection();
-
-    qDebug() << "Client connected:" << pSocket->peerName() << pSocket->origin();
-
-    connect(pSocket, &QWebSocket::textMessageReceived, this, &NetworkModel_c::processTextMessage);
-    connect(pSocket, &QWebSocket::binaryMessageReceived, this, &NetworkModel_c::processBinaryMessage);
-    connect(pSocket, &QWebSocket::disconnected, this, &NetworkModel_c::socketDisconnected);
-
-    m_clients.insert(pSocket, User());
-}
-
-void NetworkModel_c::processTextMessage(QString message)
-{
-    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    if (pClient)
-    {
-        pClient->sendTextMessage(message);
+        return mWebSocket.sendTextMessage(text) > 0;
     }
-}
-
-void NetworkModel_c::processBinaryMessage(QByteArray _message)
-{
-    auto _obj = convertToJson(_message);
-    auto title = _obj.value(jsonKeys::title);
-    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-
-    if (pClient)
-    {
-        if (title == jsonValues::login_student)
-        {
-            User user = Network::jsonToUser(_obj);
-            if (VerificationModel_c::instance()->isUserExist(user))
-            {
-                m_clients.insert(pClient, user);
-                pClient->sendTextMessage(message::loginSuccess);
-            }
-        } else if (title == jsonValues::registration_student)
-        {
-
-        }
-    }
-}
-
-void NetworkModel_c::socketDisconnected()
-{
-    qDebug() << "Client disconnected";
-    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    if (pClient)
-    {
-        m_clients.remove(pClient);
-        pClient->deleteLater();
-    }
-}
-
-void NetworkModel_c::onSslErrors(const QList<QSslError> &)
-{
-    qDebug() << "Ssl errors occurred";
+    return false;
 }
 
 QJsonObject NetworkModel_c::convertToJson(const QByteArray &data)
@@ -166,4 +101,24 @@ QJsonObject NetworkModel_c::convertToJson(const QByteArray &data)
 void NetworkModel_c::parseReceivedJson(const QJsonObject &_obj)
 {
 
+}
+
+void NetworkModel_c::parseReceivedText(const QString &_text)
+{
+    if (_text == message::loginSuccess)
+    {
+        emit NotificationModel_c::instance()->loginSuccess();
+    } else if (_text == message::loginFail)
+    {
+        emit NotificationModel_c::instance()->loginFail();
+    } else if (_text == message::registrationSuccess)
+    {
+        emit NotificationModel_c::instance()->registrationSuccess();
+    } else if (_text == message::registrationFail)
+    {
+        emit NotificationModel_c::instance()->registrationFail();
+    } else if (_text.startsWith(QStringLiteral("<!DOCTYPE")))
+    {
+        emit NotificationModel_c::instance()->lectureRecieved(_text);
+    }
 }

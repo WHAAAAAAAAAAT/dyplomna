@@ -41,7 +41,7 @@ NetworkModel_c::NetworkModel_c(QObject *parent) :
 
     if (m_pWebSocketServer->listen(QHostAddress::Any, Network::port))
     {
-        qDebug() << "SSL Echo Server listening on port" << Network::port;
+        qDebug() << "SSL Echo Server2 listening on port" << Network::port;
         connect(m_pWebSocketServer, &QWebSocketServer::newConnection,
                 this, &NetworkModel_c::onNewConnection);
         connect(m_pWebSocketServer, &QWebSocketServer::sslErrors,
@@ -135,9 +135,14 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
                 m_clients.insert(pClient, user);
                 pClient->sendTextMessage(message::loginSuccess);
             }
-        } else if (title == jsonValues::registration_student)
+        } else if (title == jsonValues::login_teacher)
         {
-
+            User user = Network::jsonToUser(_obj);
+            if (VerificationModel_c::instance()->isUserExist(user))
+            {
+                m_clients.insert(pClient, user);
+                pClient->sendTextMessage(message::loginSuccess);
+            }
         }
     }
 }

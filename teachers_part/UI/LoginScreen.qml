@@ -26,7 +26,7 @@ Rectangle {
     visible: true
     LoginController {
         id: controller
-        onLoginError: {
+        onLoginFail: {
             errorOn.start()
         }
         onLoginSuccess: {

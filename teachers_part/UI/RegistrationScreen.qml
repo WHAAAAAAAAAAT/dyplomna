@@ -26,7 +26,7 @@ Rectangle {
     visible: true
     LoginController {
         id: controller
-        onRegistrationError: {
+        onRegistrationFail: {
             currentErrorText.text = verificationErrorText.text
             errorOn.start()
         }

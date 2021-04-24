@@ -11,11 +11,13 @@ CONFIG -= app_bundle
 SOURCES += \
         main.cpp \
         networkmodel_c.cpp \
-        verificationmodel_c.cpp
+        verificationmodel_c.cpp \
+        loginverificationmodel_c.cpp
 
 HEADERS += \
         networkmodel_c.h \
-        verificationmodel_c.h
+        verificationmodel_c.h \
+        loginverificationmodel_c.h
 
 RESOURCES += \
     secure.qrc
