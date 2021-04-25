@@ -9,6 +9,7 @@
 #include "commondata.h"
 #include "jsontypes.h"
 #include "networkmessages.h"
+#include "loginverificationmodel_c.h"
 
 #include "verificationmodel_c.h"
 
@@ -130,18 +131,46 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
         if (title == jsonValues::login_student)
         {
             User user = Network::jsonToUser(_obj);
-            if (VerificationModel_c::instance()->isUserExist(user))
+            if (LoginVerificationModel_c::instance()->verifyLoginStudent(user))
             {
                 m_clients.insert(pClient, user);
                 pClient->sendTextMessage(message::loginSuccess);
+            } else
+            {
+                pClient->sendTextMessage(message::loginFail);
             }
         } else if (title == jsonValues::login_teacher)
         {
             User user = Network::jsonToUser(_obj);
-            if (VerificationModel_c::instance()->isUserExist(user))
+            if (LoginVerificationModel_c::instance()->verifyLoginTeacher(user))
             {
                 m_clients.insert(pClient, user);
                 pClient->sendTextMessage(message::loginSuccess);
+            } else
+            {
+                pClient->sendTextMessage(message::loginFail);
+            }
+        } else if (title == jsonValues::registration_student)
+        {
+            Student user = Network::jsonToStudent(_obj);
+            if (LoginVerificationModel_c::instance()->verifyRegistrationStudent(user))
+            {
+                m_clients.insert(pClient, user);
+                pClient->sendTextMessage(message::registrationSuccess);
+            } else
+            {
+                pClient->sendTextMessage(message::registrationFail);
+            }
+        } else if (title == jsonValues::registration_teacher)
+        {
+            User user = Network::jsonToUser(_obj);
+            if (LoginVerificationModel_c::instance()->verifyRegistrationTeacher(user))
+            {
+                m_clients.insert(pClient, user);
+                pClient->sendTextMessage(message::registrationSuccess);
+            } else
+            {
+                pClient->sendTextMessage(message::registrationFail);
             }
         }
     }

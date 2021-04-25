@@ -11,6 +11,8 @@
 #include <QJsonObject>
 #include <QStandardPaths>
 
+#include "user.h"
+
 class LoginVerificationModel_c : QObject
 {
 
@@ -19,13 +21,11 @@ public:
     QJsonDocument loadJson(const QString &fileName);
     void saveJson(const QJsonDocument &document, const QString &fileName);
 
-    bool verifyLoginTeacher(const QString &_username, const QString &_password);
-    bool verifyRegistrationTeacher(const QString &_username, const QString &_password,
-                                   const QString &_name, const QString &_surname);
+    bool verifyLoginTeacher(const User &_user);
+    bool verifyRegistrationTeacher(const User &_user);
 
-    bool verifyLoginStudent(const QString &_username, const QString &_password);
-    bool verifyRegistrationStudent(const QString &_username, const QString &_password,
-                                   const QString &_name, const QString &_surname, const QString &_group);
+    bool verifyLoginStudent(const User &_user);
+    bool verifyRegistrationStudent(const Student &_student);
 
 private:
     explicit LoginVerificationModel_c(QObject *_parent_ptr = nullptr);
@@ -34,11 +34,9 @@ private:
     const QString studentJsonFileName{"studentsinfo.json"};
 
     bool loginHelper(const QString &_username, const QString &_password, const QJsonDocument & _doc);
-    QJsonObject createNewUser(const QString &_username, const QString &_password,
-                              const QString &_name, const QString &_surname);
+    QJsonObject createNewUser(const User & _user);
 
-    QJsonObject createNewStudent(const QString &_username, const QString &_password,
-                                   const QString &_name, const QString &_surname, const QString &_group);
+    QJsonObject createNewStudent(const Student&_student);
 };
 
 #endif // LOGINVERIFICATIONMODEL_C_H

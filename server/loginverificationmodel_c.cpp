@@ -38,20 +38,21 @@ bool LoginVerificationModel_c::loginHelper(const QString &_username, const QStri
     return false;
 }
 
-QJsonObject LoginVerificationModel_c::createNewUser(const QString &_username, const QString &_password, const QString &_name, const QString &_surname)
+QJsonObject LoginVerificationModel_c::createNewUser(const User &_user)
 {
     QJsonObject newUser;
-    newUser.insert(jsonKeys::username, QJsonValue::fromVariant(_username));
-    newUser.insert(jsonKeys::name, QJsonValue::fromVariant(_name));
-    newUser.insert(jsonKeys::surname, QJsonValue::fromVariant(_surname));
-    newUser.insert(jsonKeys::password, QJsonValue::fromVariant(_password));
+    newUser.insert(jsonKeys::username, QJsonValue::fromVariant(_user.username));
+    newUser.insert(jsonKeys::name, QJsonValue::fromVariant(_user.name));
+    newUser.insert(jsonKeys::surname, QJsonValue::fromVariant(_user.surname));
+    newUser.insert(jsonKeys::password, QJsonValue::fromVariant(_user.password));
     return newUser;
 }
 
-QJsonObject LoginVerificationModel_c::createNewStudent(const QString &_username, const QString &_password, const QString &_name, const QString &_surname, const QString &_group)
+
+QJsonObject LoginVerificationModel_c::createNewStudent(const Student &_student)
 {
-    auto student = createNewUser(_username, _password, _name, _surname);
-    student.insert(jsonKeys::group, QJsonValue::fromVariant(_group));
+    auto student = createNewUser(_student);
+    student.insert(jsonKeys::group, QJsonValue::fromVariant(_student.group));
     return student;
 }
 
@@ -88,12 +89,12 @@ void LoginVerificationModel_c::saveJson(const QJsonDocument &document, const QSt
     jsonFile.close();
 }
 
-bool LoginVerificationModel_c::verifyLoginTeacher(const QString &_username, const QString &_password)
+bool LoginVerificationModel_c::verifyLoginTeacher(const User &_user)
 {
-    return loginHelper(_username, _password, loadJson(teacherJsonFileName));
+    return loginHelper(_user.username, _user.password, loadJson(teacherJsonFileName));
 }
 
-bool LoginVerificationModel_c::verifyRegistrationTeacher(const QString &_username, const QString &_password, const QString &_name, const QString &_surname)
+bool LoginVerificationModel_c::verifyRegistrationTeacher(const User &_user)
 {
     QJsonDocument usersInfoDoc = loadJson(teacherJsonFileName);
     QJsonObject usersInfoObj;
@@ -105,7 +106,7 @@ bool LoginVerificationModel_c::verifyRegistrationTeacher(const QString &_usernam
         foreach (const QJsonValue &currentUsersInfo, usersInfoArray)
         {
             QJsonObject currentUser = currentUsersInfo.toObject();
-            return (_username == currentUser["username"].toString());
+            return (_user.username == currentUser["username"].toString());
         }
     }
     //якщо об'єкт є і логін не співпав, начіт usersInfoObj і usersInfoArray вже ініціалізовані
@@ -113,7 +114,7 @@ bool LoginVerificationModel_c::verifyRegistrationTeacher(const QString &_usernam
     //якщо об'єкта не було, то і масив, і об'єкт пусті і до них просто додасться нова інфа
     //переписуєм док
 
-    QJsonObject currentUser = createNewUser(_username, _password, _name, _surname);
+    QJsonObject currentUser = createNewUser(_user);
     usersInfoArray.push_back(currentUser);
     if(!usersInfoObj.isEmpty())
     {
@@ -125,12 +126,12 @@ bool LoginVerificationModel_c::verifyRegistrationTeacher(const QString &_usernam
     return true;
 }
 
-bool LoginVerificationModel_c::verifyLoginStudent(const QString &_username, const QString &_password)
+bool LoginVerificationModel_c::verifyLoginStudent(const User &_user)
 {
-    return loginHelper(_username, _password, loadJson(studentJsonFileName));
+    return loginHelper(_user.username, _user.password, loadJson(studentJsonFileName));
 }
 
-bool LoginVerificationModel_c::verifyRegistrationStudent(const QString &_username, const QString &_password, const QString &_name, const QString &_surname, const QString &_group)
+bool LoginVerificationModel_c::verifyRegistrationStudent(const Student &_student)
 {
     QJsonDocument usersInfoDoc = loadJson(studentJsonFileName);
     QJsonObject usersInfoObj;
@@ -142,7 +143,7 @@ bool LoginVerificationModel_c::verifyRegistrationStudent(const QString &_usernam
         foreach (const QJsonValue &currentUsersInfo, usersInfoArray)
         {
             QJsonObject currentUser = currentUsersInfo.toObject();
-            return (_username == currentUser["username"].toString());
+            return (_student.username == currentUser["username"].toString());
         }
     }
     //якщо об'єкт є і логін не співпав, начіт usersInfoObj і usersInfoArray вже ініціалізовані
@@ -150,7 +151,7 @@ bool LoginVerificationModel_c::verifyRegistrationStudent(const QString &_usernam
     //якщо об'єкта не було, то і масив, і об'єкт пусті і до них просто додасться нова інфа
     //переписуєм док
 
-    QJsonObject currentUser = createNewStudent(_username, _password, _name, _surname, _group);
+    QJsonObject currentUser = createNewStudent(_student);
     usersInfoArray.push_back(currentUser);
     if(!usersInfoObj.isEmpty())
     {

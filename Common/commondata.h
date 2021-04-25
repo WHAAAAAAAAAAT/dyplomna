@@ -15,4 +15,5 @@ namespace Network {
 
     User jsonToUser(const QJsonObject &_json);
     Lecture jsonToLecture(const QJsonObject &_json);
+    Student jsonToStudent(const QJsonObject& _json);
 }

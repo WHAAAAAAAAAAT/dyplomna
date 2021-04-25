@@ -15,7 +15,7 @@ public:
 class Student : public User
 {
 public:
-    QString mGroup;
+    QString group;
 };
 
 class Teacher : public User

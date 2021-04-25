@@ -9,7 +9,9 @@ SOURCES += \
         networkmodel_c.cpp \
         documenthandler.cpp \
         notificationmodel_c.cpp \
-        teacherinfomodel_c.cpp
+        teacherinfomodel_c.cpp \
+        testcreator/testlist.cpp \
+        testcreator/testmodel.cpp
 
 HEADERS += \
     lecturescontroller_c.h \
@@ -17,7 +19,9 @@ HEADERS += \
     networkmodel_c.h \
     documenthandler.h \
     notificationmodel_c.h \
-    teacherinfomodel_c.h
+    teacherinfomodel_c.h \
+    testcreator/testlist.h \
+    testcreator/testmodel.h
 
 RESOURCES += \
     qml.qrc

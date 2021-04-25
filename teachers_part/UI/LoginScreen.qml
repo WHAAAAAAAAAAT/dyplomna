@@ -24,12 +24,20 @@ Rectangle {
         visible: true
     }
     visible: true
+
     LoginController {
         id: controller
         onLoginFail: {
             errorOn.start()
         }
         onLoginSuccess: {
+            mainWindow.hide()
+            menuWindow.show()
+        }
+        onRegistrationFail: {
+            errorOn.start()
+        }
+        onRegistrationSuccess: {
             mainWindow.hide()
             menuWindow.show()
         }

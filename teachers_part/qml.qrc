@@ -19,5 +19,6 @@
         <file>UI/images/menuBackgroundImage.gif</file>
         <file>UI/images/loginBackground.gif</file>
         <file>UI/images/regBackground.gif</file>
+        <file>UI/testcreator/TestList.qml</file>
     </qresource>
 </RCC>

@@ -43,9 +43,9 @@ void UserInfoModel_c::setSurname(const QString &_surname)
 
 void UserInfoModel_c::setGroup(const QString &_group)
 {
-    if ((mStudent.mGroup != _group) && !_group.isEmpty())
+    if ((mStudent.group != _group) && !_group.isEmpty())
     {
-        mStudent.mGroup = _group;
+        mStudent.group = _group;
         emit groupChanged();
     }
 }
@@ -72,7 +72,7 @@ QString UserInfoModel_c::surname() const
 
 QString UserInfoModel_c::group() const
 {
-    return mStudent.mGroup;
+    return mStudent.group;
 }
 
 UserInfoModel_c::UserInfoModel_c(QObject *_parent_ptr)
