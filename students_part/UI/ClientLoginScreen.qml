@@ -33,13 +33,6 @@ Rectangle {
             mainWindow.hide()
             menuWindow.show()
         }
-        onRegistrationFail: {
-            errorOn.start()
-        }
-        onRegistrationSuccess: {
-            mainWindow.hide()
-            menuWindow.show()
-        }
     }
     Text {
         id: pageTitle

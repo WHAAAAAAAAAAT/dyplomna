@@ -3,7 +3,6 @@
 #include "jsontypes.h"
 
 #include "userinfomodel_c.h"
-//#include "loginverificationmodel_c.h"
 #include "networkmodel_c.h"
 #include "notificationmodel_c.h"
 

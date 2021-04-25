@@ -24,17 +24,14 @@ bool LoginVerificationModel_c::loginHelper(const QString &_username, const QStri
             }
             else
             {
-                //логін не співпав, шукаєм дальше
                 continue;
             }
         }
     }
     else
     {
-        //нема об'єкта, начіт джсон пустий і ще ніхто не зарєганий
         return false;
     }
-    //якщо логін так і не співпав, начіт такого юзера німа
     return false;
 }
 
@@ -51,8 +48,9 @@ QJsonObject LoginVerificationModel_c::createNewUser(const User &_user)
 
 QJsonObject LoginVerificationModel_c::createNewStudent(const Student &_student)
 {
-    auto student = createNewUser(_student);
+    QJsonObject student = createNewUser(_student);
     student.insert(jsonKeys::group, QJsonValue::fromVariant(_student.group));
+    qDebug() << "newUserInfo :" << student;
     return student;
 }
 
@@ -106,14 +104,12 @@ bool LoginVerificationModel_c::verifyRegistrationTeacher(const User &_user)
         foreach (const QJsonValue &currentUsersInfo, usersInfoArray)
         {
             QJsonObject currentUser = currentUsersInfo.toObject();
-            return (_user.username == currentUser["username"].toString());
+            if (_user.username == currentUser["username"].toString())
+            {
+                return false;
+            }
         }
     }
-    //якщо об'єкт є і логін не співпав, начіт usersInfoObj і usersInfoArray вже ініціалізовані
-    //тоді нам треба додати нового юзера в масив, очистити об'єкт і інсертнути в нього оновлений масив
-    //якщо об'єкта не було, то і масив, і об'єкт пусті і до них просто додасться нова інфа
-    //переписуєм док
-
     QJsonObject currentUser = createNewUser(_user);
     usersInfoArray.push_back(currentUser);
     if(!usersInfoObj.isEmpty())
@@ -143,14 +139,12 @@ bool LoginVerificationModel_c::verifyRegistrationStudent(const Student &_student
         foreach (const QJsonValue &currentUsersInfo, usersInfoArray)
         {
             QJsonObject currentUser = currentUsersInfo.toObject();
-            return (_student.username == currentUser["username"].toString());
+            if (_student.username == currentUser["username"].toString())
+            {
+                return false;
+            }
         }
     }
-    //якщо об'єкт є і логін не співпав, начіт usersInfoObj і usersInfoArray вже ініціалізовані
-    //тоді нам треба додати нового юзера в масив, очистити об'єкт і інсертнути в нього оновлений масив
-    //якщо об'єкта не було, то і масив, і об'єкт пусті і до них просто додасться нова інфа
-    //переписуєм док
-
     QJsonObject currentUser = createNewStudent(_student);
     usersInfoArray.push_back(currentUser);
     if(!usersInfoObj.isEmpty())
@@ -159,7 +153,7 @@ bool LoginVerificationModel_c::verifyRegistrationStudent(const Student &_student
     }
     usersInfoObj.insert("usersinfo", usersInfoArray);
     usersInfoDoc.setObject(usersInfoObj);
-    saveJson(usersInfoDoc, teacherJsonFileName);
+    saveJson(usersInfoDoc, studentJsonFileName);
     return true;
 }
 

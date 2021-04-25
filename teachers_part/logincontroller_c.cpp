@@ -33,32 +33,28 @@ void LoginController_c::login(const QString &_username, const QString &_password
 void LoginController_c::registration(const QString &_name, const QString &_surname,
                                      const QString &_username, const QString &_password)
 {
-//    //передати рядки моделі верифікації
-//    if(LoginVerificationModel_c::instance()->registrationVerificationSuccessful(_username, _password,
-//                                                                                _name, _surname))
+    auto json = createRegistrationJson(_name, _surname, _username, _password);
+    if(NetworkModel_c::instance()->sendJson(json))
     {
-        //якщо всьо ок
+        qDebug() << "registration send";
         TeacherInfoModel_c::instance()->setUsername(_username);
         TeacherInfoModel_c::instance()->setPassword(_password);
         TeacherInfoModel_c::instance()->setName(_name);
         TeacherInfoModel_c::instance()->setSurname(_surname);
     }
-//    else
-//    {
-//        //якщо верифікація не пройшла, то ошипка!1
-//        emit registrationFail();
-//    }
+    else
+    {
+        emit registrationFail();
+    }
 }
 
 void LoginController_c::onLoginSuccess()
 {
-    qDebug() <<"loginSuccess";
     emit loginSuccess();
 }
 
 void LoginController_c::onLoginFail()
 {
-    qDebug() <<"loginFail";
     emit loginFail();
 }
 

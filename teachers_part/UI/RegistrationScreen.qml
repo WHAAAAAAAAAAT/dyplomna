@@ -30,6 +30,9 @@ Rectangle {
             currentErrorText.text = verificationErrorText.text
             errorOn.start()
         }
+        onRegistrationSuccess: {
+            stackView.pop()
+        }
     }
     LoginButton {
         id: registrationButton

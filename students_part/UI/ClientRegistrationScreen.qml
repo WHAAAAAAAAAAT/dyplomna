@@ -31,6 +31,9 @@ Rectangle {
             currentErrorText.text = verificationErrorText.text
             errorOn.start()
         }
+        onRegistrationSuccess: {
+            stackView.pop()
+        }
     }
     ClientLoginButton {
         id: registrationButton
@@ -168,7 +171,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         horizontalAlignment: Text.AlignLeft
-        anchors.topMargin: 50
+        anchors.topMargin: 30
         anchors.leftMargin: 50
         placeholderText: qsTr("Введіть Ваше ім'я")
         background: Rectangle {
@@ -374,7 +377,7 @@ Rectangle {
         placeholderTextColor: "#3C3C3C"
         font.pixelSize: 16
         font.family: ClientLoginConstants.font.family
-        anchors.top: surnameField.bottom
+        anchors.top: groupField.bottom
         anchors.topMargin: 20
         anchors.horizontalCenter: nameField.horizontalCenter
         placeholderText: qsTr("Введіть логін")

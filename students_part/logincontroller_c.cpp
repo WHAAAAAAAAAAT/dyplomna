@@ -46,20 +46,17 @@ void LoginController_c::registration(const QString &_name, const QString &_surna
     }
     else
     {
-        //якщо верифікація не пройшла, то ошипка!1
         emit registrationFail();
     }
 }
 
 void LoginController_c::onLoginSuccess()
 {
-    qDebug() <<"loginSuccess";
     emit loginSuccess();
 }
 
 void LoginController_c::onLoginFail()
 {
-    qDebug() <<"loginFail";
     emit loginFail();
 }
 
