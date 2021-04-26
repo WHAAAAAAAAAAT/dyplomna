@@ -5,6 +5,7 @@ import QtGraphicalEffects 1.15
 import Controllers 1.0
 
 import "qrc:/UI/testcreator"
+import "qrc:/UI/courses"
 
 ApplicationWindow {
     id: windowLectures
@@ -39,24 +40,26 @@ ApplicationWindow {
             font.bold: true
             anchors.top: parent.top
             anchors.left: parent.left
-            font.pixelSize: 25
-            anchors.topMargin: 10
+            font.pixelSize: parent.width * 0.11
+            anchors.topMargin: 15
             anchors.leftMargin: 20
             font.family: LoginConstants.font.family
         }
-        ListView {
+        Rectangle {
             id: coursesList
-            width: parent.width - 40
+            width: parent.width - 20
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: createCourseButton.top
             anchors.bottomMargin: 15
             anchors.top: leftSidebarTitle.bottom
-            anchors.topMargin: 15
-            /* model: CoursesListModel {}
-            delegate: ...
+            anchors.topMargin: 20
+            color: parent.color
+            clip: false
 
+            CourseList {
+                anchors.fill: parent
+                color: parent.color
             }
-            */
         }
         LoginButton {
             id: createCourseButton

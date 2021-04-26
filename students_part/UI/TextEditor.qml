@@ -300,7 +300,6 @@ Rectangle {
         width: parent.width
         TextArea.flickable: TextArea {
             id: textArea
-            //text: "123"
             textFormat: Qt.RichText
             wrapMode: TextArea.Wrap
             focus: true

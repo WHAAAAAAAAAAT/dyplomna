@@ -172,8 +172,6 @@ ApplicationWindow {
     }
 
 
-
-
     //test creator
     /*Rectangle {
         id: testCreator

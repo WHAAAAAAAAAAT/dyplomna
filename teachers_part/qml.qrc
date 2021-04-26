@@ -20,5 +20,6 @@
         <file>UI/images/loginBackground.gif</file>
         <file>UI/images/regBackground.gif</file>
         <file>UI/testcreator/TestList.qml</file>
+        <file>UI/courses/CourseList.qml</file>
     </qresource>
 </RCC>
