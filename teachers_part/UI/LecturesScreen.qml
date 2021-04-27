@@ -18,10 +18,10 @@ ApplicationWindow {
 
     LecturesController {
         id: lecturesController
-        onLectureCreationSuccess: {
+        onLectureSendingSuccess: {
 
         }
-        onLectureCreationError: {
+        onLectureSendingError: {
 
         }
     }
@@ -46,7 +46,7 @@ ApplicationWindow {
             font.family: LoginConstants.font.family
         }
         Rectangle {
-            id: coursesList
+            id: coursesListRect
             width: parent.width - 20
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: createCourseButton.top
@@ -57,6 +57,7 @@ ApplicationWindow {
             clip: false
 
             CourseList {
+                id: coursesList
                 anchors.fill: parent
                 color: parent.color
             }
@@ -141,7 +142,9 @@ ApplicationWindow {
             Connections {
                 target: saveLectureButton
                 function onClicked() {
-                    lecturesController.lectureCreation(lecturesView.textDocument)
+
+                    //додати номер лекції і назву курсу з CoursesList (?)
+//                    lecturesController.lectureCreation(lecturesView.textDocument)
                 }
             }
         }

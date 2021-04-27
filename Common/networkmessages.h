@@ -9,6 +9,6 @@ namespace message {
     static const QString registrationSuccess = "registrationSuccess";
     static const QString registrationFail = "registrationFail";
 
-    static const QString lectionCreationSuccess = "lectionCreationSuccess";
-    static const QString lectionCreationFail = "lectionCreationFail";
+    static const QString lectionSendingSuccess = "lectionSendingSuccess";
+    static const QString lectionSendingFail = "lectionSendingFail";
 }

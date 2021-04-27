@@ -35,7 +35,6 @@ private:
 
     bool loginHelper(const QString &_username, const QString &_password, const QJsonDocument & _doc);
     QJsonObject createNewUser(const User & _user);
-
     QJsonObject createNewStudent(const Student&_student);
 };
 

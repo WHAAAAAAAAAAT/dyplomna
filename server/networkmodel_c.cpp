@@ -172,6 +172,11 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
             {
                 pClient->sendTextMessage(message::registrationFail);
             }
+        } else if (title == jsonValues::lecture)
+        {
+            Lecture lecture = Network::jsonToLecture(_obj);
+//            m_lectures.insert(pClient, lecture);
+//            pClient->sendTextMessage(message::lectionSendingSuccess);
         }
     }
 }

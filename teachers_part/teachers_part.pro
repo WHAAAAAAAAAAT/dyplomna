@@ -3,6 +3,7 @@ QT += quick qml quick quickcontrols2 widgets network websockets
 CONFIG += c++17
 
 SOURCES += \
+        jsonconverter.cpp \
         lecturescontroller_c.cpp \
         logincontroller_c.cpp \
         main.cpp \
@@ -14,6 +15,7 @@ SOURCES += \
         testcreator/testmodel.cpp
 
 HEADERS += \
+    jsonconverter.h \
     lecturescontroller_c.h \
     logincontroller_c.h \
     networkmodel_c.h \

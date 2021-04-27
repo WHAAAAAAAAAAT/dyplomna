@@ -5,9 +5,7 @@
 
 #include "jsontypes.h"
 #include "user.h"
-struct Lecture {
-    QString lectureText;
-};
+#include "lecture.h"
 
 namespace Network {
     static const quint16 port = 1234;

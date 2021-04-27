@@ -15,11 +15,11 @@ public:
     explicit LecturesController_c(QObject *parent = nullptr);
 
 public slots:
-    void lectureCreation (QQuickTextDocument *_lecture);
+    void lectureSending (QQuickTextDocument *_lecture, const int &_lectureNumber, const QString &_courseName);
 
 signals:
-    void lectureCreationError();
-    void lectureCreationSuccess();
+    void lectureSendingError();
+    void lectureSendingSuccess();
 };
 
 #endif // LECTURESCONTROLLER_C_H

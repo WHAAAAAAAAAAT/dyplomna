@@ -11,7 +11,9 @@ namespace jsonKeys {
     static const QString surname = "surname";
     static const QString group = "group";
 
-    static const QString lectureName = "lectureName";
+    static const QString text = "text";
+    static const QString number = "number";
+    static const QString courseName = "courseName";
 }
 
 namespace jsonValues {
@@ -21,5 +23,5 @@ namespace jsonValues {
     static const QString login_student = "login_student";
     static const QString login_teacher = "login_teacher";
 
-    static const QString lectureCreation = "lectureCreation";
+    static const QString lecture = "lecture";
 }
