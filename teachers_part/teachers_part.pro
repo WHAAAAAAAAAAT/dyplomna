@@ -3,6 +3,7 @@ QT += quick qml quick quickcontrols2 widgets network websockets
 CONFIG += c++17
 
 SOURCES += \
+        courselistmodel_c.cpp \
         jsonconverter.cpp \
         lecturescontroller_c.cpp \
         logincontroller_c.cpp \
@@ -15,6 +16,7 @@ SOURCES += \
         testcreator/testmodel.cpp
 
 HEADERS += \
+    courselistmodel_c.h \
     jsonconverter.h \
     lecturescontroller_c.h \
     logincontroller_c.h \
@@ -25,8 +27,8 @@ HEADERS += \
     testcreator/testlist.h \
     testcreator/testmodel.h
 
-RESOURCES += \
-    qml.qrc
+RESOURCES += qml.qrc \
+    ../teachers_part/UI/chat/shared/shared.qrc
 
 include($${_PRO_FILE_PWD_}/../Common/common.pri)
 

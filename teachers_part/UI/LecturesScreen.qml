@@ -54,12 +54,12 @@ ApplicationWindow {
             anchors.top: leftSidebarTitle.bottom
             anchors.topMargin: 20
             color: parent.color
-            clip: false
 
             CourseList {
                 id: coursesList
                 anchors.fill: parent
                 color: parent.color
+                visible: true
             }
         }
         LoginButton {

@@ -4,6 +4,8 @@ import QtGraphicalEffects 1.15
 
 import Controllers 1.0
 
+import "qrc:/UI/courses"
+
 ApplicationWindow {
     id: windowLectures
     width: 1280
@@ -32,20 +34,25 @@ ApplicationWindow {
             anchors.leftMargin: 20
             font.family: ClientLoginConstants.font.family
         }
-        ListView {
-            id: coursesList
-            width: parent.width - 40
+
+        Rectangle {
+            id: coursesListRect
+            width: parent.width - 20
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: findCourseButton.top
             anchors.bottomMargin: 15
             anchors.top: leftSidebarTitle.bottom
-            anchors.topMargin: 15
-            /* model: CoursesListModel {}
-            delegate: ...
+            anchors.topMargin: 20
+            color: parent.color
 
+            CourseList {
+                id: coursesList
+                anchors.fill: parent
+                color: parent.color
+                visible: true
             }
-            */
         }
+
         ClientLoginButton {
             id: findCourseButton
             anchors.bottom: parent.bottom

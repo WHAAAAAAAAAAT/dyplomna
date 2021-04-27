@@ -49,7 +49,7 @@ Rectangle {
                     font.pixelSize: parent.width * 0.11
                     font.bold: true
                     color: "#FFFFFF"
-                    font.family: LoginConstants.font.family
+                    font.family: ClientLoginConstants.font.family
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -106,7 +106,7 @@ Rectangle {
                     anchors.left: parent.left
                     font.pixelSize: parent.width * 0.1
                     font.bold: true
-                    font.family: LoginConstants.font.family
+                    font.family: ClientLoginConstants.font.family
                 }
                 MouseArea {
                     anchors.fill: parent

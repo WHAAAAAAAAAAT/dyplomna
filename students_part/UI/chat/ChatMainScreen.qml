@@ -2,10 +2,10 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 ApplicationWindow {
-    id: window
+    id: windowChat
     width: 540
-    height: 960
-    visible: true
+    height: 680
+    signal exitWindowChat
 
     StackView {
         id: stackView

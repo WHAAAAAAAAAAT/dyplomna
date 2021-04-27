@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 
+import "qrc:/UI/chat"
+
 ApplicationWindow {
     id: windowMenu
     width: 1280
@@ -146,6 +148,9 @@ ApplicationWindow {
                     onExited: {
                         chatMouseAreaExited.start()
                     }
+                    onClicked: {
+                        chatWindow.show();
+                    }
                 }
                 PropertyAnimation {
                     id: chatMouseAreaEntered
@@ -233,6 +238,15 @@ ApplicationWindow {
         onExitWindowLectures: {
             lecturesWindow.hide()
             mainWindow.show()
+        }
+    }
+
+    ChatMainScreen {
+        id: chatWindow
+        title: qsTr("CPPLearn/Chat")
+
+        onExitWindowChat: {
+            chatWindow.hide()
         }
     }
 }
