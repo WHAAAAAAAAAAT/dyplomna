@@ -9,7 +9,7 @@ class JsonConverter
 {
 public:
     JsonConverter();
-    static QJsonObject fromLectureToJson(const QString &_lectureText, const int &_lectureNumber, const QString &_courseName);
+    static QJsonObject fromLectureToJson(const QString &_lectureText, const QString &_lectureName, const QString &_courseName);
 };
 
 #endif // JSONCONVERTER_H

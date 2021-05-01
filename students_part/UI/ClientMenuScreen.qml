@@ -246,9 +246,5 @@ ApplicationWindow {
     ChatMainScreen {
         id: chatWindow
         title: qsTr("CPPLearn/Chat")
-
-        onExitWindowChat: {
-            chatWindow.hide()
-        }
     }
 }

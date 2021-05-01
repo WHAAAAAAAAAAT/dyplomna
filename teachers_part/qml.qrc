@@ -40,5 +40,6 @@
         <file>UI/chat/ContactPage.qml</file>
         <file>UI/chat/ConversationPage.qml</file>
         <file>UI/chat/qtquickcontrols2.conf</file>
+        <file>UI/images/windowIcon.ico</file>
     </qresource>
 </RCC>

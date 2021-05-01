@@ -9,6 +9,8 @@
 
 #include "notificationmodel_c.h"
 
+#include "courselistmodel_c.h"
+
 NetworkModel_c* NetworkModel_c::mInstance_ptr = nullptr;
 
 NetworkModel_c::NetworkModel_c(QObject *parent) :
@@ -20,6 +22,7 @@ NetworkModel_c::NetworkModel_c(QObject *parent) :
     mWebSocket.open(mUrl);
 
     connect(this, &NetworkModel_c::textReceived, this, &NetworkModel_c::parseReceivedText);
+    connect(this, &NetworkModel_c::jsonReceived, this, &NetworkModel_c::parseReceivedJson);
 }
 
 NetworkModel_c *NetworkModel_c::instance()
@@ -100,7 +103,12 @@ QJsonObject NetworkModel_c::convertToJson(const QByteArray &data)
 
 void NetworkModel_c::parseReceivedJson(const QJsonObject &_obj)
 {
-
+    auto title = _obj.value(jsonKeys::title);
+    if (title == jsonValues::lecture)
+    {
+        Lecture lec = Network::jsonToLecture(_obj);
+        CourseListModel_c::instance()->addLecture(lec.name);
+    }
 }
 
 void NetworkModel_c::parseReceivedText(const QString &_text)

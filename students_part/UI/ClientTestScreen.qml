@@ -1,24 +1,22 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
+import QtQuick.Window 2.15
 
-ApplicationWindow {
+Window {
     id: windowTests
     width: 1280
     height: 720
-    background: Rectangle {
-        anchors.fill: parent
-        color: "#FCFCFC"
-    }
+    color: "#FCFCFC"
 
     signal exitWindowTests
 
-    property int currentQuestionNumber: 1
-    property string currentQuestion: qsTr("Тут буде питання")
-    property string firstAnswer: qsTr("first");
-    property string secondAnswer: qsTr("друге");
-    property string thirdAnswer: qsTr("3");
-    property string fourthAnswer: qsTr("насінг фром ебав");
+    property int currentQuestionNumber: 2
+    property string currentQuestion: qsTr("С++ - це...")
+    property string firstAnswer: qsTr("низькорівнева мова програмування");
+    property string secondAnswer: qsTr("високорівнева мова програмування");
+    property string thirdAnswer: qsTr("інтерпретована мова програмування");
+    property string fourthAnswer: qsTr("немає правильної відповіді");
 
     Rectangle {
         id: header

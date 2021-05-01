@@ -14,5 +14,5 @@ Student Network::jsonToStudent(const QJsonObject &_json)
 
 Lecture Network::jsonToLecture(const QJsonObject &_json)
 {
-    return {_json.value(jsonKeys::text).toString(), _json.value(jsonKeys::number).toInt(), _json.value(jsonKeys::courseName).toString()};
+    return {_json.value(jsonKeys::text).toString(), _json.value(jsonKeys::lectureName).toString(), _json.value(jsonKeys::courseName).toString()};
 }

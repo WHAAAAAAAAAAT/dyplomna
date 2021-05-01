@@ -18,8 +18,8 @@ public:
     static NetworkModel_c* instance();
     ~NetworkModel_c();
 
-    bool sendToAll(const QJsonObject &object);
-    bool sendToAll(const QString &text);
+    bool sendToAllStudents(const QJsonObject &object);
+    bool sendToAllStudents(const QString &text);
 
 private slots:
     void onNewConnection();
@@ -34,7 +34,11 @@ private:
     void parseReceivedText(const QString &_text);
 
 private:
-    QMap<QWebSocket *, User> m_clients;
+    QMap<QWebSocket *, User> m_teachers;
+    QMap<QWebSocket *, Student> m_students;
+
+    QVector<QWebSocket *> m_clients;
+
     QWebSocketServer *m_pWebSocketServer;
     static NetworkModel_c* mInstance_ptr;
 };

@@ -9,12 +9,14 @@ CONFIG -= app_bundle
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        lecturefilemodel_c.cpp \
         main.cpp \
         networkmodel_c.cpp \
         verificationmodel_c.cpp \
         loginverificationmodel_c.cpp
 
 HEADERS += \
+        lecturefilemodel_c.h \
         networkmodel_c.h \
         verificationmodel_c.h \
         loginverificationmodel_c.h

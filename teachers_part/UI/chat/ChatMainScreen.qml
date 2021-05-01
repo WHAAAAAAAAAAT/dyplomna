@@ -1,7 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Window 2.15
 
-ApplicationWindow {
+Window {
     id: windowChat
     width: 540
     height: 680

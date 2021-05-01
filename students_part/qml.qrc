@@ -41,5 +41,7 @@
         <file>UI/chat/shared/Hans_Gude@3x.png</file>
         <file>UI/chat/shared/Hans_Gude@4x.png</file>
         <file>UI/courses/CourseList.qml</file>
+        <file>UI/images/windowIcon.ico</file>
+        <file>UI/TestResultScreen.qml</file>
     </qresource>
 </RCC>

@@ -13,10 +13,6 @@ Rectangle {
         id: courseListItem
         anchors.fill: parent
 
-        CourseModel {
-            id: courseListModel
-        }
-
         Component {
             id: sectionHeader
             Rectangle {
@@ -39,17 +35,18 @@ Rectangle {
                     }
                     else
                         sectionHeaderText.color = "#FFFFFF";
-                        courseListModel.updateVisibleForCourse(section);
+                    CourseModel.updateVisibleForCourse(section);
                 }
                 Text {
                     id: sectionHeaderText
                     text: qsTr("⬤  " + section)
                     anchors.left: parent.left
                     anchors.leftMargin: courseListRect.width * 0.05
-                    font.pixelSize: parent.width * 0.11
+                    font.pixelSize: 25
                     font.bold: true
                     color: "#FFFFFF"
                     font.family: LoginConstants.font.family
+                    wrapMode: Text.WordWrap
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -66,7 +63,7 @@ Rectangle {
             id: listing
             width: courseListRect.width * 0.9
             height: courseListRect.height
-            model: courseListModel
+            model: CourseModel
             property string expandedSection: ""
             delegate: listdelegate
             section.property: "type"
@@ -80,7 +77,7 @@ Rectangle {
             Rectangle {
                 property bool listCurrentItem: ListView.isCurrentItem
                 id: menuItem
-                width: courseListRect.width * 0.85
+                width: courseListRect.width * 0.8
                 height: 0
                 color: "transparent"
                 anchors.left: parent.left
@@ -99,15 +96,36 @@ Rectangle {
                         duration: 500
                     }
                 }
-                Text {
-                    id: text
-                    text: qsTr("◯  " + name)
-                    color: listCurrentItem ? "#4D0973" : "#FFFFFF";
+                Rectangle {
+                    id: textContainer
+                    color: parent.color
                     anchors.left: parent.left
-                    font.pixelSize: parent.width * 0.1
-                    font.bold: true
-                    font.family: LoginConstants.font.family
+                    property string newText
+                    height: text.paintedHeight
+                    newText: qsTr("◯  " + name)
+                    Text {
+                        id: text
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        height: parent.height
+                        width: parent.width
+                        text: parent.newText
+                        color: listCurrentItem ? "#4D0973" : "#FFFFFF";
+                        font.pixelSize: 20
+                        font.bold: true
+                        font.family: LoginConstants.font.family
+                        wrapMode: Text.WordWrap
+                    }
+                    Component.onCompleted: {
+                        if (text.paintedWidth > (courseListRect.width * 0.8)) {
+                            width = courseListRect.width * 0.8
+                        } else {
+                            width = text.paintedWidth
+                        }
+                    }
+
                 }
+
                 MouseArea {
                     anchors.fill: parent
                     hoverEnabled: true

@@ -1,14 +1,16 @@
 #include "courselistmodel_c.h"
 
+CourseListModel_c* CourseListModel_c::mInstance_ptr = nullptr;
+
 CourseListModel_c::CourseListModel_c(QObject *parent) : QAbstractListModel(parent)
 {
-    mItems.append({QStringLiteral("C++"), QStringLiteral("lec1"), false});
-    mItems.append({QStringLiteral("C++"), QStringLiteral("lec2"), false});
-    mItems.append({QStringLiteral("C++"), QStringLiteral("lec3"), false});
-    mItems.append({QStringLiteral("C++"), QStringLiteral("test1"), false});
-    mItems.append({QStringLiteral("java"), QStringLiteral("lec4"), false});
-    mItems.append({QStringLiteral("java"), QStringLiteral("lec5"), false});
-    mItems.append({QStringLiteral("java"), QStringLiteral("lec6"), false});
+    mItems.append({QStringLiteral("C++"), QStringLiteral("Введення в С++"), false});
+    mItems.append({QStringLiteral("C++"), QStringLiteral("Встановлення IDE"), false});
+    //    mItems.append({QStringLiteral("C++"), QStringLiteral("lec3"), false});
+    //    mItems.append({QStringLiteral("C++"), QStringLiteral("test1"), false});
+    //    mItems.append({QStringLiteral("Java"), QStringLiteral("lec4"), false});
+    //    mItems.append({QStringLiteral("Java"), QStringLiteral("lec5"), false});
+    //    mItems.append({QStringLiteral("Java"), QStringLiteral("lec6"), false});
 }
 
 int CourseListModel_c::rowCount(const QModelIndex &parent) const
@@ -70,11 +72,34 @@ QHash<int, QByteArray> CourseListModel_c::roleNames() const
     return names;
 }
 
+QObject *CourseListModel_c::qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(engine);
+    Q_UNUSED(scriptEngine);
+    return CourseListModel_c::instance();
+}
+
+CourseListModel_c *CourseListModel_c::instance()
+{
+    if (!mInstance_ptr)
+    {
+        mInstance_ptr = new CourseListModel_c;
+    }
+    return mInstance_ptr;
+}
+
 void CourseListModel_c::updateVisibleForCourse(const QString &_course)
 {
     for (auto &i : mItems)
     {
         i.isVisible = i.course == _course;
     }
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
+}
+
+void CourseListModel_c::addLecture(const QString _lectureName)
+{
+    qDebug () << _lectureName;
+    mItems.append({QStringLiteral("C++"), _lectureName, true});
     emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }

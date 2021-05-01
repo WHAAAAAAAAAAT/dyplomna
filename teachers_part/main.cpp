@@ -17,39 +17,40 @@
 #include "documenthandler.h"
 #include "testcreator/testmodel.h"
 #include "testcreator/testlist.h"
+#include "courselistmodel_c.h"
 
 #include "networkmodel_c.h"
 #include "courselistmodel_c.h"
 
-//#include <QSqlDatabase>
-//#include <QSqlError>
-//#include <QStandardPaths>
-//#include <QDir>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QStandardPaths>
+#include <QDir>
 #include "chat/sqlcontactmodel.h"
 #include "chat/sqlconversationmodel.h"
 
-//static void connectToChatDatabase()
-//{
-//    QSqlDatabase database = QSqlDatabase::database();
-//    if (!database.isValid()) {
-//        database = QSqlDatabase::addDatabase("QSQLITE");
-//        if (!database.isValid())
-//            qFatal("Cannot add database: %s", qPrintable(database.lastError().text()));
-//    }
+static void connectToChatDatabase()
+{
+    QSqlDatabase database = QSqlDatabase::database();
+    if (!database.isValid()) {
+        database = QSqlDatabase::addDatabase("QSQLITE");
+        if (!database.isValid())
+            qFatal("Cannot add database: %s", qPrintable(database.lastError().text()));
+    }
 
-//    const QDir writeDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-//    if (!writeDir.mkpath("."))
-//        qFatal("Failed to create writable directory at %s", qPrintable(writeDir.absolutePath()));
+    const QDir writeDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    if (!writeDir.mkpath("."))
+        qFatal("Failed to create writable directory at %s", qPrintable(writeDir.absolutePath()));
 
-//    // Ensure that we have a writable location on all devices.
-//    const QString fileName = writeDir.absolutePath() + "/chat-database.sqlite3";
-//    // When using the SQLite driver, open() will create the SQLite database if it doesn't exist.
-//    database.setDatabaseName(fileName);
-//    if (!database.open()) {
-//        qFatal("Cannot open database: %s", qPrintable(database.lastError().text()));
-//        QFile::remove(fileName);
-//    }
-//}
+    // Ensure that we have a writable location on all devices.
+    const QString fileName = writeDir.absolutePath() + "/chat-database.sqlite3";
+    // When using the SQLite driver, open() will create the SQLite database if it doesn't exist.
+    database.setDatabaseName(fileName);
+    if (!database.open()) {
+        qFatal("Cannot open database: %s", qPrintable(database.lastError().text()));
+        QFile::remove(fileName);
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -62,7 +63,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "LoginController");
     qmlRegisterType<LecturesController_c>("Controllers", 1, 0, "LecturesController");
     qmlRegisterType<TestModel>("Test", 1, 0, "TestModel");
-    qmlRegisterType<CourseListModel_c>("Models", 1, 0, "CourseModel");
+    qmlRegisterSingletonType<CourseListModel_c>("Models", 1, 0, "CourseModel", &CourseListModel_c::qmlInstance);
     qmlRegisterUncreatableType<TestList>("Test", 1, 0, "TestList",
                                          QStringLiteral("TestList should not be created in QML"));
 
@@ -80,12 +81,12 @@ int main(int argc, char *argv[])
     auto network = NetworkModel_c::instance();
     Q_UNUSED(network)
 
-    app.setWindowIcon(QIcon(":/UI/images/windowIcon.png"));
+    app.setWindowIcon(QIcon(":/UI/images/windowIcon.ico"));
     QFontDatabase fontDatabase;
     if (fontDatabase.addApplicationFont(":/fonts/fontello.ttf") == -1)
         qWarning() << "Failed to load fontello.ttf";
 
-//    connectToChatDatabase();
+    connectToChatDatabase();
 
     TestList testList;
 

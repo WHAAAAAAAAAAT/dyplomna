@@ -163,7 +163,6 @@ ApplicationWindow {
 
     LectureController {
         id: controller
-
         Component.onCompleted: {
             setDocument(lecturesView.textDocument)
         }

@@ -15,7 +15,7 @@ public:
     explicit LecturesController_c(QObject *parent = nullptr);
 
 public slots:
-    void lectureSending (QQuickTextDocument *_lecture, const int &_lectureNumber, const QString &_courseName);
+    void sendLecture(QQuickTextDocument *_lecture, const QString &_lectureName, const QString &_courseName);
 
 signals:
     void lectureSendingError();

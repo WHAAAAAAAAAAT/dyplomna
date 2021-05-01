@@ -12,6 +12,7 @@
 #include "loginverificationmodel_c.h"
 
 #include "verificationmodel_c.h"
+#include "lecturefilemodel_c.h"
 
 QT_USE_NAMESPACE
 
@@ -37,7 +38,7 @@ NetworkModel_c::NetworkModel_c(QObject *parent) :
     sslConfiguration.setPeerVerifyMode(QSslSocket::VerifyNone);
     sslConfiguration.setLocalCertificate(certificate);
     sslConfiguration.setPrivateKey(sslKey);
-    sslConfiguration.setProtocol(QSsl::TlsV1SslV3);
+    sslConfiguration.setProtocol(QSsl::TlsV1_3);
     m_pWebSocketServer->setSslConfiguration(sslConfiguration);
 
     if (m_pWebSocketServer->listen(QHostAddress::Any, Network::port))
@@ -64,10 +65,10 @@ NetworkModel_c::~NetworkModel_c()
     m_pWebSocketServer->close();
 }
 
-bool NetworkModel_c::sendToAll(const QJsonObject &object)
+bool NetworkModel_c::sendToAllStudents(const QJsonObject &object)
 {
     bool result{false};
-    for (auto client : m_clients.keys())
+    for (auto client : m_students.keys())
         if (client)
         {
             if (object.isEmpty())
@@ -84,15 +85,15 @@ bool NetworkModel_c::sendToAll(const QJsonObject &object)
     return result;
 }
 
-bool NetworkModel_c::sendToAll(const QString &text)
+bool NetworkModel_c::sendToAllStudents(const QString &text)
 {
     if (!text.isEmpty())
         qDebug() << "Message to send:" << text;
 
     bool result{false};
 
-    qDebug() << m_clients.keys();
-    for (auto client : m_clients.keys())
+    qDebug() << m_students.keys();
+    for (auto client : m_students.keys())
         if (client)
             result = client->sendTextMessage(text) > 0;
     return result;
@@ -108,7 +109,7 @@ void NetworkModel_c::onNewConnection()
     connect(pSocket, &QWebSocket::binaryMessageReceived, this, &NetworkModel_c::processBinaryMessage);
     connect(pSocket, &QWebSocket::disconnected, this, &NetworkModel_c::socketDisconnected);
 
-    m_clients.insert(pSocket, User());
+    m_clients.append(pSocket);
 }
 
 void NetworkModel_c::processTextMessage(QString message)
@@ -130,10 +131,10 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
     {
         if (title == jsonValues::login_student)
         {
-            User user = Network::jsonToUser(_obj);
+            Student user = Network::jsonToStudent(_obj);
             if (LoginVerificationModel_c::instance()->verifyLoginStudent(user))
             {
-                m_clients.insert(pClient, user);
+                m_students.insert(pClient, user);
                 pClient->sendTextMessage(message::loginSuccess);
             } else
             {
@@ -144,7 +145,7 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
             User user = Network::jsonToUser(_obj);
             if (LoginVerificationModel_c::instance()->verifyLoginTeacher(user))
             {
-                m_clients.insert(pClient, user);
+                m_teachers.insert(pClient, user);
                 pClient->sendTextMessage(message::loginSuccess);
             } else
             {
@@ -155,7 +156,7 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
             Student user = Network::jsonToStudent(_obj);
             if (LoginVerificationModel_c::instance()->verifyRegistrationStudent(user))
             {
-                m_clients.insert(pClient, user);
+                m_students.insert(pClient, user);
                 pClient->sendTextMessage(message::registrationSuccess);
             } else
             {
@@ -166,7 +167,7 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
             User user = Network::jsonToUser(_obj);
             if (LoginVerificationModel_c::instance()->verifyRegistrationTeacher(user))
             {
-                m_clients.insert(pClient, user);
+                m_teachers.insert(pClient, user);
                 pClient->sendTextMessage(message::registrationSuccess);
             } else
             {
@@ -175,6 +176,8 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
         } else if (title == jsonValues::lecture)
         {
             Lecture lecture = Network::jsonToLecture(_obj);
+            LectureFileModel_c::instance()->saveLecture(lecture);
+            sendToAllStudents(_obj);
 //            m_lectures.insert(pClient, lecture);
 //            pClient->sendTextMessage(message::lectionSendingSuccess);
         }
@@ -187,7 +190,10 @@ void NetworkModel_c::socketDisconnected()
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (pClient)
     {
-        m_clients.remove(pClient);
+        m_clients.removeAll(pClient);
+        m_students.remove(pClient);
+        m_teachers.remove(pClient);
+
         pClient->deleteLater();
     }
 }

@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QIcon>
 
 #include <userinfomodel_c.h>
 #include <logincontroller_c.h>
@@ -45,10 +46,10 @@ int main(int argc, char *argv[])
 
     qmlRegisterSingletonType(QUrl("qrc:/UI/ClientLoginConstants.qml"), "LoginPage", 1, 0, "ClientLoginConstants");
     qmlRegisterSingletonType<UserInfoModel_c>("Models", 1, 0, "UserInfoModel_c", &UserInfoModel_c::qmlInstance);
+    qmlRegisterSingletonType<CourseListModel_c>("Models", 1, 0, "CourseModel", &CourseListModel_c::qmlInstance);
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "ClientLoginController");
     qmlRegisterType<DocumentHandler>("Controllers", 1, 0, "DocumentHandler");
     qmlRegisterType<LectureController_c>("Controllers", 1, 0, "LectureController");
-    qmlRegisterType<CourseListModel_c>("Models", 1, 0, "CourseModel");
 
     //chat database
     qmlRegisterType<SqlContactModel>("io.qt.examples.chattutorial", 1, 0, "SqlContactModel");
@@ -57,6 +58,9 @@ int main(int argc, char *argv[])
     connectToChatDatabase();
 
     QGuiApplication app(argc, argv);
+
+    app.setWindowIcon(QIcon(":/UI/images/windowIcon.ico"));
+
     QQmlApplicationEngine engine;
 
     auto network = NetworkModel_c::instance();

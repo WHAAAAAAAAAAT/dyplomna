@@ -144,7 +144,7 @@ ApplicationWindow {
                 function onClicked() {
 
                     //додати номер лекції і назву курсу з CoursesList (?)
-//                    lecturesController.lectureCreation(lecturesView.textDocument)
+                    lecturesController.sendLecture(lecturesView.textDocument, "blablabla1" , "C++")
                 }
             }
         }
@@ -158,7 +158,7 @@ ApplicationWindow {
             fontSize: 20
             text: qsTr("Створити тест")
             font.bold: true
-            opacity: 1                              //поставити 0 і міняти на 1, коли відрито лекцію
+            opacity: 1                             //поставити 0 і міняти на 1, коли відрито лекцію
             Connections {
                 target: createTestButton
                 function onClicked() {
@@ -173,7 +173,8 @@ ApplicationWindow {
         anchors.bottom: footer.top
         anchors.left: listOfCourses.right
         width: header.width
-        opacity: 0
+        visible: false
+        opacity: 1
         color: "#FFFFFF"
         Text {
             id: lecturesOffText

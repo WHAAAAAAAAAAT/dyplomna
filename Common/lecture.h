@@ -6,8 +6,8 @@
 class Lecture
 {
 public:
-    QString lectureText;
-    int lectureNumber;
+    QString text;
+    QString name;
     QString courseName;
 };
 

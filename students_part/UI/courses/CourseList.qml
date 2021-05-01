@@ -13,10 +13,6 @@ Rectangle {
         id: courseListItem
         anchors.fill: parent
 
-        CourseModel {
-            id: courseListModel
-        }
-
         Component {
             id: sectionHeader
             Rectangle {
@@ -39,7 +35,7 @@ Rectangle {
                     }
                     else
                         sectionHeaderText.color = "#FFFFFF";
-                        courseListModel.updateVisibleForCourse(section);
+                        CourseModel.updateVisibleForCourse(section);
                 }
                 Text {
                     id: sectionHeaderText
@@ -66,7 +62,7 @@ Rectangle {
             id: listing
             width: courseListRect.width * 0.9
             height: courseListRect.height
-            model: courseListModel
+            model: CourseModel
             property string expandedSection: ""
             delegate: listdelegate
             section.property: "type"
