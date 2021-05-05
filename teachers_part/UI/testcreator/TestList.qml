@@ -13,7 +13,7 @@ Rectangle {
     Rectangle {
         id: viewRectangle
         width: parent.width
-        height: parent.height * 0.85
+        height: parent.height * 0.8
         color: parent.color
         ListView {
             id: view
@@ -364,29 +364,44 @@ Rectangle {
             ScrollBar.vertical: ScrollBar {}
         }
     }
-    Row {
+    Column {
         id: testButtons
         width: parent.width
-        height: parent.height * 0.15
+        height: 200
         anchors.top: viewRectangle.bottom
-        anchors.topMargin: 15
+        anchors.topMargin: 10
         anchors.left: parent.left
-        anchors.leftMargin: parent.width * 0.1
-        spacing: width * 0.05
+//        anchors.bottom: parent.bottom
+//        anchors.bottomMargin: 10
+        spacing: 10
         LoginButton {
+            id: saveTestButton
             width: parent.width * 0.36
-            text: qsTr("ДОДАТИ ПИТАННЯ")
-            onClicked: testList.appendItem();
+            text: qsTr("ЗБЕРЕГТИ ТЕСТ")
+            anchors.left: parent.left
+            anchors.leftMargin: parent.width * 0.3
+//                onClicked: testList.appendItem();
         }
-        LoginButton {
-            id: removeButton
-            width: parent.width * 0.36
-            text: qsTr("ВИДАЛИТИ ПИТАННЯ")
-            onClicked: {
-                testList.removeCompletedItems();
-                removeButtonOff.start();
+        Row {
+            width: parent.width
+            anchors.left: parent.left
+            anchors.leftMargin: width * 0.1
+            spacing: width * 0.05
+            LoginButton {
+                width: parent.width * 0.36
+                text: qsTr("ДОДАТИ ПИТАННЯ")
+                onClicked: testList.appendItem();
             }
-            enabled: false
+            LoginButton {
+                id: removeButton
+                width: parent.width * 0.36
+                text: qsTr("ВИДАЛИТИ ПИТАННЯ")
+                onClicked: {
+                    testList.removeCompletedItems();
+                    removeButtonOff.start();
+                }
+                enabled: false
+            }
         }
     }
     PropertyAnimation {

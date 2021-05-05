@@ -11,7 +11,7 @@ Page {
 
     header: ChatToolBar {
         ToolButton {
-            text: qsTr("Back")
+            text: qsTr("Назад")
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
@@ -94,13 +94,13 @@ Page {
                 TextArea {
                     id: messageField
                     Layout.fillWidth: true
-                    placeholderText: qsTr("Compose message")
+                    placeholderText: qsTr("Написати повідомлення")
                     wrapMode: TextArea.Wrap
                 }
 
                 Button {
                     id: sendButton
-                    text: qsTr("Send")
+                    text: qsTr("Надіслати")
                     enabled: messageField.length > 0
                     onClicked: {
                         listView.model.sendMessage(inConversationWith, messageField.text);

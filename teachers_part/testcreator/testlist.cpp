@@ -3,10 +3,10 @@
 TestList::TestList(QObject *parent) : QObject(parent)
 {
     appendItem();
-//    QStringList newList = {"a", "b", "c", "d"};
-//    mItems.append({ false, QStringLiteral("abc"), newList, QStringLiteral("d"), QStringLiteral("ff") });
-//    mItems.append({ false, QStringLiteral("efg"), newList, QStringLiteral("b"), QStringLiteral("fdf") });
-//    mItems.append({ false, QStringLiteral("hij"), newList, QStringLiteral("a"), QStringLiteral("yaf") });
+    //    QStringList newList = {"a", "b", "c", "d"};
+    //    mItems.append({ false, QStringLiteral("abc"), newList, QStringLiteral("d"), QStringLiteral("ff") });
+    //    mItems.append({ false, QStringLiteral("efg"), newList, QStringLiteral("b"), QStringLiteral("fdf") });
+    //    mItems.append({ false, QStringLiteral("hij"), newList, QStringLiteral("a"), QStringLiteral("yaf") });
 
 }
 
@@ -22,7 +22,7 @@ bool TestList::setItemAt(int index, const TestListItem &item)
 
     const TestListItem &oldItem = mItems.at(index);
     if ( (item.check == oldItem.check) && (item.question == oldItem.question) && (item.answers == oldItem.answers)
-            && (item.correctAnswer == oldItem.correctAnswer) && (item.linkToText == oldItem.linkToText))
+         && (item.correctAnswer == oldItem.correctAnswer) && (item.linkToText == oldItem.linkToText))
         return false;
 
     mItems[index] = item;

@@ -14,7 +14,7 @@ Window {
     property int currentQuestionNumber: 2
     property string currentQuestion: qsTr("С++ - це...")
     property string firstAnswer: qsTr("низькорівнева мова програмування");
-    property string secondAnswer: qsTr("високорівнева мова програмування");
+    property string secondAnswer: qsTr("компільована мова програмування");
     property string thirdAnswer: qsTr("інтерпретована мова програмування");
     property string fourthAnswer: qsTr("немає правильної відповіді");
 

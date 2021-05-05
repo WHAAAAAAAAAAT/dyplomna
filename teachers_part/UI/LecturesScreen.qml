@@ -31,19 +31,27 @@ ApplicationWindow {
         anchors.left: windowLectures.left
         width: windowLectures.width * 0.2
         height: windowLectures.height
-        color: '#B2A1F1'
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#FFA4E5" }
+            GradientStop { position: 1.0; color: "#AF89FF" }
+        }
         visible: true
-        Text {
+        Rectangle {
             id: leftSidebarTitle
-            text: qsTr("МОЇ КУРСИ:")
-            color: "#FFFFFF"
-            font.bold: true
             anchors.top: parent.top
-            anchors.left: parent.left
-            font.pixelSize: parent.width * 0.11
-            anchors.topMargin: 15
-            anchors.leftMargin: 20
-            font.family: LoginConstants.font.family
+            width: parent.width
+            height: 90
+            color: "transparent"
+            Text {
+                text: qsTr("МОЇ КУРСИ:")
+                color: "#FFFFFF"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.bold: true
+                font.pixelSize: parent.width * 0.11
+                font.family: LoginConstants.font.family
+            }
+
         }
         Rectangle {
             id: coursesListRect
@@ -53,8 +61,7 @@ ApplicationWindow {
             anchors.bottomMargin: 15
             anchors.top: leftSidebarTitle.bottom
             anchors.topMargin: 20
-            color: parent.color
-
+            color: "transparent"
             CourseList {
                 id: coursesList
                 anchors.fill: parent
@@ -63,12 +70,28 @@ ApplicationWindow {
             }
         }
         LoginButton {
+            id: createLectureButton
+            anchors.bottom: createCourseButton.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 10
+            width: parent.width * 0.75
+            opacity: 0.8
+            text: qsTr("ДОДАТИ ЛЕКЦІЮ")
+            enabled: true
+            Connections {
+                target: createLectureButton
+                function onClicked() {
+
+                }
+            }
+        }
+        LoginButton {
             id: createCourseButton
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottomMargin: 40
             width: parent.width * 0.75
-            opacity: 1
+            opacity: 0.8
             text: qsTr("СТВОРИТИ КУРС")
             Connections {
                 target: createCourseButton

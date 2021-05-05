@@ -21,9 +21,9 @@ static void createTable()
         qFatal("Failed to query database: %s", qPrintable(query.lastError().text()));
     }
 
-    query.exec("INSERT INTO Contacts VALUES('Albert Einstein')");
-    query.exec("INSERT INTO Contacts VALUES('Ernest Hemingway')");
-    query.exec("INSERT INTO Contacts VALUES('Hans Gude')");
+    query.exec("INSERT INTO Contacts VALUES('Ольга Гошко')");
+    query.exec("INSERT INTO Contacts VALUES('Дарина Мовчій')");
+//    query.exec("INSERT INTO Contacts VALUES('Hans Gude')");
 }
 
 SqlContactModel::SqlContactModel(QObject *parent) :

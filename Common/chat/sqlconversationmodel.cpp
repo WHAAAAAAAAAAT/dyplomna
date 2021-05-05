@@ -29,13 +29,18 @@ static void createTable()
         qFatal("Failed to query database: %s", qPrintable(query.lastError().text()));
     }
 
-    query.exec("INSERT INTO Conversations VALUES('Me', 'Ernest Hemingway', '2016-01-07T14:36:06', 'Hello!')");
-    query.exec("INSERT INTO Conversations VALUES('Ernest Hemingway', 'Me', '2016-01-07T14:36:16', 'Good afternoon.')");
-    query.exec("INSERT INTO Conversations VALUES('Me', 'Albert Einstein', '2016-01-01T11:24:53', 'Hi!')");
-    query.exec("INSERT INTO Conversations VALUES('Albert Einstein', 'Me', '2016-01-07T14:36:16', 'Good morning.')");
-    query.exec("INSERT INTO Conversations VALUES('Hans Gude', 'Me', '2015-11-20T06:30:02', 'God morgen. Har du fått mitt maleri?')");
-    query.exec("INSERT INTO Conversations VALUES('Me', 'Hans Gude', '2015-11-20T08:21:03', 'God morgen, Hans. Ja, det er veldig fint. Tusen takk! "
-               "Hvor mange timer har du brukt på den?')");
+    query.exec("INSERT INTO Conversations VALUES('Me', 'Ольга Гошко', '2021-05-01T14:36:06', 'Привіт!')");
+    query.exec("INSERT INTO Conversations VALUES('Ольга Гошко', 'Me', '2021-05-01T14:36:20', 'Привіт :)')");
+    query.exec("INSERT INTO Conversations VALUES('Дарина Мовчій', 'Me', '2021-05-01T14:40:10', 'Добрий день.')");
+    query.exec("INSERT INTO Conversations VALUES('Me', 'Дарина Мовчій', '2021-05-01T14:45:14', 'Добрий!')");
+
+//    query.exec("INSERT INTO Conversations VALUES('Me', 'Ernest Hemingway', '2016-01-07T14:36:06', 'Hello!')");
+//    query.exec("INSERT INTO Conversations VALUES('Ernest Hemingway', 'Me', '2016-01-07T14:36:16', 'Good afternoon.')");
+//    query.exec("INSERT INTO Conversations VALUES('Me', 'Albert Einstein', '2016-01-01T11:24:53', 'Hi!')");
+//    query.exec("INSERT INTO Conversations VALUES('Albert Einstein', 'Me', '2016-01-07T14:36:16', 'Good morning.')");
+//    query.exec("INSERT INTO Conversations VALUES('Hans Gude', 'Me', '2015-11-20T06:30:02', 'God morgen. Har du fått mitt maleri?')");
+//    query.exec("INSERT INTO Conversations VALUES('Me', 'Hans Gude', '2015-11-20T08:21:03', 'God morgen, Hans. Ja, det er veldig fint. Tusen takk! "
+//               "Hvor mange timer har du brukt på den?')");
 }
 
 SqlConversationModel::SqlConversationModel(QObject *parent) :

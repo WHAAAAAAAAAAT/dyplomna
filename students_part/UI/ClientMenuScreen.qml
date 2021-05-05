@@ -214,7 +214,7 @@ ApplicationWindow {
                         settingsMouseAreaExited.start()
                     }
                     onClicked: {
-
+                        testResultWindow.show();
                     }
                 }
                 PropertyAnimation {
@@ -246,5 +246,9 @@ ApplicationWindow {
     ChatMainScreen {
         id: chatWindow
         title: qsTr("CPPLearn/Chat")
+    }
+    TestResultScreen {
+        id: testResultWindow
+        title: qsTr("CPPLearn/Courses/Test/Result")
     }
 }

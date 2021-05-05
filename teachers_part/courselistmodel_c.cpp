@@ -67,7 +67,7 @@ QHash<int, QByteArray> CourseListModel_c::roleNames() const
 {
     QHash<int, QByteArray> names;
     names[VisibleRole] = "aVisible";
-    names[CourseRole] = "type";
+    names[CourseRole] = "course";
     names[NameRole] = "name";
     return names;
 }

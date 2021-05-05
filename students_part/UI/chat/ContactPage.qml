@@ -8,7 +8,7 @@ Page {
 
     header: ChatToolBar {
         Label {
-            text: qsTr("Contacts")
+            text: qsTr("Контакти")
             font.pixelSize: 20
             anchors.centerIn: parent
         }

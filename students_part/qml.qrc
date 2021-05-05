@@ -43,5 +43,7 @@
         <file>UI/courses/CourseList.qml</file>
         <file>UI/images/windowIcon.ico</file>
         <file>UI/TestResultScreen.qml</file>
+        <file>UI/images/testResultScreen.gif</file>
+        <file>UI/images/online-education.png</file>
     </qresource>
 </RCC>
