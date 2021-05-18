@@ -10,6 +10,7 @@ HEADERS += \
     $$PWD/jsontypes.h \
     $$PWD/lecture.h \
     $$PWD/networkmessages.h \
+    $$PWD/testitem.h \
     $$PWD/user.h
 
 

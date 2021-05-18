@@ -107,7 +107,7 @@ void NetworkModel_c::parseReceivedJson(const QJsonObject &_obj)
     if (title == jsonValues::lecture)
     {
         Lecture lec = Network::jsonToLecture(_obj);
-        CourseListModel_c::instance()->addLecture(lec.name);
+        CourseListModel_c::instance()->addLecture(lec.name, lec.courseName);
     }
 }
 

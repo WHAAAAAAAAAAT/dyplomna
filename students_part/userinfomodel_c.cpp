@@ -79,7 +79,6 @@ UserInfoModel_c::UserInfoModel_c(QObject *_parent_ptr)
     : QObject(_parent_ptr)
 {}
 
-
 UserInfoModel_c *UserInfoModel_c::instance()
 {
     if (!mInstance_ptr)
@@ -87,6 +86,48 @@ UserInfoModel_c *UserInfoModel_c::instance()
         mInstance_ptr = new UserInfoModel_c;
     }
     return mInstance_ptr;
+}
+
+void UserInfoModel_c::getUserInfo(Student &_student)
+{
+    QJsonDocument _doc = loadJson(studentJsonFileName);
+    if(_doc.isObject())
+    {
+        QJsonObject usersInfoObj = _doc.object();
+        QJsonArray usersInfoArray = usersInfoObj["usersinfo"].toArray();
+        foreach (const QJsonValue &currentUsersInfo, usersInfoArray)
+        {
+            QJsonObject currentUser = currentUsersInfo.toObject();
+            if(_student.username == currentUser["username"].toString())
+            {
+                _student.name = currentUser["name"].toString();
+                _student.surname = currentUser["surname"].toString();
+                _student.group = currentUser["group"].toString();
+                break;
+            }
+            else
+            {
+                continue;
+            }
+        }
+    }
+}
+
+QJsonDocument UserInfoModel_c::loadJson(const QString &fileName)
+{
+    QString documents(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    QDir directory(documents);
+    bool pathExists = directory.cd("CPPLearn");
+    if(!pathExists)
+    {
+        directory.mkdir("CPPLearn");
+    }
+    directory.setPath(documents + "/CPPLearn");
+    QFile jsonFile(directory.filePath(fileName));
+    jsonFile.open(QFile::ReadWrite);
+    QJsonDocument tempDocument = QJsonDocument().fromJson(jsonFile.readAll());
+    jsonFile.close();
+    return tempDocument;
 }
 
 QObject *UserInfoModel_c::qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine) {

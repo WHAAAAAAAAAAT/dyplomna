@@ -85,8 +85,11 @@ Window {
                         coursesMouseAreaExited.start()
                     }
                     onClicked: {
-                        menuWindow.hide();
-                        lecturesWindow.show();
+                        var component = Qt.createComponent("LecturesScreen.qml")
+                        var lecturesWindow = component.createObject(windowMenu)
+                        lecturesWindow.title = qsTr("CPPLearn/Courses")
+                        lecturesWindow.show()
+                        menuWindow.hide()
                     }
                 }
                 PropertyAnimation {
@@ -232,15 +235,15 @@ Window {
             }
         }
     }
-    LecturesScreen {
-        id: lecturesWindow
-        title: qsTr("CPPLearn/Courses")
+//    LecturesScreen {
+//        id: lecturesWindow
+//        title: qsTr("CPPLearn/Courses")
 
-        onExitWindowLectures: {
-            lecturesWindow.hide()
-            mainWindow.show()
-        }
-    }
+//        onExitWindowLectures: {
+//            lecturesWindow.hide()
+//            mainWindow.show()
+//        }
+//    }
 
     ChatMainScreen {
         id: chatWindow

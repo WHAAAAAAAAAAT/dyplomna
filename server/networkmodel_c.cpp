@@ -13,6 +13,8 @@
 
 #include "verificationmodel_c.h"
 #include "lecturefilemodel_c.h"
+#include "coursefoldermodel.h"
+#include "testfilemodel_c.h"
 
 QT_USE_NAMESPACE
 
@@ -69,6 +71,26 @@ bool NetworkModel_c::sendToAllStudents(const QJsonObject &object)
 {
     bool result{false};
     for (auto client : m_students.keys())
+        if (client)
+        {
+            if (object.isEmpty())
+                qDebug() << "Empty json";
+            else
+            {
+                QJsonDocument doc(object);
+                QByteArray data = doc.toJson();
+                result = client->sendBinaryMessage(data) > 0;
+                if (!result)
+                    break;
+            }
+        }
+    return result;
+}
+
+bool NetworkModel_c::sendToAllTeachers(const QJsonObject &object)
+{
+    bool result{false};
+    for (auto client : m_teachers.keys())
         if (client)
         {
             if (object.isEmpty())
@@ -178,8 +200,21 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
             Lecture lecture = Network::jsonToLecture(_obj);
             LectureFileModel_c::instance()->saveLecture(lecture);
             sendToAllStudents(_obj);
-//            m_lectures.insert(pClient, lecture);
-//            pClient->sendTextMessage(message::lectionSendingSuccess);
+        } else if (title == jsonValues::course)
+        {
+            CourseItem course = Network::jsonToCourse(_obj);
+            CourseFolderModel_c::instance()->saveCourse(course);
+            //            sendToAllStudents(_obj);
+        } else if (title == jsonValues::test)
+        {
+            Test test = Network::jsonToTest(_obj);
+            TestFileModel_c::instance()->saveTest(test, _message);
+        } else if(title == jsonValues::loadCourses)
+        {
+            sendToAllTeachers(CourseFolderModel_c::instance()->getCourses());
+        } else if(title == jsonValues::loadLectures)
+        {
+            sendToAllTeachers(LectureFileModel_c::instance()->getLectures(_obj.value(jsonKeys::courseName).toString()));
         }
     }
 }

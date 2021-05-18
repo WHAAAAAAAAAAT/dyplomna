@@ -1,9 +1,6 @@
 #include "logincontroller_c.h"
-
 #include "jsontypes.h"
-
 #include "userinfomodel_c.h"
-//#include "loginverificationmodel_c.h"
 #include "networkmodel_c.h"
 #include "notificationmodel_c.h"
 
@@ -21,8 +18,14 @@ void LoginController_c::login(const QString &_username, const QString &_password
     if(NetworkModel_c::instance()->sendJson(json))
     {
         qDebug() << "login send";
+        Student student;
+        student.username = _username;
+        UserInfoModel_c::instance()->getUserInfo(student);
         UserInfoModel_c::instance()->setUsername(_username);
         UserInfoModel_c::instance()->setPassword(_password);
+        UserInfoModel_c::instance()->setName(student.name);
+        UserInfoModel_c::instance()->setSurname(student.surname);
+        UserInfoModel_c::instance()->setGroup(student.group);
     }
     else
     {

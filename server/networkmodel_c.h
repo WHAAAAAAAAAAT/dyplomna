@@ -19,6 +19,7 @@ public:
     ~NetworkModel_c();
 
     bool sendToAllStudents(const QJsonObject &object);
+    bool sendToAllTeachers(const QJsonObject &object);
     bool sendToAllStudents(const QString &text);
 
 private slots:

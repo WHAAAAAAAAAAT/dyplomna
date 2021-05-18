@@ -16,3 +16,47 @@ Lecture Network::jsonToLecture(const QJsonObject &_json)
 {
     return {_json.value(jsonKeys::text).toString(), _json.value(jsonKeys::lectureName).toString(), _json.value(jsonKeys::courseName).toString()};
 }
+
+CourseItem Network::jsonToCourse(const QJsonObject &_json)
+{
+    CourseItem newCourse;
+    newCourse.course = _json.value(jsonKeys::courseName).toString();
+    return newCourse;
+}
+
+Test Network::jsonToTest(const QJsonObject &_json)
+{
+    Test test;
+
+    QJsonValue jsonVal;
+    jsonVal = _json.value("LectureName");
+    test.lectureName = jsonVal.toString();
+    jsonVal = _json.value("CourseName");
+    test.courseName = jsonVal.toString();
+
+    QJsonObject jsonTestQuestions;
+    jsonVal = _json.value(QString("Test"));
+    jsonTestQuestions = jsonVal.toObject();
+
+    for(int i{0}; i < jsonTestQuestions.size(); ++i)
+    {
+        TestListItem tempListItem;
+
+        QJsonObject tempObj;
+        jsonVal = jsonTestQuestions.value(QString("Task" + QString::number(i)));
+        tempObj  = jsonVal.toObject();
+
+        tempListItem.question = tempObj["Question"].toString();
+        tempListItem.correctAnswer = tempObj["CorrectAnswer"].toString();
+        tempListItem.linkToText = tempObj["Link"].toString();
+        tempListItem.check = tempObj["Check"].toVariant().toBool();
+
+        QJsonArray tempAnswers = tempObj["Answers"].toArray();
+        for(int i{0}; i < tempAnswers.size(); ++i)
+        {
+            tempListItem.answers.append(tempAnswers.at(i).toString());
+        }
+        test.testList.append(tempListItem);
+    }
+    return test;
+}

@@ -1,13 +1,12 @@
 #include "testlist.h"
+#include <QDebug>
+#include "networkmodel_c.h"
+#include "notificationmodel_c.h"
+#include "jsonconverter.h"
 
 TestList::TestList(QObject *parent) : QObject(parent)
 {
     appendItem();
-    //    QStringList newList = {"a", "b", "c", "d"};
-    //    mItems.append({ false, QStringLiteral("abc"), newList, QStringLiteral("d"), QStringLiteral("ff") });
-    //    mItems.append({ false, QStringLiteral("efg"), newList, QStringLiteral("b"), QStringLiteral("fdf") });
-    //    mItems.append({ false, QStringLiteral("hij"), newList, QStringLiteral("a"), QStringLiteral("yaf") });
-
 }
 
 QVector<TestListItem> TestList::items() const
@@ -34,16 +33,27 @@ QStringList TestList::answers(int index)
     return mItems.at(index).answers;
 }
 
+void TestList::saveTestList(QString _lectureName, QString _courseName)
+{
+    QJsonObject testDoc = JsonConverter::fromTestToJson(_courseName, _lectureName, mItems);
+    if(NetworkModel_c::instance()->sendJson(testDoc))
+    {
+        qDebug() << "test send";
+    }
+    else
+    {
+        qDebug() << "test not send";
+    }
+}
+
 void TestList::appendItem()
 {
     emit preItemAppended();
 
     TestListItem item;
-
     QStringList newList = {"", "", "", ""};
     item.check = false;
     item.answers = newList;
-
     mItems.append(item);
 
     emit postItemAppended();

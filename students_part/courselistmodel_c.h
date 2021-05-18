@@ -16,7 +16,7 @@ public:
 
     enum {
         CourseRole,
-        NameRole,
+        LecturesRole,
         VisibleRole,
     };
 
@@ -34,7 +34,8 @@ public:
 public slots:
     void updateVisibleForCourse(const QString &_course);
 
-    void addLecture(const QString _lectureName);
+    QStringList lecturesList(int index);
+    void addLecture(const QString _lectureName, const QString _courseName);
 
 private:
     QVector<CourseItem> mItems;

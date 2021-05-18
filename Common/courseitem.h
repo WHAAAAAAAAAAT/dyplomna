@@ -1,10 +1,11 @@
 #pragma once
 
 #include <QString>
+#include <QStringList>
 
 struct CourseItem
 {
     QString course;
-    QString name;
-    bool isVisible{false};
+    QStringList lectures;
+    bool isVisible;
 };

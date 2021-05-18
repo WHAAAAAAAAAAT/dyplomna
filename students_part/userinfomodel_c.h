@@ -6,6 +6,14 @@
 #include <QQmlEngine>
 #include <QJSEngine>
 
+#include <QDir>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QFile>
+#include <QJsonValue>
+#include <QJsonObject>
+#include <QStandardPaths>
+
 #include "user.h"
 
 class UserInfoModel_c : public QObject
@@ -22,21 +30,24 @@ public:
     static UserInfoModel_c* instance();
     static QObject *qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
 
+public slots:
     QString username() const;
     QString password() const;
     QString name() const;
     QString surname() const;
     QString group() const;
-
-public slots:
     void setUsername(const QString &_username);
     void setPassword(const QString &_password);
     void setName(const QString &_name);
     void setSurname(const QString &_surname);
     void setGroup(const QString &_group);
+    void getUserInfo(Student &_student);
 
 private:
     explicit UserInfoModel_c(QObject *_parent_ptr = nullptr);
+
+    const QString studentJsonFileName{"studentsinfo.json"};
+    QJsonDocument loadJson(const QString &fileName);
 
 signals:
     void usernameChanged();

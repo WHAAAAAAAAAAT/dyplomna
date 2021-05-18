@@ -1,16 +1,14 @@
 #include "courselistmodel_c.h"
+#include <QDebug>
 
 CourseListModel_c* CourseListModel_c::mInstance_ptr = nullptr;
 
 CourseListModel_c::CourseListModel_c(QObject *parent) : QAbstractListModel(parent)
 {
-    mItems.append({QStringLiteral("C++"), QStringLiteral("Введення в С++"), false});
-    mItems.append({QStringLiteral("C++"), QStringLiteral("Встановлення IDE"), false});
-    //    mItems.append({QStringLiteral("C++"), QStringLiteral("lec3"), false});
-    //    mItems.append({QStringLiteral("C++"), QStringLiteral("test1"), false});
-    //    mItems.append({QStringLiteral("Java"), QStringLiteral("lec4"), false});
-    //    mItems.append({QStringLiteral("Java"), QStringLiteral("lec5"), false});
-    //    mItems.append({QStringLiteral("Java"), QStringLiteral("lec6"), false});
+    QStringList newList = {"Введення в С++", "Встановлення IDE"};
+    QStringList newList2 = {"Мова програмування\nJava"};
+    mItems.append({QStringLiteral("C++"), newList, false});
+    mItems.append({QStringLiteral("Java"), newList2, false});
 }
 
 int CourseListModel_c::rowCount(const QModelIndex &parent) const
@@ -28,8 +26,8 @@ QVariant CourseListModel_c::data(const QModelIndex &indexM, int role) const
 
     const CourseItem item = mItems.at(indexM.row());
     switch (role) {
-    case NameRole:
-        return QVariant(item.name);
+    case LecturesRole:
+        return QVariant(item.lectures);
     case CourseRole:
         return QVariant(item.course);
     case VisibleRole:
@@ -37,8 +35,6 @@ QVariant CourseListModel_c::data(const QModelIndex &indexM, int role) const
     }
     return QVariant();
 }
-
-#include <QDebug>
 
 bool CourseListModel_c::setData(const QModelIndex &indexM, const QVariant &value, int role)
 {
@@ -50,8 +46,8 @@ bool CourseListModel_c::setData(const QModelIndex &indexM, const QVariant &value
     case CourseRole:
         item.course = value.toString();
         break;
-    case NameRole:
-        item.name = value.toString();
+    case LecturesRole:
+        item.lectures = value.toStringList();
         break;
     }
 
@@ -67,8 +63,8 @@ QHash<int, QByteArray> CourseListModel_c::roleNames() const
 {
     QHash<int, QByteArray> names;
     names[VisibleRole] = "aVisible";
-    names[CourseRole] = "type";
-    names[NameRole] = "name";
+    names[CourseRole] = "course";
+    names[LecturesRole] = "lecturesList";
     return names;
 }
 
@@ -97,9 +93,20 @@ void CourseListModel_c::updateVisibleForCourse(const QString &_course)
     emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }
 
-void CourseListModel_c::addLecture(const QString _lectureName)
+QStringList CourseListModel_c::lecturesList(int index)
 {
-    qDebug () << _lectureName;
-    mItems.append({QStringLiteral("C++"), _lectureName, true});
+    return mItems.at(index).lectures;
+}
+
+void CourseListModel_c::addLecture(const QString _lectureName, const QString _courseName)
+{
+    for (auto item : mItems)
+    {
+        if(item.course == _courseName)
+        {
+            item.lectures.append(_lectureName);
+            break;
+        }
+    }
     emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }

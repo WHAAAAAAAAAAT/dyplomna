@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QJsonArray>
 #include <QString>
 
 namespace jsonKeys {
@@ -14,6 +15,8 @@ namespace jsonKeys {
     static const QString text = "text";
     static const QString lectureName = "lectureName";
     static const QString courseName = "courseName";
+
+    static const QJsonArray testArray;
 }
 
 namespace jsonValues {
@@ -24,4 +27,8 @@ namespace jsonValues {
     static const QString login_teacher = "login_teacher";
 
     static const QString lecture = "lectureToServer";
+    static const QString course = "courseToServer";
+    static const QString test = "testToServer";
+    static const QString loadCourses = "loadCourses";
+    static const QString loadLectures = "loadLectures";
 }

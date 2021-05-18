@@ -18,6 +18,10 @@ public slots:
     void registration(const QString &_name, const QString &_surname, const QString &_group,
                       const QString &_username, const QString &_password);
 
+    QJsonObject createLoginJson(const QString &_username, const QString &_password);
+    QJsonObject createRegistrationJson(const QString &_name, const QString &_surname, const QString &_group,
+                                       const QString &_username, const QString &_password);
+
     void onLoginSuccess();
     void onLoginFail();
     void onRegistrationSuccess();
@@ -28,10 +32,5 @@ signals:
     void loginSuccess();
     void registrationFail();
     void registrationSuccess();
-
-private:
-    QJsonObject createLoginJson(const QString &_username, const QString &_password);
-    QJsonObject createRegistrationJson(const QString &_name, const QString &_surname, const QString &_group,
-                                       const QString &_username, const QString &_password);
 };
 

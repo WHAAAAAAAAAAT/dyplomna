@@ -3,15 +3,7 @@
 
 #include <QObject>
 #include <QVector>
-
-struct TestListItem
-{
-    bool check;
-    QString question;
-    QStringList answers;
-    QString correctAnswer;
-    QString linkToText;
-};
+#include "testitem.h"
 
 class TestList : public QObject
 {
@@ -34,8 +26,10 @@ public slots:
     void appendItem();
     void removeCompletedItems();
     QStringList answers(int index);
+    void saveTestList(QString _lectureName, QString _courseName);
 
 private:
+    QString lectureName;
     QVector<TestListItem> mItems;
 };
 

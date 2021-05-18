@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
 #else
     QGuiApplication app(argc, argv);
 #endif
+    QApplication::setQuitOnLastWindowClosed(false);
 
     auto network = NetworkModel_c::instance();
     Q_UNUSED(network)

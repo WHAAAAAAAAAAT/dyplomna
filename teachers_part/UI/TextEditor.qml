@@ -14,6 +14,8 @@ Rectangle {
     visible: true
 
     readonly property var textDocument: document.document
+    property string chosenLecture: ""
+    property string chosenCourse: ""
 
     Shortcut {
         sequence: StandardKey.Open
@@ -81,13 +83,6 @@ Rectangle {
     }
     MessageDialog {
         id: errorDialog
-    }
-    MessageDialog {
-        id : quitDialog
-        title: qsTr("Quit?")
-        text: qsTr("The file has been modified. Quit anyway?")
-        buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: Qt.quit()
     }
     ToolBar {
         id: toolBarArea
@@ -281,12 +276,6 @@ Rectangle {
         selectionStart: textArea.selectionStart
         selectionEnd: textArea.selectionEnd
         textColor: colorDialog.color
-        Component.onCompleted: {
-            if (Qt.application.arguments.length === 2)
-                document.load("file:" + Qt.application.arguments[1]);
-            else
-                document.load("qrc:/texteditor.html")
-        }
         onLoaded: {
             textArea.textFormat = format
             textArea.text = text

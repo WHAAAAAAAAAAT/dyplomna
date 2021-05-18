@@ -2,6 +2,7 @@
 #define LECTURE_H
 
 #include <QObject>
+#include "testitem.h"
 
 class Lecture
 {

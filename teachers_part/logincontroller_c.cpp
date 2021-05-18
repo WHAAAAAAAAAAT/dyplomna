@@ -1,9 +1,6 @@
 #include "logincontroller_c.h"
-
 #include "teacherinfomodel_c.h"
-
 #include "jsontypes.h"
-
 #include "networkmodel_c.h"
 #include "notificationmodel_c.h"
 
@@ -20,7 +17,6 @@ void LoginController_c::login(const QString &_username, const QString &_password
     auto json = createLoginJson(_username, _password);
     if(NetworkModel_c::instance()->sendJson(json))
     {
-        qDebug() << "login send";
         TeacherInfoModel_c::instance()->setUsername(_username);
         TeacherInfoModel_c::instance()->setPassword(_password);
     }
@@ -36,7 +32,6 @@ void LoginController_c::registration(const QString &_name, const QString &_surna
     auto json = createRegistrationJson(_name, _surname, _username, _password);
     if(NetworkModel_c::instance()->sendJson(json))
     {
-        qDebug() << "registration send";
         TeacherInfoModel_c::instance()->setUsername(_username);
         TeacherInfoModel_c::instance()->setPassword(_password);
         TeacherInfoModel_c::instance()->setName(_name);

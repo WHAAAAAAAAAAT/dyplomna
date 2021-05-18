@@ -8,6 +8,7 @@
 #include "networkmessages.h"
 
 #include "notificationmodel_c.h"
+#include "courselistmodel_c.h"
 
 NetworkModel_c* NetworkModel_c::mInstance_ptr = nullptr;
 
@@ -50,16 +51,47 @@ void NetworkModel_c::onTextMessageReceived(const QString &message)
 
 void NetworkModel_c::onJsonObjectsReceived(const QByteArray &data)
 {
-    if (!data.isEmpty())
+    auto _obj = convertToJson(data);
+    auto title = _obj.value(jsonKeys::title);
+    if (title == "Courses")
     {
-        auto json = convertToJson(data);
-        if (!json.isEmpty())
+        QVector<CourseItem> courses;
+        for(int i{0}; i < _obj.size()/2; ++i)
         {
-            qDebug() << "Json received: " << json;
-            mReceivedJsonObjects.append(json);
-            emit jsonReceived(json);
+            if(_obj.contains("Course " + QString::number(i)))
+            {
+                CourseItem tempCourseItem;
+                tempCourseItem.course = _obj.value("Course " + QString::number(i)).toString().toUtf8();
+                tempCourseItem.isVisible = false;
+                QJsonArray tempArray = _obj.value("Lectures at course " + QString::number(i)).toArray();
+                for(int j{0}; j < tempArray.size(); ++j)
+                {
+                    tempCourseItem.lectures.append(tempArray.at(j).toString().toUtf8());
+                }
+                courses.append(tempCourseItem);
+                qDebug() << tempCourseItem.course;
+            }
         }
+        CourseListModel_c::instance()->setCourses(courses);
+    } else if(title == "Lectures")
+    {
+        QVector<Lecture> lectures;
+        for(int i{0}; i < _obj.size(); ++i)
+        {
+            if(_obj.contains("Lecture " + QString::number(i)))
+            {
+                QJsonObject currentLecture = _obj.value("Lecture " + QString::number(i)).toObject();
+                Lecture tempLectureItem;
+                tempLectureItem.name = currentLecture.value("Name").toString().toUtf8();
+                tempLectureItem.courseName = currentLecture.value("Course").toString().toUtf8();
+                tempLectureItem.text = currentLecture.value("Text").toString().toUtf8();
+                lectures.append(tempLectureItem);
+                qDebug() << tempLectureItem.name;
+            }
+        }
+        CourseListModel_c::instance()->setLectures(lectures);
     }
+
 }
 
 void NetworkModel_c::onSslErrors(const QList<QSslError> &errors)

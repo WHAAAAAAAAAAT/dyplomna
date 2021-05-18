@@ -10,11 +10,16 @@ import Test 1.0
 Rectangle {
     id: testRectangle
     anchors.fill: parent
+
+    property string lecName: ""
+    property string courseName: ""
+
     Rectangle {
         id: viewRectangle
         width: parent.width
         height: parent.height * 0.8
         color: parent.color
+
         ListView {
             id: view
             anchors.fill: parent
@@ -148,7 +153,10 @@ Rectangle {
                             id: answerField
                             width: answersListView.width
                             text: model.modelData
-                            onEditingFinished: model.modelData = text
+                            onEditingFinished: {
+                                model.modelData = answerField.text
+                                col.stringList[model.index] = answerField.text
+                            }
                             color: "#000000"
                             placeholderTextColor: "#3C3C3C"
                             placeholderText: qsTr("Введіть варіант відповіді")
@@ -300,7 +308,11 @@ Rectangle {
                     anchors.leftMargin: parent.width * 0.05
                     width: parent.width * 0.9
                     text: model.linkToText
-                    onEditingFinished: model.linkToText = text
+                    onEditingFinished:
+                    {
+                        model.linkToText = text
+                        model.answers = col.stringList
+                    }
                     color: "#000000"
                     placeholderTextColor: "#3C3C3C"
                     placeholderText: qsTr("Вставте текст з лекції, котрий містить правильну відповідь")
@@ -371,8 +383,6 @@ Rectangle {
         anchors.top: viewRectangle.bottom
         anchors.topMargin: 10
         anchors.left: parent.left
-//        anchors.bottom: parent.bottom
-//        anchors.bottomMargin: 10
         spacing: 10
         LoginButton {
             id: saveTestButton
@@ -380,7 +390,11 @@ Rectangle {
             text: qsTr("ЗБЕРЕГТИ ТЕСТ")
             anchors.left: parent.left
             anchors.leftMargin: parent.width * 0.3
-//                onClicked: testList.appendItem();
+            onClicked:
+            {
+                testList.saveTestList(lecName, courseName);
+//              onClicked: testList.appendItem();
+            }
         }
         Row {
             width: parent.width

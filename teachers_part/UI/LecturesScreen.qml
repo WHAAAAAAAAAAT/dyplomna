@@ -13,11 +13,15 @@ ApplicationWindow {
     height: 720
     signal exitWindowLectures
 
-    property int numberOfQuestion: 2
+    property string currentLecName: ""
+    property string currentCourseName: ""
     property int numberOfAnswers: 4
 
     LecturesController {
         id: lecturesController
+        Component.onCompleted: {
+            setDocument(lecturesView.textDocument)
+        }
         onLectureSendingSuccess: {
 
         }
@@ -55,10 +59,11 @@ ApplicationWindow {
         }
         Rectangle {
             id: coursesListRect
+
             width: parent.width - 20
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: createCourseButton.top
-            anchors.bottomMargin: 15
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 40
             anchors.top: leftSidebarTitle.bottom
             anchors.topMargin: 20
             color: "transparent"
@@ -67,36 +72,11 @@ ApplicationWindow {
                 anchors.fill: parent
                 color: parent.color
                 visible: true
-            }
-        }
-        LoginButton {
-            id: createLectureButton
-            anchors.bottom: createCourseButton.top
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottomMargin: 10
-            width: parent.width * 0.75
-            opacity: 0.8
-            text: qsTr("ДОДАТИ ЛЕКЦІЮ")
-            enabled: true
-            Connections {
-                target: createLectureButton
-                function onClicked() {
-
-                }
-            }
-        }
-        LoginButton {
-            id: createCourseButton
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottomMargin: 40
-            width: parent.width * 0.75
-            opacity: 0.8
-            text: qsTr("СТВОРИТИ КУРС")
-            Connections {
-                target: createCourseButton
-                function onClicked() {
-
+                onSendLectureName: {
+                    lecturesView.chosenLecture = lecName
+                    lecturesView.chosenCourse = courseName
+                    lecturesOffView.visible = false
+                    lecturesView.visible = true
                 }
             }
         }
@@ -138,7 +118,7 @@ ApplicationWindow {
                 Connections {
                     target: menuButton
                     function onClicked() {
-                        lecturesWindow.hide()
+                        windowLectures.hide()
                         menuWindow.show()
                     }
                 }
@@ -161,13 +141,12 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             width: footer.width * 0.2
             text: qsTr("ЗБЕРЕГТИ ЛЕКЦІЮ")
-            opacity: 1
+            opacity: 0
             Connections {
                 target: saveLectureButton
                 function onClicked() {
-
-                    //додати номер лекції і назву курсу з CoursesList (?)
-                    lecturesController.sendLecture(lecturesView.textDocument, "blablabla1" , "C++")
+                    lecturesController.sendLecture(lecturesView.textDocument, lecturesView.chosenLecture,
+                                                   lecturesView.chosenCourse)
                 }
             }
         }
@@ -181,7 +160,7 @@ ApplicationWindow {
             fontSize: 20
             text: qsTr("Створити тест")
             font.bold: true
-            opacity: 1                             //поставити 0 і міняти на 1, коли відрито лекцію
+            opacity: 0                             //поставити 0 і міняти на 1, коли відрито лекцію
             Connections {
                 target: createTestButton
                 function onClicked() {
@@ -196,7 +175,7 @@ ApplicationWindow {
         anchors.bottom: footer.top
         anchors.left: listOfCourses.right
         width: header.width
-        visible: false
+        visible: true
         opacity: 1
         color: "#FFFFFF"
         Text {
@@ -216,7 +195,14 @@ ApplicationWindow {
         anchors.bottom: footer.top
         anchors.left: listOfCourses.right
         width: header.width
-        visible: true
+        visible: false
+        onVisibleChanged: {
+            saveLectureButton.opacity = 1
+            createTestButton.opacity = 1
+            currentLecName = chosenLecture
+            currentCourseName = chosenCourse
+            console.log(chosenLecture + " " + chosenCourse)
+        }
     }
     Rectangle {
         id: testCreator
@@ -271,321 +257,9 @@ ApplicationWindow {
             TestList {
                 anchors.fill: parent
                 color: parent.color
+                lecName: currentLecName
+                courseName: currentCourseName
             }
-
-            //            ScrollView {
-            //                anchors.fill: parent
-            //                clip: true
-            //                Column {
-            //                    spacing: 13
-            //                    Repeater {
-            //                        model: numberOfQuestion
-            //                        Column {
-            //                            spacing: 13
-            //                            Text {
-            //                                id: questionNameTitle
-            //                                text: qsTr("Питання " + (index + 1) + ":")
-            //                                color: "#6F61AE"
-            //                                font.bold: true
-            //                                font.pixelSize: 19
-            //                                font.family: LoginConstants.font.family
-            //                            }
-            //                            TextField {
-            //                                id: questionNameField
-            //                                width: testCreator.width * 0.9
-            //                                text: ""
-            //                                color: "#000000"
-            //                                placeholderTextColor: "#3C3C3C"
-            //                                placeholderText: qsTr("Введіть запитання")
-            //                                font.bold: true
-            //                                opacity: 0.75
-            //                                font.pixelSize: 16
-            //                                font.family: LoginConstants.font.family
-            //                                horizontalAlignment: Text.AlignLeft
-            //                                background: Rectangle {
-            //                                    implicitWidth: parent.width
-            //                                    implicitHeight: 47
-            //                                    border.color: "#6D6D6D"
-            //                                    border.width: 1
-            //                                    radius: 10
-            //                                    Rectangle {
-            //                                        id: questionNameFieldGlowBorder
-            //                                        width: parent.width
-            //                                        height: parent.height
-            //                                        opacity: 0
-            //                                        radius: parent.radius
-            //                                        RectangularGlow {
-            //                                            anchors.fill: questionNameFieldGlowBorder
-            //                                            glowRadius: 10
-            //                                            spread: 0.2
-            //                                            color: "#FF7C7C"
-            //                                            cornerRadius: questionNameFieldGlowBorder.radius
-            //                                        }
-            //                                        SequentialAnimation {
-            //                                            id: emptyQuestionNameFieldErrorOn
-            //                                            PropertyAnimation {
-            //                                                target: questionNameFieldGlowBorder
-            //                                                properties: "opacity"
-            //                                                from: 0
-            //                                                to: 0.7
-            //                                                duration: 700
-            //                                            }
-            //                                        }
-            //                                        SequentialAnimation {
-            //                                            id: emptyQuestionNameFieldErrorOff
-            //                                            PropertyAnimation {
-            //                                                target: questionNameFieldGlowBorder
-            //                                                properties: "opacity"
-            //                                                from: 0.7
-            //                                                to: 0
-            //                                                duration: 700
-            //                                            }
-            //                                        }
-            //                                        Rectangle {
-            //                                            width: parent.width
-            //                                            height: parent.height
-            //                                            color: "#FFFFFF"
-            //                                            opacity: 0.7
-            //                                            radius: parent.radius
-            //                                        }
-            //                                    }
-            //                                }
-            //                                selectByMouse: true
-            //                                selectionColor: "#9E7ECE"
-            //                            }
-            //                            Repeater {
-            //                                model: numberOfAnswers
-            //                                Column {
-            //                                    anchors.left: parent.left
-            //                                    anchors.leftMargin: parent.width * 0.05
-            //                                    spacing: 13
-            //                                    Text {
-            //                                        id: answerTitle
-            //                                        text: qsTr("Відповідь " + (index + 1) + ":")
-            //                                        color: "#313131"
-            //                                        font.bold: true
-            //                                        font.pixelSize: 17
-            //                                        font.family: LoginConstants.font.family
-            //                                    }
-            //                                    TextField {
-            //                                        id: answerField
-            //                                        width: testCreator.width * 0.85
-            //                                        text: ""
-            //                                        color: "#000000"
-            //                                        placeholderTextColor: "#3C3C3C"
-            //                                        placeholderText: qsTr("Введіть варіант відповіді")
-            //                                        font.bold: true
-            //                                        opacity: 0.75
-            //                                        font.pixelSize: 16
-            //                                        font.family: LoginConstants.font.family
-            //                                        horizontalAlignment: Text.AlignLeft
-            //                                        background: Rectangle {
-            //                                            implicitWidth: parent.width
-            //                                            implicitHeight: 47
-            //                                            border.color: "#6D6D6D"
-            //                                            border.width: 1
-            //                                            radius: 10
-            //                                            Rectangle {
-            //                                                id: answerFieldGlowBorder
-            //                                                width: parent.width
-            //                                                height: parent.height
-            //                                                opacity: 0
-            //                                                radius: parent.radius
-            //                                                RectangularGlow {
-            //                                                    anchors.fill: parent
-            //                                                    glowRadius: 10
-            //                                                    spread: 0.2
-            //                                                    color: "#FF7C7C"
-            //                                                    cornerRadius: parent.radius
-            //                                                }
-            //                                                SequentialAnimation {
-            //                                                    id: emptyFirstAnswerFieldErrorOn
-            //                                                    PropertyAnimation {
-            //                                                        target: answerFieldGlowBorder
-            //                                                        properties: "opacity"
-            //                                                        from: 0
-            //                                                        to: 0.7
-            //                                                        duration: 700
-            //                                                    }
-            //                                                }
-            //                                                SequentialAnimation {
-            //                                                    id: emptyFirstAnswerFieldErrorOff
-            //                                                    PropertyAnimation {
-            //                                                        target: answerFieldGlowBorder
-            //                                                        properties: "opacity"
-            //                                                        from: 0.7
-            //                                                        to: 0
-            //                                                        duration: 700
-            //                                                    }
-            //                                                }
-            //                                                Rectangle {
-            //                                                    width: parent.width
-            //                                                    height: parent.height
-            //                                                    color: "#FFFFFF"
-            //                                                    opacity: 0.7
-            //                                                    radius: parent.radius
-            //                                                }
-            //                                            }
-            //                                        }
-            //                                        selectByMouse: true
-            //                                        selectionColor: "#9E7ECE"
-            //                                    }
-            //                                }
-            //                            }
-            //                            Text{
-            //                                id: correctAnswerTitle
-            //                                text: qsTr("Правильна відповідь:")
-            //                                color: "#313131"
-            //                                font.bold: true
-            //                                font.pixelSize: 17
-            //                                font.family: LoginConstants.font.family
-            //                                anchors.left: parent.left
-            //                                anchors.leftMargin: parent.width * 0.05
-            //                            }
-            //                            TextField {
-            //                                id: correctAnswerField
-            //                                anchors.left: parent.left
-            //                                anchors.leftMargin: parent.width * 0.05
-            //                                width: testCreator.width * 0.85
-            //                                text: ""
-            //                                color: "#000000"
-            //                                placeholderTextColor: "#3C3C3C"
-            //                                placeholderText: qsTr("Введіть правильну відповідь (повністю)")
-            //                                font.bold: true
-            //                                opacity: 0.75
-            //                                font.pixelSize: 16
-            //                                font.family: LoginConstants.font.family
-            //                                horizontalAlignment: Text.AlignLeft
-            //                                background: Rectangle {
-            //                                    implicitWidth: parent.width
-            //                                    implicitHeight: 47
-            //                                    border.color: "#6D6D6D"
-            //                                    border.width: 1
-            //                                    radius: 10
-            //                                    Rectangle {
-            //                                        id: correctAnswerFieldGlowBorder
-            //                                        width: parent.width
-            //                                        height: parent.height
-            //                                        opacity: 0
-            //                                        radius: parent.radius
-            //                                        RectangularGlow {
-            //                                            anchors.fill: parent
-            //                                            glowRadius: 10
-            //                                            spread: 0.2
-            //                                            color: "#FF7C7C"
-            //                                            cornerRadius: parent.radius
-            //                                        }
-            //                                        SequentialAnimation {
-            //                                            id: emptyCorrectAnswerFieldErrorOn
-            //                                            PropertyAnimation {
-            //                                                target: correctAnswerFieldGlowBorder
-            //                                                properties: "opacity"
-            //                                                from: 0
-            //                                                to: 0.7
-            //                                                duration: 700
-            //                                            }
-            //                                        }
-            //                                        SequentialAnimation {
-            //                                            id: emptyCorrectAnswerFieldErrorOff
-            //                                            PropertyAnimation {
-            //                                                target: correctAnswerFieldGlowBorder
-            //                                                properties: "opacity"
-            //                                                from: 0.7
-            //                                                to: 0
-            //                                                duration: 700
-            //                                            }
-            //                                        }
-            //                                        Rectangle {
-            //                                            width: parent.width
-            //                                            height: parent.height
-            //                                            color: "#FFFFFF"
-            //                                            opacity: 0.7
-            //                                            radius: parent.radius
-            //                                        }
-            //                                    }
-            //                                }
-            //                                selectByMouse: true
-            //                                selectionColor: "#9E7ECE"
-            //                            }
-
-            //                            Text{
-            //                                id: correctAnswerLinkTitle
-            //                                text: qsTr("Посилання на правильну відповідь:")
-            //                                color: "#313131"
-            //                                font.bold: true
-            //                                font.pixelSize: 17
-            //                                font.family: LoginConstants.font.family
-            //                                anchors.left: parent.left
-            //                                anchors.leftMargin: parent.width * 0.05
-            //                            }
-            //                            TextField {
-            //                                id: correctAnswerLinkField
-            //                                anchors.left: parent.left
-            //                                anchors.leftMargin: parent.width * 0.05
-            //                                width: testCreator.width * 0.85
-            //                                text: ""
-            //                                color: "#000000"
-            //                                placeholderTextColor: "#3C3C3C"
-            //                                placeholderText: qsTr("Вставте текст з лекції, котрий містить правильну відповідь")
-            //                                font.bold: true
-            //                                opacity: 0.75
-            //                                font.pixelSize: 16
-            //                                font.family: LoginConstants.font.family
-            //                                horizontalAlignment: Text.AlignLeft
-            //                                background: Rectangle {
-            //                                    implicitWidth: parent.width
-            //                                    implicitHeight: 47
-            //                                    border.color: "#6D6D6D"
-            //                                    border.width: 1
-            //                                    radius: 10
-            //                                    Rectangle {
-            //                                        id: correctAnswerLinkFieldGlowBorder
-            //                                        width: parent.width
-            //                                        height: parent.height
-            //                                        opacity: 0
-            //                                        radius: parent.radius
-            //                                        RectangularGlow {
-            //                                            anchors.fill: parent
-            //                                            glowRadius: 10
-            //                                            spread: 0.2
-            //                                            color: "#FF7C7C"
-            //                                            cornerRadius: parent.radius
-            //                                        }
-            //                                        SequentialAnimation {
-            //                                            id: emptyCcorrectAnswerLinkFieldErrorOn
-            //                                            PropertyAnimation {
-            //                                                target: correctAnswerLinkFieldGlowBorder
-            //                                                properties: "opacity"
-            //                                                from: 0
-            //                                                to: 0.7
-            //                                                duration: 700
-            //                                            }
-            //                                        }
-            //                                        SequentialAnimation {
-            //                                            id: emptyCcorrectAnswerLinkFieldErrorOff
-            //                                            PropertyAnimation {
-            //                                                target: correctAnswerLinkFieldGlowBorder
-            //                                                properties: "opacity"
-            //                                                from: 0.7
-            //                                                to: 0
-            //                                                duration: 700
-            //                                            }
-            //                                        }
-            //                                        Rectangle {
-            //                                            width: parent.width
-            //                                            height: parent.height
-            //                                            color: "#FFFFFF"
-            //                                            opacity: 0.7
-            //                                            radius: parent.radius
-            //                                        }
-            //                                    }
-            //                                }
-            //                                selectByMouse: true
-            //                                selectionColor: "#9E7ECE"
-            //                            }
-            //                        }
-            //                    }
-            //                }
         }
     }
 

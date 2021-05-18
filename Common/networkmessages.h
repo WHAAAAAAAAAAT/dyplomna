@@ -11,4 +11,7 @@ namespace message {
 
     static const QString lectionSendingSuccess = "lectionSendingSuccess";
     static const QString lectionSendingFail = "lectionSendingFail";
+
+    static const QString courseSendingSuccess = "courseSendingSuccess";
+    static const QString courseSendingFail = "courseSendingFail";
 }

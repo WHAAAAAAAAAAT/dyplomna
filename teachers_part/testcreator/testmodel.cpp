@@ -121,6 +121,5 @@ void TestModel::setList(TestList *list)
             endRemoveRows();
         });
     }
-
     endResetModel();
 }

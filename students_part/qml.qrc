@@ -45,5 +45,6 @@
         <file>UI/TestResultScreen.qml</file>
         <file>UI/images/testResultScreen.gif</file>
         <file>UI/images/online-education.png</file>
+        <file>UI/ClientProfileScreen.qml</file>
     </qresource>
 </RCC>

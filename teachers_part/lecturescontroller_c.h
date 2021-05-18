@@ -16,10 +16,18 @@ public:
 
 public slots:
     void sendLecture(QQuickTextDocument *_lecture, const QString &_lectureName, const QString &_courseName);
+    void onLectureRecieved(const QString &_lecture);
+    void onLectureRecieved2(const QString &_course, const QString &_lecture, const QString &_text);
+    QQuickTextDocument *document();
+    void setDocument(QQuickTextDocument * _doc);
 
 signals:
     void lectureSendingError();
     void lectureSendingSuccess();
+    void lectureRecieved();
+
+private:
+    QQuickTextDocument *mDocument_ptr;
 };
 
 #endif // LECTURESCONTROLLER_C_H

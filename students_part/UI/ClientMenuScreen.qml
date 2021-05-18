@@ -214,7 +214,11 @@ ApplicationWindow {
                         settingsMouseAreaExited.start()
                     }
                     onClicked: {
-                        testResultWindow.show();
+                        var component = Qt.createComponent("ClientProfileScreen.qml")
+                        var profileWindow = component.createObject(windowMenu)
+                        profileWindow.title = qsTr("CPPLearn/Profile")
+                        profileWindow.show()
+                        menuWindow.hide()
                     }
                 }
                 PropertyAnimation {
@@ -247,8 +251,14 @@ ApplicationWindow {
         id: chatWindow
         title: qsTr("CPPLearn/Chat")
     }
-    TestResultScreen {
-        id: testResultWindow
-        title: qsTr("CPPLearn/Courses/Test/Result")
-    }
+
+//    ClientProfileScreen {
+//        id: profileWindow1
+//        title: qsTr("CPPLearn/Profile")
+//    }
+
+    //    TestResultScreen {
+    //        id: testResultWindow
+    //        title: qsTr("CPPLearn/Courses/Test/Result")
+    //    }
 }
