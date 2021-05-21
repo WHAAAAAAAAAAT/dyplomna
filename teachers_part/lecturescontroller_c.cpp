@@ -8,7 +8,7 @@
 LecturesController_c::LecturesController_c(QObject *parent) : QObject(parent)
 {
     connect(NotificationModel_c::instance(), &NotificationModel_c::lectureRecieved, this, &LecturesController_c::onLectureRecieved);
-    connect(CourseListModel_c::instance(), &CourseListModel_c::lectureRecived, this, &LecturesController_c::onLectureRecieved2);
+    connect(CourseListModel_c::instance(), &CourseListModel_c::lectureRecived, this, &LecturesController_c::onLectureRecieved);
 }
 
 void LecturesController_c::sendLecture(QQuickTextDocument *_lecture, const QString &_lectureName, const QString &_courseName)
@@ -17,17 +17,12 @@ void LecturesController_c::sendLecture(QQuickTextDocument *_lecture, const QStri
     if(NetworkModel_c::instance()->sendJson(lectureJson))
     {
         qDebug() << "lecture send";
+        CourseListModel_c::instance()->updateLectures();
     }
     else
     {
         qDebug() << "lecture not send";
     }
-}
-
-void LecturesController_c::onLectureRecieved2(const QString &_course, const QString &_lecture, const QString &_text)
-{
-    mDocument_ptr->textDocument()->setHtml(_text);
-    emit lectureRecieved();
 }
 
 void LecturesController_c::onLectureRecieved(const QString &_lecture)

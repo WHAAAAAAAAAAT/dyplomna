@@ -9,16 +9,16 @@ CourseListModel_c* CourseListModel_c::mInstance_ptr = nullptr;
 CourseListModel_c::CourseListModel_c(QObject *parent) : QAbstractListModel(parent)
 {
     if(NetworkModel_c::instance()->sendJson(JsonConverter::fromLoadCourseToJson()))
-    {
         qDebug() << "load courses send";
-    }
-    else
+}
+
+void CourseListModel_c::updateLectures()
+{
+    for(int i{0}; i < mItems.size(); ++i)
     {
-        QStringList newList = {"Введення в С++", "Встановлення IDE"};
-        QStringList newList2 = {"Мова Java"};
-        mItems.append({QStringLiteral("C++"), newList, false});
-        mItems.append({QStringLiteral("Java"), newList2, false});
+        NetworkModel_c::instance()->sendJson(JsonConverter::fromLoadLectureToJson(mItems.at(i).course));
     }
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }
 
 int CourseListModel_c::rowCount(const QModelIndex &parent) const
@@ -104,7 +104,7 @@ void CourseListModel_c::updateVisibleForCourse(const QString &_course)
 }
 
 void CourseListModel_c::loadLectures(QString _courseName, QString lectureName)
-{
+{  
     int courseIndex{0};
     for(int i{0}; i < mItems.size(); ++i)
     {
@@ -123,8 +123,8 @@ void CourseListModel_c::loadLectures(QString _courseName, QString lectureName)
             break;
         }
     }
-    qDebug() << lectureName + " " + _courseName + " " + lectureText;
-    emit lectureRecived(_courseName, lectureName, lectureText);
+    emit lectureRecived(lectureText);
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }
 
 void CourseListModel_c::setCourses(QVector<CourseItem> _courses)
@@ -137,14 +137,14 @@ void CourseListModel_c::setCourses(QVector<CourseItem> _courses)
     {
         NetworkModel_c::instance()->sendJson(JsonConverter::fromLoadLectureToJson(mItems.at(i).course));
     }
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }
 
 void CourseListModel_c::setLectures(QVector<Lecture> _lectures)
 {
     mLectures.append(_lectures);
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }
-
-
 
 QStringList CourseListModel_c::lecturesList(int index)
 {

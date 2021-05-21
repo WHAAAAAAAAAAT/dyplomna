@@ -35,6 +35,7 @@ public:
 public slots:
     void updateVisibleForCourse(const QString &_course);
 
+    void updateLectures();
     void loadLectures(QString _courseName, QString _lectureName);
     void setCourses(QVector<CourseItem> _courses);
     void setLectures(QVector<Lecture> _lectures);
@@ -44,7 +45,7 @@ public slots:
     void removeCourse(const QString &_course);
 
 signals:
-    void lectureRecived(QString courseName, QString lectureName, QString lectureText);
+    void lectureRecived(QString lectureText);
 
 private:
     QVector<CourseItem> mItems;

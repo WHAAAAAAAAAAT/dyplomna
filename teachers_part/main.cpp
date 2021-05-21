@@ -77,8 +77,6 @@ int main(int argc, char *argv[])
 #else
     QGuiApplication app(argc, argv);
 #endif
-    QApplication::setQuitOnLastWindowClosed(false);
-
     auto network = NetworkModel_c::instance();
     Q_UNUSED(network)
 
@@ -102,6 +100,8 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+    QApplication::setQuitOnLastWindowClosed(false);
 
     return app.exec();
 }
