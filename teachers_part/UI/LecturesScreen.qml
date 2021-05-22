@@ -148,6 +148,7 @@ ApplicationWindow {
                 function onClicked() {
                     CourseModel.saveCurrentLecture(lecturesView.textDocument, lecturesView.chosenLecture,
                                                    lecturesView.chosenCourse)
+
                     lecturesController.sendLecture(lecturesView.textDocument, lecturesView.chosenLecture,
                                                    lecturesView.chosenCourse)
                 }

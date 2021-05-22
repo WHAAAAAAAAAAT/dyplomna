@@ -9,6 +9,7 @@
 
 #include "notificationmodel_c.h"
 #include "courselistmodel_c.h"
+#include "testcreator/testmodel.h"
 
 NetworkModel_c* NetworkModel_c::mInstance_ptr = nullptr;
 
@@ -112,6 +113,13 @@ void NetworkModel_c::onJsonObjectsReceived(const QByteArray &data)
             tests.testList[i].linkToText = tempTask["Link"].toString();
         }
         qDebug() << tests.testList[0].question;
+        // add test to TestModel::instance->setTest(Test)
+
+        // setTest(Test)
+        //{
+        //list.updateData();
+        //emit data changed({Qt::EditRole});
+        //}
     }
 }
 

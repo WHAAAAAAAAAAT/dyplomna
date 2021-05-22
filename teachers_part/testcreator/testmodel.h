@@ -43,6 +43,8 @@ public:
     static TestModel* instance();
 
 private:
+    static TestModel* mInstance_ptr;
+
     TestList *mList;
 };
 
