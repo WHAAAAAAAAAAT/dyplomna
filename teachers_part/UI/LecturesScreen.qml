@@ -23,12 +23,10 @@ ApplicationWindow {
         Component.onCompleted: {
             setDocument(lecturesView.textDocument)
         }
-        onLectureSendingSuccess: {
+    }
 
-        }
-        onLectureSendingError: {
-
-        }
+    TestController {
+        id: testController
     }
 
     Rectangle {
@@ -167,6 +165,7 @@ ApplicationWindow {
             Connections {
                 target: createTestButton
                 function onClicked() {
+                    testController.loadTest(lecturesView.chosenLecture, lecturesView.chosenCourse)
                     createTestOn.start()
                 }
             }
@@ -262,6 +261,9 @@ ApplicationWindow {
                 color: parent.color
                 lecName: currentLecName
                 courseName: currentCourseName
+                onSaveTest: {
+                    testController.saveTestList(lec, course)
+                }
             }
         }
     }

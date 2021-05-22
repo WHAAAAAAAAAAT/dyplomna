@@ -6,6 +6,7 @@ SOURCES += \
         courselistmodel_c.cpp \
         jsonconverter.cpp \
         lecturescontroller_c.cpp \
+        testcontroller_c.cpp \
         logincontroller_c.cpp \
         main.cpp \
         networkmodel_c.cpp \
@@ -19,6 +20,7 @@ HEADERS += \
     courselistmodel_c.h \
     jsonconverter.h \
     lecturescontroller_c.h \
+    testcontroller_c.h \
     logincontroller_c.h \
     networkmodel_c.h \
     documenthandler.h \

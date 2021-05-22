@@ -1,4 +1,4 @@
-#ifndef TESTLIST_H
+﻿#ifndef TESTLIST_H
 #define TESTLIST_H
 
 #include <QObject>
@@ -16,6 +16,9 @@ public:
     bool setItemAt(int index, const TestListItem &item);
     QString getLectureName();
     QString getCourseName();
+    QVector<TestListItem> getItems();
+    void setLectureName(const QString &_lectureName);
+    void setCourseName(const QString &_courseName);
 
 signals:
     void preItemAppended();
@@ -23,13 +26,11 @@ signals:
 
     void preItemRemoved(int index);
     void postItemRemoved();
-//    void updateTest(TestList *list);
 
 public slots:
     void appendItem();
     void removeCompletedItems();
     QStringList answers(int index);
-    void saveTestList(QString _lectureName, QString _courseName);
     void setTestList(const Test &_test);
 
 private:

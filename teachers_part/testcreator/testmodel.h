@@ -3,6 +3,10 @@
 
 #include <QAbstractListModel>
 
+#include <QQmlEngine>
+#include <QJSEngine>
+#include "testitem.h"
+
 class TestList;
 
 class TestModel : public QAbstractListModel
@@ -35,8 +39,14 @@ public:
 
     TestList *list() const;
     void setList(TestList *list);
+    void setTest(const Test &_test);
+
+    static QObject *qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
+    static TestModel* instance();
 
 private:
+    static TestModel* mInstance_ptr;
+
     TestList *mList;
 };
 

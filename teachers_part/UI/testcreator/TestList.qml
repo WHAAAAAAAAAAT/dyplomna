@@ -5,7 +5,8 @@ import QtGraphicalEffects 1.15
 
 import "qrc:/UI"
 
-import Test 1.0
+import Controllers 1.0
+import Models 1.0
 
 Rectangle {
     id: testRectangle
@@ -13,6 +14,8 @@ Rectangle {
 
     property string lecName: ""
     property string courseName: ""
+
+    signal saveTest(string lec, string course)
 
     Rectangle {
         id: viewRectangle
@@ -392,8 +395,7 @@ Rectangle {
             anchors.leftMargin: parent.width * 0.3
             onClicked:
             {
-                testList.saveTestList(lecName, courseName);
-//              onClicked: testList.appendItem();
+                saveTest(lecName, courseName)
             }
         }
         Row {
