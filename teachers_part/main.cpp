@@ -62,7 +62,10 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<TeacherInfoModel_c>("Models", 1, 0, "TeacherInfoModel_c", &TeacherInfoModel_c::qmlInstance);
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "LoginController");
     qmlRegisterType<LecturesController_c>("Controllers", 1, 0, "LecturesController");
+<<<<<<< HEAD
     qmlRegisterType<TestController_c>("Controllers", 1, 0, "TestController");
+=======
+>>>>>>> 4b11e5461d67800f6d15d238e24cc76113f54f59
     qmlRegisterSingletonType<TestModel>("Models", 1, 0, "TestModel", &TestModel::qmlInstance);
     qmlRegisterSingletonType<CourseListModel_c>("Models", 1, 0, "CourseModel", &CourseListModel_c::qmlInstance);
     qmlRegisterUncreatableType<TestList>("Test", 1, 0, "TestList",

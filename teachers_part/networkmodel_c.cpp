@@ -113,7 +113,17 @@ void NetworkModel_c::onJsonObjectsReceived(const QByteArray &data)
             tests.testList[i].linkToText = tempTask["Link"].toString();
         }
         qDebug() << tests.testList[0].question;
+<<<<<<< HEAD
         TestModel::instance()->setTest(tests);
+=======
+        // add test to TestModel::instance->setTest(Test)
+
+        // setTest(Test)
+        //{
+        //list.updateData();
+        //emit data changed({Qt::EditRole});
+        //}
+>>>>>>> 4b11e5461d67800f6d15d238e24cc76113f54f59
     }
 }
 
