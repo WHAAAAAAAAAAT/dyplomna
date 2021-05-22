@@ -20,7 +20,6 @@
 #include "courselistmodel_c.h"
 
 #include "networkmodel_c.h"
-#include "courselistmodel_c.h"
 
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -62,7 +61,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<TeacherInfoModel_c>("Models", 1, 0, "TeacherInfoModel_c", &TeacherInfoModel_c::qmlInstance);
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "LoginController");
     qmlRegisterType<LecturesController_c>("Controllers", 1, 0, "LecturesController");
-    qmlRegisterType<TestModel>("Test", 1, 0, "TestModel");
+    qmlRegisterSingletonType<TestModel>("Models", 1, 0, "TestModel", &TestModel::qmlInstance);
     qmlRegisterSingletonType<CourseListModel_c>("Models", 1, 0, "CourseModel", &CourseListModel_c::qmlInstance);
     qmlRegisterUncreatableType<TestList>("Test", 1, 0, "TestList",
                                          QStringLiteral("TestList should not be created in QML"));

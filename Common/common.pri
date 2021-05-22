@@ -4,7 +4,6 @@ QT += sql
 
 HEADERS += \
     $$PWD/answeritem.h \
-    $$PWD/answeritem.h \
     $$PWD/chat/sqlcontactmodel.h \
     $$PWD/chat/sqlconversationmodel.h \
     $$PWD/commondata.h \

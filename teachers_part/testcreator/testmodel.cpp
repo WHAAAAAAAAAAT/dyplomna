@@ -4,11 +4,30 @@
 #include "networkmodel_c.h"
 #include "jsonconverter.h"
 
+TestModel* TestModel::mInstance_ptr = nullptr;
+
 TestModel::TestModel(QObject *parent)
     : QAbstractListModel(parent)
     , mList(nullptr)
 {
 }
+
+QObject *TestModel::qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(engine);
+    Q_UNUSED(scriptEngine);
+    return TestModel::instance();
+}
+
+TestModel *TestModel::instance()
+{
+    if (!mInstance_ptr)
+    {
+        mInstance_ptr = new TestModel;
+    }
+    return mInstance_ptr;
+}
+
 
 int TestModel::rowCount(const QModelIndex &parent) const
 {
