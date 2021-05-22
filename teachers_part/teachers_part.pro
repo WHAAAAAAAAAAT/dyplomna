@@ -32,7 +32,6 @@ RESOURCES += qml.qrc \
 
 include($${_PRO_FILE_PWD_}/../Common/common.pri)
 
-# Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target

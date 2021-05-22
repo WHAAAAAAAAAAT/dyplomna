@@ -90,8 +90,29 @@ void NetworkModel_c::onJsonObjectsReceived(const QByteArray &data)
             }
         }
         CourseListModel_c::instance()->setLectures(lectures);
-    }
+    } else if(title == "Tests")
+    {
+        Test tests;
+        tests.courseName = _obj["CourseName"].toString();
+        tests.lectureName = _obj["LectureName"].toString();
+        QJsonObject testTasksObj = _obj["Test"].toObject();
+        for(int i{0}; i < testTasksObj.size(); ++i)
+        {
+            QJsonObject tempTask = testTasksObj["Task" + QString::number(i)].toObject();
+            tests.testList[i].question = tempTask["Question"].toString();
+            QStringList tempList;
+            for(int j{0}; j < tempTask["Answers"].toArray().size(); ++j)
+            {
+                tempList.append(tempTask["Answers"].toArray().at(j).toString());
 
+            }
+            tests.testList[i].answers = tempList;
+            tests.testList[i].check = tempTask["Check"].toBool();
+            tests.testList[i].correctAnswer = tempTask["CorrectAnswer"].toString();
+            tests.testList[i].linkToText = tempTask["Link"].toString();
+        }
+        qDebug() << tests.testList[0].question;
+    }
 }
 
 void NetworkModel_c::onSslErrors(const QList<QSslError> &errors)

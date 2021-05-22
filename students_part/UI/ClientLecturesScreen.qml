@@ -12,8 +12,8 @@ ApplicationWindow {
     height: 720
     signal exitWindowLectures
 
-    property int numberOfQuestion: 2
-    property int numberOfAnswers: 4
+    property string currentLecName: ""
+    property string currentCourseName: ""
 
     LectureController {
         id: controller
@@ -63,6 +63,15 @@ ApplicationWindow {
                 anchors.fill: parent
                 color: parent.color
                 visible: true
+                onSendLectureName: {
+                    lecturesView.chosenLecture = lecName
+                    lecturesView.chosenCourse = courseName
+                    lecturesOffView.visible = false
+                    lecturesView.visible = true
+                }
+                Component.onCompleted: {
+                    console.log("ha ha ha ha")
+                }
             }
         }
     }
@@ -103,7 +112,7 @@ ApplicationWindow {
                 Connections {
                     target: menuButton
                     function onClicked() {
-                        lecturesWindow.hide()
+                        windowLectures.hide()
                         menuWindow.show()
                     }
                 }
@@ -132,8 +141,11 @@ ApplicationWindow {
             Connections {
                 target: startTestButton
                 function onClicked() {
-                    lecturesWindow.hide()
+                    var component = Qt.createComponent("ClientTestScreen.qml")
+                    var testWindow = component.createObject(windowLectures)
+                    testWindow.title = qsTr("CPPLearn/Courses/Test")
                     testWindow.show()
+                    windowLectures.hide()
                 }
             }
         }
@@ -167,14 +179,13 @@ ApplicationWindow {
         visible: true
     }
 
-    ClientTestScreen {
-        id: testWindow
-        title: qsTr("CPPLearn/Courses/Test")
+//    ClientTestScreen {
+//        id: testWindow
+//        title: qsTr("CPPLearn/Courses/Test")
 
-        onExitWindowTests: {
-            testWindow.hide()
-            lecturesWindow.show()
-        }
-    }
-
+//        onExitWindowTests: {
+//            testWindow.hide()
+//            lecturesWindow.show()
+//        }
+//    }
 }

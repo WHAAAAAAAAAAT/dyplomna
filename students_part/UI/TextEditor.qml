@@ -14,6 +14,8 @@ Rectangle {
     visible: true
 
     readonly property var textDocument: document.document
+    property string chosenLecture: ""
+    property string chosenCourse: ""
 
     ColorDialog {
         id: colorDialog

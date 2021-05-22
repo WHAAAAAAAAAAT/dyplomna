@@ -1,6 +1,8 @@
 #include "testmodel.h"
 
 #include "testlist.h"
+#include "networkmodel_c.h"
+#include "jsonconverter.h"
 
 TestModel::TestModel(QObject *parent)
     : QAbstractListModel(parent)

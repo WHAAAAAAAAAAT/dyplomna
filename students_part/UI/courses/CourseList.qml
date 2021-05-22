@@ -11,6 +11,8 @@ Rectangle {
     id: courseListRect
     anchors.fill: parent
     color: "transparent"
+    signal sendLectureName(string lecName, string courseName)
+
     ListView {
         id: view
         anchors.fill: parent
@@ -48,7 +50,7 @@ Rectangle {
                 anchors.left: courseNameRectangle.left
                 spacing: 10
                 model: currentModel.lecturesList
-                height: 30 * model.length
+                height: courseNameRectangle.height - 70
                 visible: currentModel.aVisible
                 delegate: Rectangle {
                     id: lectureRectangle
@@ -68,7 +70,7 @@ Rectangle {
                         wrapMode: Text.WordWrap
                     }
                     Rectangle {
-                        id: lectureeButtonEntered
+                        id: lectureButtonEntered
                         anchors.fill: lectureRectangle
                         opacity: 0
                         color: "#2B2B2B"
@@ -76,6 +78,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: lectureRectangle
                         hoverEnabled: true
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
                         cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
                         onEntered: {
                             lectureMouseAreaEntered.start()
@@ -84,22 +87,30 @@ Rectangle {
                             lectureMouseAreaExited.start()
                         }
                         onClicked: {
-
+                            courseListRect.sendLectureName(lecture.text, currentModel.course)
+                            CourseModel.loadLectures(currentModel.course, lecture.text)
                         }
                     }
                     PropertyAnimation {
                         id: lectureMouseAreaEntered
-                        target: lectureeButtonEntered
+                        target: lectureButtonEntered
                         properties: "opacity"
                         to: 0.1
                         duration: 100
                     }
                     PropertyAnimation {
                         id: lectureMouseAreaExited
-                        target: lectureeButtonEntered
+                        target: lectureButtonEntered
                         properties: "opacity"
                         to: 0
                         duration: 100
+                    }
+                    Menu {
+                        id: contextMenuLecture
+                        MenuItem {
+                            text: qsTr("Видалити лекцію")
+                            //onTriggered: model.removeCourse(lecture.text)
+                        }
                     }
                 }
             }
@@ -119,6 +130,7 @@ Rectangle {
                 height: 50
                 width: parent.width
                 hoverEnabled: true
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
                 cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
                 onEntered: {
                     courseMouseAreaEntered.start()
@@ -127,15 +139,23 @@ Rectangle {
                     courseMouseAreaExited.start()
                 }
                 onClicked: {
-                    if(model.aVisible === false)
+                    if (mouse.button == Qt.LeftButton)
                     {
-                        model.aVisible = true
-                        courseMouseClickedOpen.start()
+                        if(model.aVisible === false)
+                        {
+                            model.aVisible = true
+                            courseMouseClickedOpen.start()
+                        }
+                        else
+                        {
+                            model.aVisible = false
+                            courseMouseClickedClose.start()
+                        }
                     }
-                    else
+                    if (mouse.button == Qt.RightButton)
                     {
-                        model.aVisible = false
-                        courseMouseClickedClose.start()
+                        console.log("right click")
+                        contextMenuCourse.open()
                     }
                 }
             }
@@ -157,30 +177,36 @@ Rectangle {
                 id: courseMouseClickedOpen
                 target: courseNameRectangle
                 properties: "height"
-                to: 50 + (40 * currentListModel.length)
+                to: 50 + 40 * currentListModel.length
                 duration: 100
             }
-           PropertyAnimation {
+            PropertyAnimation {
                 id: courseMouseClickedClose
                 target: courseNameRectangle
                 properties: "height"
                 to: 50
                 duration: 100
             }
+            Menu {
+                id: contextMenuCourse
+                MenuItem {
+                    text: qsTr("Видалити курс")
+                    onTriggered: CourseModel.removeCourse(courseNameText.text)
+                }
+            }
         }
         ScrollBar.vertical: ScrollBar {}
     }
 
     ClientLoginButton {
-        id: findCourseButton
+        id: createCourseButton
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width * 0.75
-        opacity: 0.85
-        text: qsTr("ЗНАЙТИ НОВИЙ КУРС")
-        enabled: enabled
+        opacity: 0.8
+        text: qsTr("ЗНАЙТИ КУРС")
         Connections {
-            target: findCourseButton
+            target: createCourseButton
             function onClicked() {
 
             }

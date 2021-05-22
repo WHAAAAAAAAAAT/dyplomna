@@ -53,15 +53,67 @@ void NetworkModel_c::onTextMessageReceived(const QString &message)
 
 void NetworkModel_c::onJsonObjectsReceived(const QByteArray &data)
 {
-    if (!data.isEmpty())
+    auto _obj = convertToJson(data);
+    auto title = _obj.value(jsonKeys::title);
+    if (title == "Courses")
     {
-        auto json = convertToJson(data);
-        if (!json.isEmpty())
+        QVector<CourseItem> courses;
+        for(int i{0}; i < _obj.size()/2; ++i)
         {
-            qDebug() << "Json received: " << json;
-            mReceivedJsonObjects.append(json);
-            emit jsonReceived(json);
+            if(_obj.contains("Course " + QString::number(i)))
+            {
+                CourseItem tempCourseItem;
+                tempCourseItem.course = _obj.value("Course " + QString::number(i)).toString().toUtf8();
+                tempCourseItem.isVisible = false;
+                QJsonArray tempArray = _obj.value("Lectures at course " + QString::number(i)).toArray();
+                for(int j{0}; j < tempArray.size(); ++j)
+                {
+                    tempCourseItem.lectures.append(tempArray.at(j).toString().toUtf8());
+                }
+                courses.append(tempCourseItem);
+                qDebug() << tempCourseItem.course;
+            }
         }
+        CourseListModel_c::instance()->setCourses(courses);
+    } else if(title == "Lectures")
+    {
+        QVector<Lecture> lectures;
+        for(int i{0}; i < _obj.size(); ++i)
+        {
+            if(_obj.contains("Lecture " + QString::number(i)))
+            {
+                QJsonObject currentLecture = _obj.value("Lecture " + QString::number(i)).toObject();
+                Lecture tempLectureItem;
+                tempLectureItem.name = currentLecture.value("Name").toString().toUtf8();
+                tempLectureItem.courseName = currentLecture.value("Course").toString().toUtf8();
+                tempLectureItem.text = currentLecture.value("Text").toString().toUtf8();
+                lectures.append(tempLectureItem);
+                qDebug() << tempLectureItem.name;
+            }
+        }
+        CourseListModel_c::instance()->setLectures(lectures);
+    } else if(title == "Tests")
+    {
+//        Test tests;
+//        tests.courseName = _obj["CourseName"].toString();
+//        tests.lectureName = _obj["LectureName"].toString();
+//        QJsonObject testTasksObj = _obj["Test"].toObject();
+//        for(int i{0}; i < testTasksObj.size(); ++i)
+//        {
+//            QJsonObject tempTask = testTasksObj["Task" + QString::number(i)].toObject();
+//            tests.testList[i].question = tempTask["Question"].toString();
+//            QStringList tempList;
+//            for(int j{0}; j < tempTask["Answers"].toArray().size(); ++j)
+//            {
+//                tempList.append(tempTask["Answers"].toArray().at(j).toString());
+
+//            }
+//            tests.testList[i].answers = tempList;
+//            tests.testList[i].check = tempTask["Check"].toBool();
+//            tests.testList[i].correctAnswer = tempTask["CorrectAnswer"].toString();
+//            tests.testList[i].linkToText = tempTask["Link"].toString();
+//        }
+//        qDebug() << tests.testList[0].question;
     }
 }
 

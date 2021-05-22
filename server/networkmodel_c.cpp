@@ -204,7 +204,7 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
         {
             CourseItem course = Network::jsonToCourse(_obj);
             CourseFolderModel_c::instance()->saveCourse(course);
-            //            sendToAllStudents(_obj);
+            sendToAllStudents(_obj);
         } else if (title == jsonValues::test)
         {
             Test test = Network::jsonToTest(_obj);
@@ -212,9 +212,17 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
         } else if(title == jsonValues::loadCourses)
         {
             sendToAllTeachers(CourseFolderModel_c::instance()->getCourses());
+            sendToAllStudents(CourseFolderModel_c::instance()->getCourses());
         } else if(title == jsonValues::loadLectures)
         {
             sendToAllTeachers(LectureFileModel_c::instance()->getLectures(_obj.value(jsonKeys::courseName).toString()));
+            sendToAllStudents(LectureFileModel_c::instance()->getLectures(_obj.value(jsonKeys::courseName).toString()));
+        } else if(title == jsonValues::loadTests)
+        {
+            sendToAllTeachers(TestFileModel_c::instance()->getTest(_obj.value(jsonKeys::courseName).toString(),
+                                                                   _obj.value(jsonKeys::lectureName).toString()));
+            sendToAllStudents(TestFileModel_c::instance()->getTest(_obj.value(jsonKeys::courseName).toString(),
+                                                                   _obj.value(jsonKeys::lectureName).toString()));
         }
     }
 }

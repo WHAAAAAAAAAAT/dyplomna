@@ -38,8 +38,8 @@ Window {
             Connections {
                 target: goBackButton
                 function onClicked() {
-                    testWindow.hide()
-                    lecturesWindow.show()
+                    windowTests.hide()
+                    windowLectures.show()
                 }
             }
         }
@@ -119,40 +119,40 @@ Window {
         anchors.bottom: parent.bottom
         width: parent.width
         height: 100
-        Row {
-            id: footerButtons
-            anchors.top: parent.top
-            anchors.topMargin: parent.height * 0.3
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: windowTests.height * 0.45 * 0.05
-            ClientLoginButton {
-                id: previousButton
-                width: footer.width * 0.1
-                text: qsTr("Назад")
-                loginfontSize: 18
-                opacity: 1
-                visible: true
-                Connections {
-                    target: previousButton
-                    function onClicked() {
+//        Row {
+//            id: footerButtons
+//            anchors.top: parent.top
+//            anchors.topMargin: parent.height * 0.3
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            spacing: windowTests.height * 0.45 * 0.05
+//            ClientLoginButton {
+//                id: previousButton
+//                width: footer.width * 0.1
+//                text: qsTr("Назад")
+//                loginfontSize: 18
+//                opacity: 1
+//                visible: true
+//                Connections {
+//                    target: previousButton
+//                    function onClicked() {
 
-                    }
-                }
-            }
-            ClientLoginButton {
-                id: nextButton
-                width: footer.width * 0.1
-                text: qsTr("Далі")
-                loginfontSize: 18
-                opacity: 1
-                visible: true
-                Connections {
-                    target: nextButton
-                    function onClicked() {
+//                    }
+//                }
+//            }
+//            ClientLoginButton {
+//                id: nextButton
+//                width: footer.width * 0.1
+//                text: qsTr("Далі")
+//                loginfontSize: 18
+//                opacity: 1
+//                visible: true
+//                Connections {
+//                    target: nextButton
+//                    function onClicked() {
 
-                    }
-                }
-            }
-        }
+//                    }
+//                }
+//            }
+//        }
     }
 }

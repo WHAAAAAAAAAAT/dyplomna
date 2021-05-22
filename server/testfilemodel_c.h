@@ -12,7 +12,7 @@ public:
     static TestFileModel_c* instance();
 
     void saveTest(const Test &_test, const QByteArray &_message);
-    Test getTest(const QString &_courseName, const QString &_lectureName);
+    QJsonObject getTest(const QString &_courseName, const QString &_lectureName);
 
 private:
     explicit TestFileModel_c(QObject *_parent_ptr = nullptr);

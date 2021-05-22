@@ -1,22 +1,20 @@
 #include "courselistmodel_c.h"
 #include <QDebug>
+#include "networkmodel_c.h"
+#include "notificationmodel_c.h"
+#include "jsonconverter.h"
 
 CourseListModel_c* CourseListModel_c::mInstance_ptr = nullptr;
 
 CourseListModel_c::CourseListModel_c(QObject *parent) : QAbstractListModel(parent)
 {
-    QStringList newList = {"Введення в С++", "Встановлення IDE"};
-    QStringList newList2 = {"Мова програмування\nJava"};
-    mItems.append({QStringLiteral("C++"), newList, false});
-    mItems.append({QStringLiteral("Java"), newList2, false});
+    if(NetworkModel_c::instance()->sendJson(JsonConverter::fromLoadCourseToJson()))
+        qDebug() << "load courses send";
 }
 
 int CourseListModel_c::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
-        return 0;
-
-    return mItems.size();
+    return parent.isValid() ? 0 : mItems.size();
 }
 
 QVariant CourseListModel_c::data(const QModelIndex &indexM, int role) const
@@ -32,8 +30,9 @@ QVariant CourseListModel_c::data(const QModelIndex &indexM, int role) const
         return QVariant(item.course);
     case VisibleRole:
         return QVariant(item.isVisible);
+    default:
+        return QVariant();
     }
-    return QVariant();
 }
 
 bool CourseListModel_c::setData(const QModelIndex &indexM, const QVariant &value, int role)
@@ -93,20 +92,102 @@ void CourseListModel_c::updateVisibleForCourse(const QString &_course)
     emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }
 
-QStringList CourseListModel_c::lecturesList(int index)
+void CourseListModel_c::loadLectures(QString _courseName, QString lectureName)
 {
-    return mItems.at(index).lectures;
+    int courseIndex{0};
+    for(int i{0}; i < mItems.size(); ++i)
+    {
+        if(mItems.at(i).course == _courseName)
+        {
+            courseIndex = i;
+            break;
+        }
+    }
+    QString lectureText;
+    for(int i{0}; i < mLectures.at(courseIndex).size(); ++i)
+    {
+        if(mLectures.at(courseIndex).at(i).name == lectureName)
+        {
+            lectureText = mLectures.at(courseIndex).at(i).text;
+            break;
+        }
+    }
+    emit lectureRecived(lectureText);
+}
+
+void CourseListModel_c::setCourses(QVector<CourseItem> _courses)
+{
+    beginResetModel();
+    mItems = _courses;
+    endResetModel();
+
+    for(int i{0}; i < mItems.size(); ++i)
+    {
+        NetworkModel_c::instance()->sendJson(JsonConverter::fromLoadLectureToJson(mItems.at(i).course));
+    }
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
+}
+
+void CourseListModel_c::setLectures(QVector<Lecture> _lectures)
+{
+    mLectures.append(_lectures);
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }
 
 void CourseListModel_c::addLecture(const QString _lectureName, const QString _courseName)
 {
-    for (auto item : mItems)
+    int index{0};
+    for (int i{0}; i < mItems.size(); ++i)
     {
-        if(item.course == _courseName)
+        if(mItems[i].course == _courseName)
         {
-            item.lectures.append(_lectureName);
+            index = i;
             break;
         }
     }
-    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
+    beginResetModel();
+    mItems[index].lectures.append(_lectureName);
+    endResetModel();
+}
+
+void CourseListModel_c::addCourse(const QString &_course)
+{
+    for(auto item : mItems)
+    {
+        if(item.course == _course)
+        {
+            qDebug() << "course is already created";
+            return;
+        }
+    }
+    QJsonObject courseJson = JsonConverter::fromCourseToJson(_course);
+    if(NetworkModel_c::instance()->sendJson(courseJson))
+    {
+        qDebug() << "course name send";
+        const int index = mItems.size();
+        beginInsertRows(QModelIndex(), index, index);
+        mItems.append({_course, QStringList{""}, false});
+        endInsertRows();
+    }
+    else
+    {
+        qDebug() << "course name not send";
+    }
+}
+
+void CourseListModel_c::removeCourse(const QString &_course)
+{
+    for (int i{0}; i < mItems.size(); ++i)
+    {
+        if (mItems[i].course == _course) {
+            beginRemoveRows(QModelIndex(), i, i);
+            mItems.removeAt(i);
+            endRemoveRows();
+        }
+    }
+}
+
+QStringList CourseListModel_c::lecturesList(int index)
+{
+    return mItems.at(index).lectures;
 }

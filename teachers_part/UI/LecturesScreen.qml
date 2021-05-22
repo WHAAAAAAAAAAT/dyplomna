@@ -3,6 +3,8 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 
 import Controllers 1.0
+import Models 1.0
+
 
 import "qrc:/UI/testcreator"
 import "qrc:/UI/courses"
@@ -15,7 +17,6 @@ ApplicationWindow {
 
     property string currentLecName: ""
     property string currentCourseName: ""
-    property int numberOfAnswers: 4
 
     LecturesController {
         id: lecturesController
@@ -145,6 +146,8 @@ ApplicationWindow {
             Connections {
                 target: saveLectureButton
                 function onClicked() {
+                    CourseModel.saveCurrentLecture(lecturesView.textDocument, lecturesView.chosenLecture,
+                                                   lecturesView.chosenCourse)
                     lecturesController.sendLecture(lecturesView.textDocument, lecturesView.chosenLecture,
                                                    lecturesView.chosenCourse)
                 }

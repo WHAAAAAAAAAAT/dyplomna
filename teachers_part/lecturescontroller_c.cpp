@@ -17,7 +17,6 @@ void LecturesController_c::sendLecture(QQuickTextDocument *_lecture, const QStri
     if(NetworkModel_c::instance()->sendJson(lectureJson))
     {
         qDebug() << "lecture send";
-        CourseListModel_c::instance()->updateLectures();
     }
     else
     {

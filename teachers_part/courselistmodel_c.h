@@ -8,6 +8,7 @@
 
 #include <QQmlEngine>
 #include <QJSEngine>
+#include <QQuickTextDocument>
 
 class CourseListModel_c : public QAbstractListModel
 {
@@ -35,7 +36,6 @@ public:
 public slots:
     void updateVisibleForCourse(const QString &_course);
 
-    void updateLectures();
     void loadLectures(QString _courseName, QString _lectureName);
     void setCourses(QVector<CourseItem> _courses);
     void setLectures(QVector<Lecture> _lectures);
@@ -43,6 +43,8 @@ public slots:
     void addLecture(const QString _lectureName, const QString _courseName);
     void addCourse(const QString &_course);
     void removeCourse(const QString &_course);
+
+    void saveCurrentLecture(QQuickTextDocument *_lecture, const QString &_lectureName, const QString &_courseName);
 
 signals:
     void lectureRecived(QString lectureText);

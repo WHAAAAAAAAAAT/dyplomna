@@ -31,4 +31,5 @@ namespace jsonValues {
     static const QString test = "testToServer";
     static const QString loadCourses = "loadCourses";
     static const QString loadLectures = "loadLectures";
+    static const QString loadTests = "loadTests";
 }

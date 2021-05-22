@@ -12,21 +12,9 @@ CourseListModel_c::CourseListModel_c(QObject *parent) : QAbstractListModel(paren
         qDebug() << "load courses send";
 }
 
-void CourseListModel_c::updateLectures()
-{
-    for(int i{0}; i < mItems.size(); ++i)
-    {
-        NetworkModel_c::instance()->sendJson(JsonConverter::fromLoadLectureToJson(mItems.at(i).course));
-    }
-    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
-}
-
 int CourseListModel_c::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
-        return 0;
-
-    return mItems.size();
+    return parent.isValid() ? 0 : mItems.size();
 }
 
 QVariant CourseListModel_c::data(const QModelIndex &indexM, int role) const
@@ -42,8 +30,9 @@ QVariant CourseListModel_c::data(const QModelIndex &indexM, int role) const
         return QVariant(item.course);
     case VisibleRole:
         return QVariant(item.isVisible);
+    default:
+        return QVariant();
     }
-    return QVariant();
 }
 
 bool CourseListModel_c::setData(const QModelIndex &indexM, const QVariant &value, int role)
@@ -104,7 +93,7 @@ void CourseListModel_c::updateVisibleForCourse(const QString &_course)
 }
 
 void CourseListModel_c::loadLectures(QString _courseName, QString lectureName)
-{  
+{
     int courseIndex{0};
     for(int i{0}; i < mItems.size(); ++i)
     {
@@ -124,7 +113,6 @@ void CourseListModel_c::loadLectures(QString _courseName, QString lectureName)
         }
     }
     emit lectureRecived(lectureText);
-    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
 }
 
 void CourseListModel_c::setCourses(QVector<CourseItem> _courses)
@@ -202,4 +190,28 @@ void CourseListModel_c::removeCourse(const QString &_course)
             endRemoveRows();
         }
     }
+}
+
+void CourseListModel_c::saveCurrentLecture(QQuickTextDocument *_lecture, const QString &_lectureName, const QString &_courseName)
+{
+    int courseIndex{0};
+    for(int i{0}; i < mItems.size(); ++i)
+    {
+        if(mItems.at(i).course == _courseName)
+        {
+            courseIndex = i;
+            break;
+        }
+    }
+    QString lectureText;
+    for(int i{0}; i < mLectures.at(courseIndex).size(); ++i)
+    {
+        if(mLectures.at(courseIndex).at(i).name == _lectureName)
+        {
+            mLectures[courseIndex][i].text = _lecture->textDocument()->toHtml();
+            break;
+        }
+    }
+
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0), {Qt::EditRole});
 }

@@ -4,9 +4,11 @@
 #include <QAbstractListModel>
 
 #include "courseitem.h"
+#include "lecture.h"
 
 #include <QQmlEngine>
 #include <QJSEngine>
+#include <QQuickTextDocument>
 
 class CourseListModel_c : public QAbstractListModel
 {
@@ -34,10 +36,19 @@ public:
 public slots:
     void updateVisibleForCourse(const QString &_course);
 
+    void loadLectures(QString _courseName, QString _lectureName);
+    void setCourses(QVector<CourseItem> _courses);
+    void setLectures(QVector<Lecture> _lectures);
     QStringList lecturesList(int index);
     void addLecture(const QString _lectureName, const QString _courseName);
+    void addCourse(const QString &_course);
+    void removeCourse(const QString &_course);
+
+signals:
+    void lectureRecived(QString lectureText);
 
 private:
     QVector<CourseItem> mItems;
+    QVector<QVector<Lecture>> mLectures;
     static CourseListModel_c* mInstance_ptr;
 };
