@@ -75,6 +75,7 @@ Rectangle {
                         opacity: 0
                         color: "#2B2B2B"
                     }
+
                     MouseArea {
                         anchors.fill: lectureRectangle
                         hoverEnabled: true

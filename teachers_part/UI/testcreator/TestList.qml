@@ -7,7 +7,6 @@ import "qrc:/UI"
 
 import Controllers 1.0
 import Models 1.0
-import Test 1.0
 
 Rectangle {
     id: testRectangle
@@ -31,10 +30,7 @@ Rectangle {
             flickableDirection: Flickable.VerticalFlick
             boundsBehavior: Flickable.StopAtBounds
             clip: true
-            model: TestModel {
-                id: testModelInstance
-                list: testList
-            }
+            model: TestModel
             delegate: Column {
                 id: col
                 width: parent.width

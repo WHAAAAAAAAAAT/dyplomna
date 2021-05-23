@@ -4,7 +4,6 @@ import QtGraphicalEffects 1.15
 
 import Controllers 1.0
 import Models 1.0
-import Test 1.0
 
 import "qrc:/UI/testcreator"
 import "qrc:/UI/courses"
@@ -27,9 +26,6 @@ ApplicationWindow {
 
     TestController {
         id: testController
-        Component.onCompleted: {
-
-        }
     }
 
     Rectangle {
@@ -169,7 +165,7 @@ ApplicationWindow {
             Connections {
                 target: createTestButton
                 function onClicked() {
-                    testController.loadTest(lecturesView.chosenLecture, lecturesView.chosenCourse)
+//                    testController.loadTest(lecturesView.chosenLecture, lecturesView.chosenCourse)
                     createTestOn.start()
                 }
             }

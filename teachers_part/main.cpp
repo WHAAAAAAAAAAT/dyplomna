@@ -61,11 +61,10 @@ int main(int argc, char *argv[])
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "LoginController");
     qmlRegisterType<LecturesController_c>("Controllers", 1, 0, "LecturesController");
     qmlRegisterType<TestController_c>("Controllers", 1, 0, "TestController");
-//    qmlRegisterSingletonType<TestModel>("Models", 1, 0, "TestModel", &TestModel::qmlInstance);
-    qmlRegisterType<TestModel>("Test", 1, 0, "TestModel");
+    qmlRegisterSingletonType<TestModel>("Models", 1, 0, "TestModel", &TestModel::qmlInstance);
     qmlRegisterSingletonType<CourseListModel_c>("Models", 1, 0, "CourseModel", &CourseListModel_c::qmlInstance);
-    qmlRegisterUncreatableType<TestList>("Test", 1, 0, "TestList",
-                                         QStringLiteral("TestList should not be created in QML"));
+//    qmlRegisterUncreatableType<TestList>("Test", 1, 0, "TestList",
+//                                         QStringLiteral("TestList should not be created in QML"));
 
     //chat database
     qmlRegisterType<SqlContactModel>("io.qt.examples.chattutorial", 1, 0, "SqlContactModel");

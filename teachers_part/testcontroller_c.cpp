@@ -14,7 +14,7 @@ void TestController_c::saveTestList(QString _lectureName, QString _courseName)
     TestList *list = TestModel::instance()->list();
     list->setCourseName(_courseName);
     list->setLectureName(_lectureName);
-    QJsonObject testDoc = JsonConverter::fromTestToJson(_courseName, _lectureName, list->getItems());
+    QJsonObject testDoc = JsonConverter::fromTestToJson(_courseName, _lectureName, list->items());
     if(NetworkModel_c::instance()->sendJson(testDoc))
     {
         qDebug() << "test send";
@@ -35,4 +35,3 @@ void TestController_c::loadTest(QString _lectureName, QString _courseName)
         qDebug() << "load tests NOT send";
     }
 }
-
