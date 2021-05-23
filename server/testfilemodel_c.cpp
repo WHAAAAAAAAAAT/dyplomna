@@ -36,35 +36,25 @@ QJsonObject TestFileModel_c::getTest(const QString &_courseName, const QString &
 {
     QString fileText;
     QString documents(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+
+    QDir directory(documents + "/CPPLearn/" + _courseName + "/");
+    if(!directory.cd(_lectureName))
+    {
+        directory.mkdir(_lectureName);
+    }
     QFile testFile(documents + "/CPPLearn/" + _courseName + "/" + _lectureName + "/" + _lectureName + ".json");
-    testFile.open(QFile::ReadOnly | QFile::Text);
-    QTextStream in(&testFile);
-    in.setCodec("UTF-8");
-    testFile.close();
-    QJsonObject tempObj = QJsonDocument::fromJson(in.readAll().toUtf8()).object();
+    if(testFile.open(QFile::ReadWrite | QFile::Text))
+    {
+        QTextStream in(&testFile);
+        in.setCodec("UTF-8");
+        QJsonObject tempObj = QJsonDocument::fromJson(in.readAll().toUtf8()).object();
+        tempObj[jsonKeys::title] = "Tests";
+        qDebug() << "got tests json";
+        testFile.close();
+        return tempObj;
+    }
+    QJsonObject tempObj;
     tempObj[jsonKeys::title] = "Tests";
-    qDebug() << "got tests json";
+    qDebug() << "can't get tests json";
     return tempObj;
 }
-
-
-
-//Test TestFileModel_c::getTest(const QString &_courseName, const QString &_lectureName)
-//{
-//    Test test;
-
-//    QString fileText;
-//    QString documents(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
-//    QDir directory(documents + "/CPPLearn/" + _courseName + "/" + _lectureName + "/");
-//    QFile testFile(directory.filePath(_lectureName + ".json"));
-//    testFile.open(QFile::ReadOnly | QFile::Text);
-//    QTextStream in(&testFile);
-//    fileText = in.readAll();
-//    testFile.close();
-
-//    QJsonDocument tempDoc = QJsonDocument::fromJson(fileText.toUtf8());
-//    QJsonObject testJson = tempDoc.object();
-
-//    test = Network::jsonToTest(testJson);
-//    return test;
-//}

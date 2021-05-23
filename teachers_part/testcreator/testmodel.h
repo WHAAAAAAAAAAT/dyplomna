@@ -1,14 +1,12 @@
 #ifndef TESTMODEL_H
 #define TESTMODEL_H
 
+#include <QObject>
 #include <QAbstractListModel>
 
 #include <QQmlEngine>
 #include <QJSEngine>
-<<<<<<< HEAD
 #include "testitem.h"
-=======
->>>>>>> 4b11e5461d67800f6d15d238e24cc76113f54f59
 
 class TestList;
 
@@ -43,9 +41,6 @@ public:
     TestList *list() const;
     void setList(TestList *list);
     void setTest(const Test &_test);
-
-    static QObject *qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
-    static TestModel* instance();
 
     static QObject *qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
     static TestModel* instance();

@@ -86,6 +86,12 @@ Window {
                     }
                     onClicked: {
                         var component = Qt.createComponent("LecturesScreen.qml")
+                        if( component.status !== Component.Ready )
+                        {
+                            if( component.status === Component.Error )
+                                console.debug("Error:"+ component.errorString());
+                            return;
+                        }
                         var lecturesWindow = component.createObject(windowMenu)
                         lecturesWindow.title = qsTr("CPPLearn/Courses")
                         lecturesWindow.show()

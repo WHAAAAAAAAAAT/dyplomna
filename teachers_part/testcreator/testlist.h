@@ -14,9 +14,8 @@ public:
     QVector<TestListItem> items() const;
 
     bool setItemAt(int index, const TestListItem &item);
-    QString getLectureName();
-    QString getCourseName();
-    QVector<TestListItem> getItems();
+    QString getLectureName() const;
+    QString getCourseName() const;
     void setLectureName(const QString &_lectureName);
     void setCourseName(const QString &_courseName);
 
@@ -31,7 +30,7 @@ public slots:
     void appendItem();
     void removeCompletedItems();
     QStringList answers(int index);
-    void setTestList(const Test &_test);
+    void setTestList(const QVector<TestListItem> &_testList);
 
 private:
     QString lectureName;

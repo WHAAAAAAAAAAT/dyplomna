@@ -147,6 +147,8 @@ void TestModel::setList(TestList *list)
 
 void TestModel::setTest(const Test &_test)
 {
-    mList->setTestList(_test);
-    emit dataChanged(index(0,0), index(mList->getItems().size() - 1, 0), {Qt::EditRole});
+    mList->setCourseName(_test.courseName);
+    mList->setLectureName(_test.lectureName);
+    mList->setTestList(_test.testList);
+    emit dataChanged(index(0,0), index(mList->items().size() - 1, 0), {Qt::EditRole});
 }

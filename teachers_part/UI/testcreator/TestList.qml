@@ -7,6 +7,7 @@ import "qrc:/UI"
 
 import Controllers 1.0
 import Models 1.0
+import Test 1.0
 
 Rectangle {
     id: testRectangle

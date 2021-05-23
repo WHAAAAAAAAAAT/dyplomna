@@ -6,7 +6,6 @@
 
 TestList::TestList(QObject *parent) : QObject(parent)
 {
-    appendItem();
 }
 
 QVector<TestListItem> TestList::items() const
@@ -28,19 +27,14 @@ bool TestList::setItemAt(int index, const TestListItem &item)
     return true;
 }
 
-QString TestList::getLectureName()
+QString TestList::getLectureName() const
 {
     return lectureName;
 }
 
-QString TestList::getCourseName()
+QString TestList::getCourseName() const
 {
     return courseName;
-}
-
-QVector<TestListItem> TestList::getItems()
-{
-    return mItems;
 }
 
 void TestList::setLectureName(const QString &_lectureName)
@@ -58,14 +52,14 @@ QStringList TestList::answers(int index)
     return mItems.at(index).answers;
 }
 
-void TestList::setTestList(const Test &_test)
+void TestList::setTestList(const QVector<TestListItem> &_testList)
 {
-    emit preItemAppended();
-    courseName = _test.courseName;
-    lectureName = _test.lectureName;
-    mItems = _test.testList;
-    qDebug() << "testlist setTestList running";
-    emit postItemAppended();
+    for(auto item : _testList)
+    {
+        emit preItemAppended();
+        mItems.append(item);
+        emit postItemAppended();
+    }
 }
 
 void TestList::appendItem()
