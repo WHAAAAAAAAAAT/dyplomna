@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 
 import Controllers 1.0
+import Models 1.0
 
 import "qrc:/UI/courses"
 
@@ -20,6 +21,10 @@ ApplicationWindow {
         Component.onCompleted: {
             setDocument(lecturesView.textDocument)
         }
+    }
+
+    TestController {
+        id: testController
     }
 
     Rectangle {
@@ -68,9 +73,6 @@ ApplicationWindow {
                     lecturesView.chosenCourse = courseName
                     lecturesOffView.visible = false
                     lecturesView.visible = true
-                }
-                Component.onCompleted: {
-                    console.log("ha ha ha ha")
                 }
             }
         }
@@ -144,6 +146,8 @@ ApplicationWindow {
                     var component = Qt.createComponent("ClientTestScreen.qml")
                     var testWindow = component.createObject(windowLectures)
                     testWindow.title = qsTr("CPPLearn/Courses/Test")
+                    testWindow.lecName = lecturesView.chosenLecture
+                    testWindow.courseName = lecturesView.chosenCourse
                     testWindow.show()
                     windowLectures.hide()
                 }

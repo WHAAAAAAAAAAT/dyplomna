@@ -3,20 +3,46 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import QtQuick.Window 2.15
 
+import Models 1.0
+import Controllers 1.0
+
 Window {
     id: windowTests
     width: 1280
     height: 720
     color: "#FCFCFC"
-
     signal exitWindowTests
 
-    property int currentQuestionNumber: 2
-    property string currentQuestion: qsTr("С++ - це...")
-    property string firstAnswer: qsTr("низькорівнева мова програмування");
-    property string secondAnswer: qsTr("компільована мова програмування");
-    property string thirdAnswer: qsTr("інтерпретована мова програмування");
-    property string fourthAnswer: qsTr("немає правильної відповіді");
+    property string lecName: ""
+    property string courseName: ""
+
+    property int currentQuestionNumber: 0
+    property string currentQuestion: qsTr("")
+    property string firstAnswer: qsTr("");
+    property string secondAnswer: qsTr("");
+    property string thirdAnswer: qsTr("");
+    property string fourthAnswer: qsTr("");
+
+    TestController {
+        id: testControlles
+    }
+
+    function setTask()
+    {
+        if(currentQuestionNumber < TestModel.getTestSize())
+        {
+            currentQuestion = TestModel.getTestQuestion(currentQuestionNumber)
+            firstAnswer = TestModel.getTestAnswerA(currentQuestionNumber)
+            secondAnswer = TestModel.getTestAnswerB(currentQuestionNumber)
+            thirdAnswer = TestModel.getTestAnswerC(currentQuestionNumber)
+            fourthAnswer = TestModel.getTestAnswerD(currentQuestionNumber)
+        }
+        else {
+            testControlles.saveTestList(lecName, courseName)
+            windowTests.hide()
+            windowLectures.show()
+        }
+    }
 
     Rectangle {
         id: header
@@ -53,7 +79,7 @@ Window {
         width: parent.width
         Text {
             id: questionNumber
-            text: qsTr("ПИТАННЯ " + currentQuestionNumber)
+            text: qsTr("ПИТАННЯ " + (currentQuestionNumber + 1))
             color: "#0E0E0E"
             font.bold: true
             anchors.top: parent.top
@@ -71,6 +97,10 @@ Window {
             anchors.topMargin: parent.height * 0.3
             font.pixelSize: 25
             font.family: "Corbel"
+        }
+        Component.onCompleted: {
+            currentQuestionNumber = 0
+            setTask()
         }
     }
 
@@ -90,6 +120,11 @@ Window {
                 text: qsTr("➊   " + firstAnswer)
                 width: answersButtons.width * 0.4
                 height: answersButtons.height * 0.45
+                onClicked: {
+                    TestModel.setAnswer(currentQuestion, firstAnswer)
+                    currentQuestionNumber = currentQuestionNumber + 1;
+                    setTask();
+                }
             }
             ClientAnswerButton {
                 id: secondAnswerButton
@@ -97,6 +132,11 @@ Window {
                 buttonColor: "#30D4AF"
                 width: answersButtons.width * 0.4
                 height: answersButtons.height * 0.45
+                onClicked: {
+                    TestModel.setAnswer(currentQuestion, secondAnswer)
+                    currentQuestionNumber = currentQuestionNumber + 1;
+                    setTask();
+                }
             }
             ClientAnswerButton {
                 id: thirdAnswerButton
@@ -104,6 +144,11 @@ Window {
                 buttonColor: "#F66298"
                 width: answersButtons.width * 0.4
                 height: answersButtons.height * 0.45
+                onClicked: {
+                    TestModel.setAnswer(currentQuestion, thirdAnswer)
+                    currentQuestionNumber = currentQuestionNumber + 1;
+                    setTask();
+                }
             }
             ClientAnswerButton {
                 id: fourthAnswerButton
@@ -111,6 +156,11 @@ Window {
                 buttonColor: "#5DA2EE"
                 width: answersButtons.width * 0.4
                 height: answersButtons.height * 0.45
+                onClicked: {
+                    TestModel.setAnswer(currentQuestion, fourthAnswer)
+                    currentQuestionNumber = currentQuestionNumber + 1;
+                    setTask();
+                }
             }
         }
     }
@@ -119,40 +169,5 @@ Window {
         anchors.bottom: parent.bottom
         width: parent.width
         height: 100
-//        Row {
-//            id: footerButtons
-//            anchors.top: parent.top
-//            anchors.topMargin: parent.height * 0.3
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            spacing: windowTests.height * 0.45 * 0.05
-//            ClientLoginButton {
-//                id: previousButton
-//                width: footer.width * 0.1
-//                text: qsTr("Назад")
-//                loginfontSize: 18
-//                opacity: 1
-//                visible: true
-//                Connections {
-//                    target: previousButton
-//                    function onClicked() {
-
-//                    }
-//                }
-//            }
-//            ClientLoginButton {
-//                id: nextButton
-//                width: footer.width * 0.1
-//                text: qsTr("Далі")
-//                loginfontSize: 18
-//                opacity: 1
-//                visible: true
-//                Connections {
-//                    target: nextButton
-//                    function onClicked() {
-
-//                    }
-//                }
-//            }
-//        }
     }
 }

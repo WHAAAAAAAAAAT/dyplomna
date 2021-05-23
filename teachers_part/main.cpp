@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<TestController_c>("Controllers", 1, 0, "TestController");
     qmlRegisterSingletonType<TestModel>("Models", 1, 0, "TestModel", &TestModel::qmlInstance);
     qmlRegisterSingletonType<CourseListModel_c>("Models", 1, 0, "CourseModel", &CourseListModel_c::qmlInstance);
-//    qmlRegisterUncreatableType<TestList>("Test", 1, 0, "TestList",
+//    qmlRegisterUncreatableType<TestList>("Models", 1, 0, "TestList",
 //                                         QStringLiteral("TestList should not be created in QML"));
 
     //chat database

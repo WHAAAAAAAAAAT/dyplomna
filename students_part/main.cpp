@@ -9,7 +9,8 @@
 #include "lecturecontroller_c.h"
 #include "networkmodel_c.h"
 #include "courselistmodel_c.h"
-
+#include "testcontroller_c.h"
+#include "testmodel.h"
 
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -31,9 +32,7 @@ static void connectToChatDatabase()
     if (!writeDir.mkpath("."))
         qFatal("Failed to create writable directory at %s", qPrintable(writeDir.absolutePath()));
 
-    // Ensure that we have a writable location on all devices.
     const QString fileName = writeDir.absolutePath() + "/chat-database.sqlite3";
-    // When using the SQLite driver, open() will create the SQLite database if it doesn't exist.
     database.setDatabaseName(fileName);
     if (!database.open()) {
         qFatal("Cannot open database: %s", qPrintable(database.lastError().text()));
@@ -48,9 +47,11 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType(QUrl("qrc:/UI/ClientLoginConstants.qml"), "LoginPage", 1, 0, "ClientLoginConstants");
     qmlRegisterSingletonType<UserInfoModel_c>("Models", 1, 0, "UserInfoModel", &UserInfoModel_c::qmlInstance);
     qmlRegisterSingletonType<CourseListModel_c>("Models", 1, 0, "CourseModel", &CourseListModel_c::qmlInstance);
+    qmlRegisterSingletonType<TestModel>("Models", 1, 0, "TestModel", &TestModel::qmlInstance);
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "ClientLoginController");
     qmlRegisterType<DocumentHandler>("Controllers", 1, 0, "DocumentHandler");
     qmlRegisterType<LectureController_c>("Controllers", 1, 0, "LectureController");
+    qmlRegisterType<TestController_c>("Controllers", 1, 0, "TestController");
 
     //chat database
     qmlRegisterType<SqlContactModel>("io.qt.examples.chattutorial", 1, 0, "SqlContactModel");

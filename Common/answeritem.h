@@ -13,5 +13,6 @@ struct StudentAnswers
 {
     QString courseName;
     QString lectureName;
+    QString username;
     QVector<AnswerItem> answerList;
 };

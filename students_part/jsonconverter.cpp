@@ -1,6 +1,7 @@
 #include "jsonconverter.h"
 
 #include "jsontypes.h"
+#include "userinfomodel_c.h"
 
 JsonConverter::JsonConverter()
 {
@@ -52,6 +53,27 @@ QJsonObject JsonConverter::fromTestToJson(const QString &_courseName, const QStr
         tempObj["Answers"] = tempAnswers;
         jsonTestQuestions["Task" + QString::number(i)] = tempObj;
     }
+    jsonObj["Test"] = jsonTestQuestions;
+    return jsonObj;
+}
+
+QJsonObject JsonConverter::fromAnswersToJson(const QString &_courseName, const QString &_lectureName, const QVector<AnswerItem> &_test)
+{
+    QJsonObject jsonObj;
+    jsonObj[jsonKeys::title] = jsonValues::answers;
+    jsonObj["LectureName"] = _lectureName;
+    jsonObj["CourseName"] = _courseName;
+    jsonObj["Username"] = UserInfoModel_c::instance()->username();
+
+    QJsonObject jsonTestQuestions;
+    for(int i{0}; i < _test.size(); ++i)
+    {
+        QJsonObject tempObj;
+        tempObj["Question"] = _test.at(i).question;
+        tempObj["Answer"] = _test.at(i).answer;
+        jsonTestQuestions["Task" + QString::number(i)] = tempObj;
+    }
+
     jsonObj["Test"] = jsonTestQuestions;
     return jsonObj;
 }

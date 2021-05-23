@@ -60,3 +60,34 @@ Test Network::jsonToTest(const QJsonObject &_json)
     }
     return test;
 }
+
+StudentAnswers Network::jsonToAnswers(const QJsonObject &_json)
+{
+    StudentAnswers answers;
+
+    QJsonValue jsonVal;
+    jsonVal = _json.value("LectureName");
+    answers.lectureName = jsonVal.toString();
+    jsonVal = _json.value("CourseName");
+    answers.courseName = jsonVal.toString();
+    jsonVal = _json.value("Username");
+    answers.username = jsonVal.toString();
+
+    QJsonObject jsonTestQuestions;
+    jsonVal = _json.value(QString("Test"));
+    jsonTestQuestions = jsonVal.toObject();
+
+    for(int i{0}; i < jsonTestQuestions.size(); ++i)
+    {
+        AnswerItem tempListItem;
+
+        QJsonObject tempObj;
+        jsonVal = jsonTestQuestions.value(QString("Task" + QString::number(i)));
+        tempObj  = jsonVal.toObject();
+
+        tempListItem.question = tempObj["Question"].toString();
+        tempListItem.answer = tempObj["Answer"].toString();
+        answers.answerList.append(tempListItem);
+    }
+    return answers;
+}

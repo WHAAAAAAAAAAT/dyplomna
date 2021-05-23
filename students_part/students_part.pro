@@ -10,6 +10,9 @@ SOURCES += \
         main.cpp \
         networkmodel_c.cpp \
         notificationmodel_c.cpp \
+        testcontroller_c.cpp \
+        testlist.cpp \
+        testmodel.cpp \
         userinfomodel_c.cpp \
         documenthandler.cpp
 
@@ -20,6 +23,9 @@ HEADERS += \
     logincontroller_c.h \
     networkmodel_c.h \
     notificationmodel_c.h \
+    testcontroller_c.h \
+    testlist.h \
+    testmodel.h \
     userinfomodel_c.h \
     documenthandler.h
 

@@ -7,6 +7,7 @@
 #include <QQmlEngine>
 #include <QJSEngine>
 #include "testitem.h"
+#include "answeritem.h"
 
 class TestList;
 
@@ -41,16 +42,23 @@ public:
     TestList *list() const;
     void setList(TestList *list);
     void setTest(const Test &_test);
+    void setAnswers(const StudentAnswers &_answers);
+
+public slots:
+    QString getTestQuestion(int index);
+    QString getTestAnswerA(int index);
+    QString getTestAnswerB(int index);
+    QString getTestAnswerC(int index);
+    QString getTestAnswerD(int index);
+    int getTestSize();
+    void setAnswer(const QString &_question, const QString &_answer);
 
     static QObject *qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine);
     static TestModel* instance();
 
-public slots:
-    void appendItemToTest();
-    void removeItemFromTest();
-
 private:
     static TestModel* mInstance_ptr;
+
     TestList *mList;
 };
 

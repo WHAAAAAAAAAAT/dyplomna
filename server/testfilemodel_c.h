@@ -13,6 +13,8 @@ public:
 
     void saveTest(const Test &_test, const QByteArray &_message);
     QJsonObject getTest(const QString &_courseName, const QString &_lectureName);
+    void saveAnswers(const StudentAnswers &_test, const QByteArray &_message);
+    QJsonObject getAnswers(const QString &_courseName, const QString &_lectureName, const QString &_username);
 
 private:
     explicit TestFileModel_c(QObject *_parent_ptr = nullptr);

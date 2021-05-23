@@ -44,13 +44,9 @@ Rectangle {
                         indicator.height: 25
                         onCheckedChanged: {
                             if(checked && questionTitle.text !== qsTr("Питання 1:"))
-                            {
                                 removeButtonOn.start();
-                            }
                             else
-                            {
                                 removeButtonOff.start();
-                            }
                         }
                     }
                     Text {
@@ -403,15 +399,15 @@ Rectangle {
             LoginButton {
                 width: parent.width * 0.36
                 text: qsTr("ДОДАТИ ПИТАННЯ")
-                onClicked: testList.appendItem();
+                onClicked: TestModel.appendItemToTest()
             }
             LoginButton {
                 id: removeButton
                 width: parent.width * 0.36
                 text: qsTr("ВИДАЛИТИ ПИТАННЯ")
                 onClicked: {
-                    testList.removeCompletedItems();
-                    removeButtonOff.start();
+                    TestModel.removeItemFromTest()
+                    removeButtonOff.start()
                 }
                 enabled: false
             }

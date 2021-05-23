@@ -222,6 +222,10 @@ void NetworkModel_c::processBinaryMessage(QByteArray _message)
                                                                    _obj.value(jsonKeys::lectureName).toString()));
             sendToAllStudents(TestFileModel_c::instance()->getTest(_obj.value(jsonKeys::courseName).toString(),
                                                                    _obj.value(jsonKeys::lectureName).toString()));
+        } else if(title == jsonValues::answers)
+        {
+            StudentAnswers answers = Network::jsonToAnswers(_obj);
+            TestFileModel_c::instance()->saveAnswers(answers, _message);
         }
     }
 }

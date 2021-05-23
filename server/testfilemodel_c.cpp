@@ -58,3 +58,46 @@ QJsonObject TestFileModel_c::getTest(const QString &_courseName, const QString &
     qDebug() << "can't get tests json";
     return tempObj;
 }
+
+void TestFileModel_c::saveAnswers(const StudentAnswers &_test, const QByteArray &_message)
+{
+    QString documents(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    QDir directory(documents + "/CPPLearn/" + _test.courseName + "/" + _test.lectureName + "/");
+    if(!directory.cd(_test.username))
+    {
+        directory.mkdir(_test.username);
+    }
+    QFile TestFile(documents + "/CPPLearn/" + _test.courseName + "/" +
+                   _test.lectureName + "/" + _test.username + "/" + _test.username + ".json");
+    TestFile.open(QFile::WriteOnly);
+    TestFile.write(_message);
+    qDebug() << "Answers are saved on server";
+    TestFile.close();
+}
+
+QJsonObject TestFileModel_c::getAnswers(const QString &_courseName, const QString &_lectureName, const QString &_username)
+{
+    QString fileText;
+    QString documents(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+
+    QDir directory(documents + "/CPPLearn/" + _courseName + "/" + _lectureName + "/");
+    if(!directory.cd(_username))
+    {
+        directory.mkdir(_username);
+    }
+    QFile testFile(documents + "/CPPLearn/" + _courseName + "/" + _lectureName + "/" + _username + "/" + _username + ".json");
+    if(testFile.open(QFile::ReadWrite | QFile::Text))
+    {
+        QTextStream in(&testFile);
+        in.setCodec("UTF-8");
+        QJsonObject tempObj = QJsonDocument::fromJson(in.readAll().toUtf8()).object();
+        tempObj[jsonKeys::title] = "Answers";
+        qDebug() << "got answers json";
+        testFile.close();
+        return tempObj;
+    }
+    QJsonObject tempObj;
+    tempObj[jsonKeys::title] = "Answers";
+    qDebug() << "can't get answers json";
+    return tempObj;
+}

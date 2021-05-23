@@ -10,6 +10,7 @@
 #include "notificationmodel_c.h"
 
 #include "courselistmodel_c.h"
+#include "testmodel.h"
 
 NetworkModel_c* NetworkModel_c::mInstance_ptr = nullptr;
 
@@ -94,26 +95,35 @@ void NetworkModel_c::onJsonObjectsReceived(const QByteArray &data)
         CourseListModel_c::instance()->setLectures(lectures);
     } else if(title == "Tests")
     {
-//        Test tests;
-//        tests.courseName = _obj["CourseName"].toString();
-//        tests.lectureName = _obj["LectureName"].toString();
-//        QJsonObject testTasksObj = _obj["Test"].toObject();
-//        for(int i{0}; i < testTasksObj.size(); ++i)
-//        {
-//            QJsonObject tempTask = testTasksObj["Task" + QString::number(i)].toObject();
-//            tests.testList[i].question = tempTask["Question"].toString();
-//            QStringList tempList;
-//            for(int j{0}; j < tempTask["Answers"].toArray().size(); ++j)
-//            {
-//                tempList.append(tempTask["Answers"].toArray().at(j).toString());
-
-//            }
-//            tests.testList[i].answers = tempList;
-//            tests.testList[i].check = tempTask["Check"].toBool();
-//            tests.testList[i].correctAnswer = tempTask["CorrectAnswer"].toString();
-//            tests.testList[i].linkToText = tempTask["Link"].toString();
-//        }
-//        qDebug() << tests.testList[0].question;
+        Test tests;
+        qDebug() << "got test on teacher client";
+        if(_obj.contains("CourseName"))
+        {
+            tests.courseName = _obj["CourseName"].toString();
+            tests.lectureName = _obj["LectureName"].toString();
+            QJsonObject testTasksObj = _obj["Test"].toObject();
+            if(testTasksObj.size() > 0)
+            {
+                for(int i{0}; i < testTasksObj.size(); ++i)
+                {
+                    QJsonObject tempTask = testTasksObj["Task" + QString::number(i)].toObject();
+                    TestListItem tempItem;
+                    tempItem.question = tempTask["Question"].toString();
+                    QStringList tempList;
+                    for(int j{0}; j < tempTask["Answers"].toArray().size(); ++j)
+                    {
+                        tempList.append(tempTask["Answers"].toArray().at(j).toString());
+                    }
+                    tempItem.answers = tempList;
+                    tempItem.check = tempTask["Check"].toBool();
+                    tempItem.correctAnswer = tempTask["CorrectAnswer"].toString();
+                    tempItem.linkToText = tempTask["Link"].toString();
+                    tests.testList.append(tempItem);
+                }
+                qDebug() << tests.testList[0].question;
+            }
+        }
+        TestModel::instance()->setTest(tests);
     }
 }
 

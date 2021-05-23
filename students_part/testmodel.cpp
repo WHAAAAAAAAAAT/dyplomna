@@ -155,16 +155,42 @@ void TestModel::setTest(const Test &_test)
     endResetModel();
 }
 
-void TestModel::appendItemToTest()
+void TestModel::setAnswers(const StudentAnswers &_answers)
 {
-    beginResetModel();
-    mList->appendItem();
-    endResetModel();
+    mList->setAnswersList(_answers.answerList);
 }
 
-void TestModel::removeItemFromTest()
+void TestModel::setAnswer(const QString &_question, const QString &_answer)
 {
-    beginResetModel();
-    mList->removeCompletedItems();
-    endResetModel();
+    mList->setAnswer(_question, _answer);
+}
+
+QString TestModel::getTestQuestion(int index)
+{
+    return mList->getQuestion(index);
+}
+
+QString TestModel::getTestAnswerA(int index)
+{
+    return mList->getAnswerA(index);
+}
+
+QString TestModel::getTestAnswerB(int index)
+{
+    return mList->getAnswerB(index);
+}
+
+QString TestModel::getTestAnswerC(int index)
+{
+    return mList->getAnswerC(index);
+}
+
+QString TestModel::getTestAnswerD(int index)
+{
+    return mList->getAnswerD(index);
+}
+
+int TestModel::getTestSize()
+{
+    return mList->items().size();
 }
