@@ -54,12 +54,16 @@ QStringList TestList::answers(int index)
 
 void TestList::setTestList(const QVector<TestListItem> &_testList)
 {
-    for(auto item : _testList)
-    {
-        emit preItemAppended();
-        mItems.append(item);
-        emit postItemAppended();
-    }
+    clearTestList();
+    if(_testList.size() == 0)
+        appendItem();
+    else
+        for(auto item : _testList)
+        {
+            emit preItemAppended();
+            mItems.append(item);
+            emit postItemAppended();
+        }
 }
 
 void TestList::appendItem()
@@ -79,14 +83,23 @@ void TestList::removeCompletedItems()
 {
     for (int i = 0; i < mItems.size(); )
     {
-        if (mItems.at(i).check) {
+        if (mItems.at(i).check)
+        {
             emit preItemRemoved(i);
-
             mItems.removeAt(i);
-
             emit postItemRemoved();
-        } else {
-            ++i;
         }
+        else
+            ++i;
+    }
+}
+
+void TestList::clearTestList()
+{
+    for (int i{0}; i < mItems.size(); ++i)
+    {
+        emit preItemRemoved(i);
+        mItems.removeAt(i);
+        emit postItemRemoved();
     }
 }

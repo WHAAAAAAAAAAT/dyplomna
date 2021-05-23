@@ -20,7 +20,6 @@ QT_USE_NAMESPACE
 
 NetworkModel_c* NetworkModel_c::mInstance_ptr = nullptr;
 
-//! [constructor]
 NetworkModel_c::NetworkModel_c(QObject *parent) :
     QObject(parent),
     m_pWebSocketServer(nullptr)

@@ -35,3 +35,9 @@ void TestController_c::loadTest(QString _lectureName, QString _courseName)
         qDebug() << "load tests NOT send";
     }
 }
+
+void TestController_c::clearTest()
+{
+    TestList *list = TestModel::instance()->list();
+    list->clearTestList();
+}

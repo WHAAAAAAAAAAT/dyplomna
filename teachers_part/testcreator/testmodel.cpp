@@ -147,13 +147,10 @@ void TestModel::setList(TestList *list)
 
 void TestModel::setTest(const Test &_test)
 {
-    beginResetModel();
-
     mList->setCourseName(_test.courseName);
     mList->setLectureName(_test.lectureName);
+    beginResetModel();
     mList->setTestList(_test.testList);
     emit dataChanged(index(0,0), index(mList->items().size() - 1, 0), {Qt::EditRole, Qt::DisplayRole});
-
     endResetModel();
-
 }

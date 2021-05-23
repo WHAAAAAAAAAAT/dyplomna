@@ -17,6 +17,7 @@ public:
 public slots:
     void saveTestList(QString _lectureName, QString _courseName);
     void loadTest(QString _lectureName, QString _courseName);
+    void clearTest();
 
 signals:
     void sendTestError();

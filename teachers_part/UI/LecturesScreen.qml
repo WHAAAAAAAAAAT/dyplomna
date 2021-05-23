@@ -165,7 +165,7 @@ ApplicationWindow {
             Connections {
                 target: createTestButton
                 function onClicked() {
-//                    testController.loadTest(lecturesView.chosenLecture, lecturesView.chosenCourse)
+                    testController.loadTest(lecturesView.chosenLecture, lecturesView.chosenCourse)
                     createTestOn.start()
                 }
             }
@@ -242,6 +242,7 @@ ApplicationWindow {
                 target: closeTestCreatorButton
                 function onClicked() {
                     createTestOff.start()
+                    testController.clearTest();
                 }
             }
         }

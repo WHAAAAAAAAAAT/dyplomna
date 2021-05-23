@@ -29,6 +29,7 @@ signals:
 public slots:
     void appendItem();
     void removeCompletedItems();
+    void clearTestList();
     QStringList answers(int index);
     void setTestList(const QVector<TestListItem> &_testList);
 

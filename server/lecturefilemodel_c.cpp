@@ -48,12 +48,10 @@ QJsonObject LectureFileModel_c::getLectures(QString _courseName)
     for(int i{0}; i < lecturesNames.size(); ++i)
     {
         QJsonObject tempLec;
-        for(int j{0}; j < lecturesNames.size(); ++j)
-        {
-            tempLec["Name"] = lecturesNames.at(j);
-            tempLec["Course"] = _courseName;
-            tempLec["Text"] = loadLectureText(lecturesNames.at(j), _courseName);
-        }
+        tempLec["Name"] = lecturesNames.at(i);
+        qDebug() << "lecture name: " << lecturesNames.at(i);
+        tempLec["Course"] = _courseName;
+        tempLec["Text"] = loadLectureText(lecturesNames.at(i), _courseName);
         tempObj["Lecture " + QString::number(i)] = tempLec;
     }
     qDebug() << "got lectures";
@@ -64,18 +62,12 @@ QString LectureFileModel_c::loadLectureText(const QString &_lectureName, const Q
 {
     QString documents(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
     QDir directory(documents + "/CPPLearn/" + _course + "/");
-    bool pathExists = directory.cd(_lectureName);
-    if(!pathExists)
+    if(!directory.cd(_lectureName))
     {
         directory.mkdir(_lectureName);
-        QFile file(documents + "/CPPLearn/" + _course + "/" + _lectureName + "/" + _lectureName + ".html");
-        file.open(QFile::ReadWrite | QFile::Text);
-        QTextStream in(&file);
-        in.setCodec("UTF-8");
-        return in.readAll();
     }
     QFile file(documents + "/CPPLearn/" + _course + "/" + _lectureName + "/" + _lectureName + ".html");
-    file.open(QFile::ReadOnly | QFile::Text);
+    file.open(QFile::ReadWrite | QFile::Text);
     QTextStream in(&file);
     in.setCodec("UTF-8");
     return in.readAll();
