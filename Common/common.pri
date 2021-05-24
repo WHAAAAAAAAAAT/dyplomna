@@ -11,6 +11,7 @@ HEADERS += \
     $$PWD/jsontypes.h \
     $$PWD/lecture.h \
     $$PWD/networkmessages.h \
+    $$PWD/recommendationitem.h \
     $$PWD/testitem.h \
     $$PWD/user.h
 

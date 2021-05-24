@@ -10,6 +10,9 @@ SOURCES += \
         main.cpp \
         networkmodel_c.cpp \
         notificationmodel_c.cpp \
+        qcustomplot.cpp \
+        recommendationlistmodel_c.cpp \
+        searchhightlight.cpp \
         testcontroller_c.cpp \
         testlist.cpp \
         testmodel.cpp \
@@ -23,6 +26,9 @@ HEADERS += \
     logincontroller_c.h \
     networkmodel_c.h \
     notificationmodel_c.h \
+    qcustomplot.h \
+    recommendationlistmodel_c.h \
+    searchhightlight.h \
     testcontroller_c.h \
     testlist.h \
     testmodel.h \

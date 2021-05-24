@@ -4,6 +4,10 @@
 #include "jsonconverter.h"
 #include "notificationmodel_c.h"
 #include "courselistmodel_c.h"
+#include "recommendationlistmodel_c.h"
+#include "searchhightlight.h"
+
+#include <QTextCharFormat>
 
 LectureController_c::LectureController_c(QObject *parent) : QObject(parent)
 {
@@ -17,6 +21,7 @@ void LectureController_c::sendLecture(QQuickTextDocument *_lecture, const QStrin
     if(NetworkModel_c::instance()->sendJson(lectureJson))
     {
         qDebug() << "lecture send";
+        RecommendationListModel_c::instance()->clearRecommendations();
     }
     else
     {
@@ -38,4 +43,30 @@ QQuickTextDocument *LectureController_c::document()
 void LectureController_c::setDocument(QQuickTextDocument *_doc)
 {
     mDocument_ptr = _doc;
+    m_searchHighLight = new SearchHighLight(mDocument_ptr->textDocument());
+}
+
+void LectureController_c::selectText(const QString &_linkToText)
+{
+    m_searchHighLight->searchText(_linkToText);
+    //    bool found{false};
+
+    //    QTextCursor highlightCursor(mDocument_ptr->textDocument()->find(_linkToText, highlightCursor, QTextDocument::FindWholeWords));
+    //    QTextCursor cursor(mDocument_ptr->textDocument().);
+
+    //    cursor.beginEditBlock();
+    //    QTextCharFormat plainFormat(highlightCursor.charFormat());
+    //    QTextCharFormat colorFormat = plainFormat;
+    //    colorFormat.setForeground(Qt::yellow);
+
+    //    while (!highlightCursor.isNull() && !highlightCursor.atEnd()) {
+    //        highlightCursor = mDocument_ptr->textDocument()->find(_linkToText, highlightCursor, QTextDocument::FindWholeWords);
+
+    //        if (!highlightCursor.isNull()) {
+    //            found = true;
+    //            highlightCursor.movePosition(QTextCursor::WordRight, QTextCursor::KeepAnchor);
+    //            highlightCursor.mergeCharFormat(colorFormat);
+    //        }
+    //    }
+    //    cursor.endEditBlock();
 }

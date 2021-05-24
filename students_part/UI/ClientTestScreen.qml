@@ -39,8 +39,19 @@ Window {
         }
         else {
             testControlles.saveTestList(lecName, courseName)
+
+            var component = Qt.createComponent("TestResultScreen.qml")
+            if( component.status !== Component.Ready )
+            {
+                if( component.status === Component.Error )
+                    console.debug("Error:"+ component.errorString());
+                return;
+            }
+            var resultWindow = component.createObject(windowTests)
+            resultWindow.title = qsTr("CPPLearn/Courses/Test/Results")
             windowTests.hide()
-            windowLectures.show()
+            windowMenu.show()
+            resultWindow.show()
         }
     }
 

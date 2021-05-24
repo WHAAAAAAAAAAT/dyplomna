@@ -3,10 +3,20 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import QtQuick.Window 2.15
 
+import Models 1.0
+import Controllers 1.0
+
+import "qrc:/UI/courses"
+
 Window {
     id: windowTestResultScreen
     width: ClientLoginConstants.width
     height: ClientLoginConstants.height + animation.height - 50
+
+    LectureController {
+        id: lectureController
+    }
+
     Rectangle {
         id: rectangleBackground
         width: parent.width
@@ -36,7 +46,7 @@ Window {
     }
     Text {
         id: result
-        text: "4/5"
+        text: RecommendationModel.testResults()
         color: "#218C0E"
         anchors.top: testResultTitle2.bottom
         font.pixelSize: 105
@@ -67,24 +77,56 @@ Window {
             text: qsTr("Рекомендації:")
             font.pixelSize: 27
             font.family: ClientLoginConstants.font.family
+            visible: false
         }
-        Text {
-            id: recommendationText
+        ListView {
+            id: view
             anchors.top: recommendationTitle.bottom
             anchors.topMargin: 10
-            text: qsTr("С++ - це...")
-            font.pixelSize: 25
-            font.family: ClientLoginConstants.font.family
-            color: "#D31717"
+            width: parent.width
+            height: 300
+            spacing: 10
+            flickableDirection: Flickable.VerticalFlick
+            boundsBehavior: Flickable.StopAtBounds
+            clip: true
+            model: RecommendationModel
+            delegate: Item {
+                id: rec
+                height: 30
+                Text {
+                    id: recommendationText
+                    text: model.question
+                    font.pixelSize: 25
+                    font.family: ClientLoginConstants.font.family
+                    color: "#D31717"
+                }
+                DropShadow {
+                    anchors.fill: recommendationText
+                    source: recommendationText
+                    verticalOffset: 1
+                    color: "#D14747"
+                    opacity: 0.8
+                    radius: 3
+                    samples: 5
+                }
+                MouseArea {
+                    anchors.fill: recommendationText
+                    hoverEnabled: true
+                    cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+                    onClicked: {
+                        lectureController.selectText(model.linkToText)
+                        windowLectures.show()
+                        windowTestResultScreen.hide()
+                        windowMenu.hide()
+                    }
+                }
+            }
         }
-        DropShadow {
-            anchors.fill: recommendationText
-            source: recommendationText
-            verticalOffset: 1
-            color: "#D14747"
-            opacity: 0.8
-            radius: 3
-            samples: 5
+        Component.onCompleted: {
+            if(RecommendationModel.testSize() > 0)
+            {
+                recommendationTitle.visible = true
+            }
         }
     }
 }

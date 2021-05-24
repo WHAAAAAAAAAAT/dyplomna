@@ -11,6 +11,7 @@
 #include "courselistmodel_c.h"
 #include "testcontroller_c.h"
 #include "testmodel.h"
+#include "recommendationlistmodel_c.h"
 
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -48,6 +49,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<UserInfoModel_c>("Models", 1, 0, "UserInfoModel", &UserInfoModel_c::qmlInstance);
     qmlRegisterSingletonType<CourseListModel_c>("Models", 1, 0, "CourseModel", &CourseListModel_c::qmlInstance);
     qmlRegisterSingletonType<TestModel>("Models", 1, 0, "TestModel", &TestModel::qmlInstance);
+    qmlRegisterSingletonType<RecommendationListModel_c>("Models", 1, 0, "RecommendationModel", &RecommendationListModel_c::qmlInstance);
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "ClientLoginController");
     qmlRegisterType<DocumentHandler>("Controllers", 1, 0, "DocumentHandler");
     qmlRegisterType<LectureController_c>("Controllers", 1, 0, "LectureController");

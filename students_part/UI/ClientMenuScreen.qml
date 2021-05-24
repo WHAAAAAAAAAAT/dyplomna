@@ -4,6 +4,8 @@ import QtGraphicalEffects 1.15
 
 import "qrc:/UI/chat"
 
+import Models 1.0
+
 ApplicationWindow {
     id: windowMenu
     width: 1280
@@ -85,6 +87,7 @@ ApplicationWindow {
                     }
                     onClicked: {
                         var component = Qt.createComponent("ClientLecturesScreen.qml")
+                        RecommendationModel.clearRecommendations()
                         var lecturesWindow = component.createObject(windowMenu)
                         lecturesWindow.title = qsTr("CPPLearn/Courses")
                         lecturesWindow.show()

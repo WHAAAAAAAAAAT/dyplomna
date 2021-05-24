@@ -5,6 +5,7 @@
 #include "notificationmodel_c.h"
 #include "testmodel.h"
 #include "testlist.h"
+#include "recommendationlistmodel_c.h"
 
 TestController_c::TestController_c(QObject *parent) : QObject(parent)
 {}
@@ -16,6 +17,7 @@ void TestController_c::saveTestList(QString _lectureName, QString _courseName)
     if(NetworkModel_c::instance()->sendJson(answersDoc))
     {
         qDebug() << "answers send";
+        RecommendationListModel_c::instance()->createRecommendations(list->items(), list->answers());
         clearAnswers();
         clearTest();
     }

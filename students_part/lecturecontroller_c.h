@@ -7,6 +7,9 @@
 
 #include "documenthandler.h"
 #include <QQuickTextDocument>
+
+class SearchHighLight;
+
 class LectureController_c : public QObject
 {
     Q_OBJECT
@@ -20,6 +23,7 @@ public slots:
     void onLectureRecieved(const QString &_lecture);
     QQuickTextDocument *document();
     void setDocument(QQuickTextDocument * _doc);
+    void selectText(const QString &_linkToText);
 
 signals:
     void lectureSendingError();
@@ -27,6 +31,7 @@ signals:
     void lectureRecieved();
 
 private:
+    SearchHighLight* m_searchHighLight;
     QQuickTextDocument *mDocument_ptr;
 };
 
