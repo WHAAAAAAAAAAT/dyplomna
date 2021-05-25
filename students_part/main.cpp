@@ -12,6 +12,7 @@
 #include "testcontroller_c.h"
 #include "testmodel.h"
 #include "recommendationlistmodel_c.h"
+#include "chartmodel_c.h"
 
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -19,6 +20,8 @@
 #include <QDir>
 #include "chat/sqlcontactmodel.h"
 #include "chat/sqlconversationmodel.h"
+
+using namespace QtCharts;
 
 static void connectToChatDatabase()
 {
@@ -50,6 +53,8 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<CourseListModel_c>("Models", 1, 0, "CourseModel", &CourseListModel_c::qmlInstance);
     qmlRegisterSingletonType<TestModel>("Models", 1, 0, "TestModel", &TestModel::qmlInstance);
     qmlRegisterSingletonType<RecommendationListModel_c>("Models", 1, 0, "RecommendationModel", &RecommendationListModel_c::qmlInstance);
+    qmlRegisterSingletonType<ChartModel_c>("Models", 1, 0, "ChartModel", &ChartModel_c::qmlInstance);
+
     qmlRegisterType<LoginController_c>("Controllers", 1, 0, "ClientLoginController");
     qmlRegisterType<DocumentHandler>("Controllers", 1, 0, "DocumentHandler");
     qmlRegisterType<LectureController_c>("Controllers", 1, 0, "LectureController");

@@ -112,8 +112,8 @@ Window {
             antialiasing: true
             ChartView {
                 id: chart
-                title: "Результати тестів"
-                titleFont: ClientLoginConstants.font
+                //                title: "Результати тестів"
+                titleFont: group.font
                 antialiasing: true
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -124,13 +124,19 @@ Window {
                     id: lineSeries
                     name: "LineSeries"
                     capStyle : Qt.SquareCap
-                    XYPoint { x: 0; y: 0}
-                    XYPoint { x: 1.1; y: 2.1 }
-                    XYPoint { x: 1.9; y: 3.3 }
-                    XYPoint { x: 2.1; y: 2.1 }
-                    XYPoint { x: 2.9; y: 4.9 }
-                    XYPoint { x: 3.4; y: 3.0 }
-                    XYPoint { x: 4.1; y: 3.3 }
+                }
+
+                axes: [lineSeries.axisY, bars.axisX]
+                BarSeries{
+                    id: bars
+                    axisX: BarCategoryAxis {
+                        id: categoryAxis
+                        categories: ["Jan", "Feb", "Mar" ]
+                    }}
+
+                Component.onCompleted: {
+                    ChartModel.updateBar(categoryAxis)
+                    ChartModel.update(lineSeries)
                 }
             }
         }
