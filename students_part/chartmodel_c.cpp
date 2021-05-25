@@ -5,11 +5,6 @@ ChartModel_c* ChartModel_c::mInstance_ptr = nullptr;
 ChartModel_c::ChartModel_c(QObject *parent) : QObject(parent)
 {
     mLine.append(0, 0);
-    mLine.append(1, 1);
-    mLine.append(2, 2);
-
-
-    mNames.append({"Lab1", "Lab2", "Lab3"});
 }
 
 QObject *ChartModel_c::qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
@@ -60,12 +55,27 @@ void ChartModel_c::updateBar(QBarCategoryAxis *bars)
 
 void ChartModel_c::addDataToChart(const QString &_lectureName, const int &_testScore)
 {
-    mChart.insert(_lectureName, _testScore);
-    mNames.append(_lectureName);
-    mLine.append(mChart.size(), _testScore);
-
+    if(!mNames.contains(_lectureName))
+    {
+        mChart.insert(_lectureName, _testScore);
+        mNames.append(_lectureName);
+        mLine.append(mChart.size(), _testScore);
+    }
+    else {
+        int position{0};
+        QMapIterator<QString, int> i(mChart);
+        while (i.hasNext()) {
+            if(i.key() != _lectureName)
+            {
+                ++position;
+                i.next();
+            }
+            else {
+                mChart[_lectureName] = _testScore;
+                mLine.append(position, _testScore);
+            }
+        }
+    }
     emit lineChanged();
     emit namesChanged();
-
-    qDebug () << "mLine changed";
 }

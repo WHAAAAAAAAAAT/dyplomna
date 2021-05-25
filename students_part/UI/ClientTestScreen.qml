@@ -51,6 +51,7 @@ Window {
             resultWindow.title = qsTr("CPPLearn/Courses/Test/Results")
             windowTests.hide()
             windowMenu.show()
+            windowLectures.close()
             resultWindow.show()
         }
     }

@@ -112,7 +112,7 @@ Window {
             antialiasing: true
             ChartView {
                 id: chart
-                //                title: "Результати тестів"
+                title: "Результати тестів"
                 titleFont: group.font
                 antialiasing: true
                 anchors.top: parent.top
@@ -123,16 +123,10 @@ Window {
                 LineSeries {
                     id: lineSeries
                     name: "LineSeries"
-                    capStyle : Qt.SquareCap
-                }
-
-                axes: [lineSeries.axisY, bars.axisX]
-                BarSeries{
-                    id: bars
                     axisX: BarCategoryAxis {
                         id: categoryAxis
-                        categories: ["Jan", "Feb", "Mar" ]
-                    }}
+                    }
+                }
 
                 Component.onCompleted: {
                     ChartModel.updateBar(categoryAxis)
