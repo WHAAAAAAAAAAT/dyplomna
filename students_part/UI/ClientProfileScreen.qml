@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import QtQuick.Window 2.15
+import QtCharts 2.15
 
 import Models 1.0
 
@@ -102,13 +103,38 @@ Window {
                 }
             }
         }
-        Rectangle {
+
+        Item {
             id: userStatistics
             anchors.top: userInfo.bottom
-            height: parent.height * 0.6
+            height: parent.height * 0.75
             width: parent.width
-            color: "#000000"
+            antialiasing: true
+            ChartView {
+                id: chart
+                title: "Результати тестів"
+                titleFont: ClientLoginConstants.font
+                antialiasing: true
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: parent.height
+                width: parent.width * 0.8
+                legend.visible: false
+                LineSeries {
+                    id: lineSeries
+                    name: "LineSeries"
+                    capStyle : Qt.SquareCap
+                    XYPoint { x: 0; y: 0}
+                    XYPoint { x: 1.1; y: 2.1 }
+                    XYPoint { x: 1.9; y: 3.3 }
+                    XYPoint { x: 2.1; y: 2.1 }
+                    XYPoint { x: 2.9; y: 4.9 }
+                    XYPoint { x: 3.4; y: 3.0 }
+                    XYPoint { x: 4.1; y: 3.3 }
+                }
+            }
         }
+
         Rectangle {
             id: userRecommendations
             anchors.top: userStatistics.bottom

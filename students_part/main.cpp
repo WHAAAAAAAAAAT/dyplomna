@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
     connectToChatDatabase();
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     app.setWindowIcon(QIcon(":/UI/images/windowIcon.ico"));
 

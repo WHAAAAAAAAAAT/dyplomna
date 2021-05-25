@@ -6,7 +6,6 @@
 #include <QJsonDocument>
 
 #include "commondata.h"
-//#include "testcreator/testlist.h"
 
 class JsonConverter
 {

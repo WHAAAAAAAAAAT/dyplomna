@@ -36,9 +36,11 @@ public slots:
     QString testResults();
     void clearRecommendations();
     int testSize();
+    int score();
 
 private:
     static RecommendationListModel_c* mInstance_ptr;
     QVector<RecommendationItem> mRecommendations;
     QString result;
+    int testScore{0};
 };

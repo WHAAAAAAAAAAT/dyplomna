@@ -221,6 +221,12 @@ ApplicationWindow {
                     }
                     onClicked: {
                         var component = Qt.createComponent("ClientProfileScreen.qml")
+                        if( component.status !== Component.Ready )
+                        {
+                            if( component.status === Component.Error )
+                                console.debug("Error:"+ component.errorString());
+                            return;
+                        }
                         var profileWindow = component.createObject(windowMenu)
                         profileWindow.title = qsTr("CPPLearn/Profile")
                         profileWindow.show()

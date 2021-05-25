@@ -1,8 +1,10 @@
-QT += quick qml quickcontrols2 widgets network websockets
+QT += quick qml quickcontrols2 widgets network websockets charts
 
 CONFIG += c++17
 
 SOURCES += \
+        chartconverter.cpp \
+        chartmodel_c.cpp \
         courselistmodel_c.cpp \
         jsonconverter.cpp \
         lecturecontroller_c.cpp \
@@ -10,7 +12,6 @@ SOURCES += \
         main.cpp \
         networkmodel_c.cpp \
         notificationmodel_c.cpp \
-        qcustomplot.cpp \
         recommendationlistmodel_c.cpp \
         searchhightlight.cpp \
         testcontroller_c.cpp \
@@ -20,13 +21,14 @@ SOURCES += \
         documenthandler.cpp
 
 HEADERS += \
+    chartconverter.h \
+    chartmodel_c.h \
     courselistmodel_c.h \
     jsonconverter.h \
     lecturecontroller_c.h \
     logincontroller_c.h \
     networkmodel_c.h \
     notificationmodel_c.h \
-    qcustomplot.h \
     recommendationlistmodel_c.h \
     searchhightlight.h \
     testcontroller_c.h \
