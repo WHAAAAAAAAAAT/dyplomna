@@ -182,6 +182,10 @@ ApplicationWindow {
         anchors.left: listOfCourses.right
         width: header.width
         visible: true
+
+        onTextDocumentChanged: {
+            controller.setDocument(textDocument)
+        }
     }
 
 //    ClientTestScreen {

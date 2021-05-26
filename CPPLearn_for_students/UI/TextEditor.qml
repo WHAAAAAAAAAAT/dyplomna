@@ -13,7 +13,7 @@ Rectangle {
     height: parent.height
     visible: true
 
-    readonly property var textDocument: document.document
+    readonly property var textDocument: documentHandler.document
     property string chosenLecture: ""
     property string chosenCourse: ""
 
@@ -42,7 +42,7 @@ Rectangle {
         }
     }
     DocumentHandler {
-        id: document
+        id: documentHandler
         document: textArea.textDocument
         cursorPosition: textArea.cursorPosition
         selectionStart: textArea.selectionStart

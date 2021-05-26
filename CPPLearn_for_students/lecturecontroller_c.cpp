@@ -31,8 +31,11 @@ void LectureController_c::sendLecture(QQuickTextDocument *_lecture, const QStrin
 
 void LectureController_c::onLectureRecieved(const QString &_lecture)
 {
-    mDocument_ptr->textDocument()->setHtml(_lecture);
-    emit lectureRecieved();
+    if (mDocument_ptr)
+    {
+        mDocument_ptr->textDocument()->setHtml(_lecture);
+        emit lectureRecieved();
+    }
 }
 
 QQuickTextDocument *LectureController_c::document()
@@ -42,7 +45,7 @@ QQuickTextDocument *LectureController_c::document()
 
 void LectureController_c::setDocument(QQuickTextDocument *_doc)
 {
-    if (mDocument_ptr == _doc)
+    if (!_doc || (mDocument_ptr == _doc))
         return;
     if (mDocument_ptr)
         mDocument_ptr->textDocument()->disconnect(this);
