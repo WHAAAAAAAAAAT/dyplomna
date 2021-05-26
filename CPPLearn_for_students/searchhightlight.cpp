@@ -22,7 +22,4 @@ void SearchHighLight::highlightBlock(const QString& text)
 
 void SearchHighLight::searchText(const QString& text)
 {
-    // Set the text as a regular expression.
-    m_pattern = QRegularExpression(text);
-    rehighlight(); // Restart the backlight
 }

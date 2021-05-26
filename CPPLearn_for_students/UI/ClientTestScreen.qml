@@ -22,6 +22,7 @@ Window {
     property string secondAnswer: qsTr("");
     property string thirdAnswer: qsTr("");
     property string fourthAnswer: qsTr("");
+    property LectureController ctrl: null
 
     TestController {
         id: testControlles
@@ -49,6 +50,7 @@ Window {
             }
             var resultWindow = component.createObject(windowTests)
             resultWindow.title = qsTr("CPPLearn/Courses/Test/Results")
+            resultWindow.controller = ctrl
             windowTests.hide()
             windowMenu.show()
             windowLectures.close()

@@ -13,9 +13,7 @@ Window {
     width: ClientLoginConstants.width
     height: ClientLoginConstants.height + animation.height - 50
 
-    LectureController {
-        id: lectureController
-    }
+    property LectureController controller: null
 
     Rectangle {
         id: rectangleBackground
@@ -114,7 +112,7 @@ Window {
                     hoverEnabled: true
                     cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
                     onClicked: {
-                        lectureController.selectText(model.linkToText)
+                        controller.selectText(model.linkToText)
                         windowLectures.show()
                         windowTestResultScreen.hide()
                         windowMenu.hide()

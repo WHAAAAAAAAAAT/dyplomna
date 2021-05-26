@@ -31,7 +31,7 @@ signals:
     void lectureRecieved();
 
 private:
-    SearchHighLight* m_searchHighLight;
+//    SearchHighLight* m_searchHighLight;
     QQuickTextDocument *mDocument_ptr;
 };
 

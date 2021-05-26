@@ -149,6 +149,7 @@ ApplicationWindow {
                     testWindow.title = qsTr("CPPLearn/Courses/Test")
                     testWindow.lecName = lecturesView.chosenLecture
                     testWindow.courseName = lecturesView.chosenCourse
+                    testWindow.ctrl = controller
                     testWindow.show()
                     windowLectures.hide()
                 }

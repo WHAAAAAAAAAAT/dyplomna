@@ -51,30 +51,33 @@ void LectureController_c::setDocument(QQuickTextDocument *_doc)
         mDocument_ptr->textDocument()->disconnect(this);
     mDocument_ptr = _doc;
 
-//    m_searchHighLight = new SearchHighLight(mDocument_ptr->textDocument());
+    //    m_searchHighLight = new SearchHighLight(mDocument_ptr->textDocument());
 }
 
 void LectureController_c::selectText(const QString &_linkToText)
 {
-    m_searchHighLight->searchText(_linkToText);
-    //    bool found{false};
+    //    m_searchHighLight->searchText(_linkToText);
+    QTextCursor highlightCursor(mDocument_ptr->textDocument());
+    QTextCursor cursor(mDocument_ptr->textDocument());
 
-    //    QTextCursor highlightCursor(mDocument_ptr->textDocument()->find(_linkToText, highlightCursor, QTextDocument::FindWholeWords));
-    //    QTextCursor cursor(mDocument_ptr->textDocument().);
+    cursor.beginEditBlock();
 
-    //    cursor.beginEditBlock();
-    //    QTextCharFormat plainFormat(highlightCursor.charFormat());
-    //    QTextCharFormat colorFormat = plainFormat;
-    //    colorFormat.setForeground(Qt::yellow);
+    bool found = false;
 
-    //    while (!highlightCursor.isNull() && !highlightCursor.atEnd()) {
-    //        highlightCursor = mDocument_ptr->textDocument()->find(_linkToText, highlightCursor, QTextDocument::FindWholeWords);
+    QTextCharFormat plainFormat(highlightCursor.charFormat());
+    QTextCharFormat colorFormat = plainFormat;
+    colorFormat.setForeground(Qt::red);
 
-    //        if (!highlightCursor.isNull()) {
-    //            found = true;
-    //            highlightCursor.movePosition(QTextCursor::WordRight, QTextCursor::KeepAnchor);
-    //            highlightCursor.mergeCharFormat(colorFormat);
-    //        }
-    //    }
-    //    cursor.endEditBlock();
+    while (!highlightCursor.isNull() && !highlightCursor.atEnd()) {
+        highlightCursor = mDocument_ptr->textDocument()->find(_linkToText, highlightCursor, QTextDocument::FindWholeWords);
+
+        if (!highlightCursor.isNull()) {
+            found = true;
+            highlightCursor.movePosition(QTextCursor::WordRight,
+                                         QTextCursor::KeepAnchor);
+            highlightCursor.mergeCharFormat(colorFormat);
+        }
+    }
+
+    cursor.endEditBlock();
 }
