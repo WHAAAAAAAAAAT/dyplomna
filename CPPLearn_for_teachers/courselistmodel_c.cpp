@@ -125,13 +125,13 @@ void CourseListModel_c::setCourses(QVector<CourseItem> _courses)
     {
         NetworkModel_c::instance()->sendJson(JsonConverter::fromLoadLectureToJson(mItems.at(i).course));
     }
-    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0), {Qt::EditRole});
 }
 
 void CourseListModel_c::setLectures(QVector<Lecture> _lectures)
 {
     mLectures.append(_lectures);
-    emit dataChanged(index(0,0), index(mItems.size() - 1, 0));
+    emit dataChanged(index(0,0), index(mItems.size() - 1, 0), {Qt::EditRole});
 }
 
 QStringList CourseListModel_c::lecturesList(int index)
@@ -150,9 +150,14 @@ void CourseListModel_c::addLecture(const QString _lectureName, const QString _co
             break;
         }
     }
-    beginResetModel();
-    mItems[index].lectures.append(_lectureName);
-    endResetModel();
+    QJsonObject lectureJson = JsonConverter::fromLectureToJson("", _lectureName, _courseName);
+    if(NetworkModel_c::instance()->sendJson(lectureJson))
+    {
+        beginResetModel();
+        NetworkModel_c::instance()->sendJson(JsonConverter::fromLoadLectureToJson(_courseName));
+        mItems[index].lectures.append(_lectureName);
+        endResetModel();
+    }
 }
 
 void CourseListModel_c::addCourse(const QString &_course)
@@ -171,7 +176,10 @@ void CourseListModel_c::addCourse(const QString &_course)
         qDebug() << "course name send";
         const int index = mItems.size();
         beginInsertRows(QModelIndex(), index, index);
-        mItems.append({_course, QStringList{""}, false});
+        CourseItem newCourse;
+        newCourse.course = _course;
+        newCourse.isVisible = false;
+        mItems.append(newCourse);
         endInsertRows();
     }
     else
@@ -203,15 +211,23 @@ void CourseListModel_c::saveCurrentLecture(QQuickTextDocument *_lecture, const Q
             break;
         }
     }
-    QString lectureText;
+    bool found{false};
     for(int i{0}; i < mLectures.at(courseIndex).size(); ++i)
     {
         if(mLectures.at(courseIndex).at(i).name == _lectureName)
         {
             mLectures[courseIndex][i].text = _lecture->textDocument()->toHtml();
+            found = true;
             break;
         }
     }
-
+    if(found == false)
+    {
+        Lecture newLecture;
+        newLecture.courseName = _courseName;
+        newLecture.name = _lectureName;
+        newLecture.text = _lecture->textDocument()->toHtml();
+        mLectures[courseIndex].append(newLecture);
+    }
     emit dataChanged(index(0,0), index(mItems.size() - 1, 0), {Qt::EditRole});
 }

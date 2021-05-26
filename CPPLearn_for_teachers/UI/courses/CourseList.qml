@@ -286,18 +286,20 @@ Rectangle {
                 id: enterLectureNameDialogTitle
                 text: qsTr("Назва лекції: ")
                 anchors.top: enterLectureNameRect.top
-                anchors.topMargin:enterLectureNameRect.height * 0.4
-                anchors.horizontalCenter: enterLectureNameRect.horizontalCenter
-                font.pixelSize: 23
+                anchors.topMargin:enterLectureNameRect.height * 0.1
+                anchors.left: enterLectureNameRect.left
+                anchors.leftMargin: 10
+                font.pixelSize: 20
                 font.bold: true
-                color: "#FFFFFF"
+                color: "#000000"
                 font.family: LoginConstants.font.family
             }
             TextField {
                 id: enterLectureNameDialogText
-                anchors.left: enterLectureNameDialogTitle.left
-                anchors.leftMargin: 10
-                width: enterLectureNameRect.width * 0.9
+                anchors.horizontalCenter: enterLectureNameRect.horizontalCenter
+                anchors.top: enterLectureNameDialogTitle.bottom
+                anchors.topMargin: 5
+                width: enterLectureNameRect.width * 0.95
                 text: qsTr("")
                 color: "#000000"
                 placeholderTextColor: "#3C3C3C"
@@ -322,7 +324,7 @@ Rectangle {
                 anchors.bottom: enterLectureNameRect.bottom
                 anchors.horizontalCenter: enterLectureNameRect.horizontalCenter
                 anchors.bottomMargin: 40
-                width: 100
+                width: 200
                 opacity: 0.85
                 text: qsTr("СТВОРИТИ ЛЕКЦІЮ")
                 Connections {
