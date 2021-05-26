@@ -67,7 +67,7 @@ Window {
                     id: profilePicture
                     width: height
                     height: parent.height
-                    source: "qrc:/" + qsTr(newName) + "_" + qsTr(newSurname) + ".png"
+                    source: "qrc:/" + qsTr(newName) + "_" + qsTr(newSurname) + "_profile.png"
                 }
                 Column {
                     id: userInfoColumn
@@ -110,27 +110,39 @@ Window {
             height: parent.height * 0.75
             width: parent.width
             antialiasing: true
-            ChartView {
-                id: chart
-                title: "Результати тестів"
-                titleFont: group.font
-                antialiasing: true
+            Text {
+                id: chartTitle
+                text: qsTr("Результати тестів (%)")
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: parent.height
+                color: "#181818"
+                font.pixelSize: 25
+                font.family: ClientLoginConstants.font.family
+            }
+            ChartView {
+                id: chart
+                //                title: "Результати тестів"
+                titleFont: group.font
+                antialiasing: true
+                anchors.top: chartTitle.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: parent.height * 0.9
                 width: parent.width * 0.8
                 legend.visible: false
-                LineSeries {
-                    id: lineSeries
-                    name: "LineSeries"
+                BarSeries {
+                    id: bar
                     axisX: BarCategoryAxis {
                         id: categoryAxis
                     }
+                    axisY: ValueAxis {
+                        id: yAxis
+                        min: 0
+                        max: 100
+                    }
                 }
-
                 Component.onCompleted: {
                     ChartModel.updateBar(categoryAxis)
-                    ChartModel.update(lineSeries)
+                    ChartModel.update(bar)
                 }
             }
         }

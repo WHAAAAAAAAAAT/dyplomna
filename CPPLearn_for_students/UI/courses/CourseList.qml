@@ -89,7 +89,9 @@ Rectangle {
                         onClicked: {
                             courseListRect.sendLectureName(lecture.text, currentModel.course)
                             CourseModel.loadLectures(currentModel.course, lecture.text)
+                            testController.clearTest()
                             testController.loadTest(lecture.text, currentModel.course)
+                            model.aVisible = false
                         }
                     }
                     PropertyAnimation {

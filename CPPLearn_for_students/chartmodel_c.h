@@ -5,6 +5,8 @@
 #include <QQmlEngine>
 #include <QJSEngine>
 #include <QLineSeries>
+#include <QBarSeries>
+#include <QBarSet>
 #include <QBarCategoryAxis>
 
 using namespace QtCharts;
@@ -20,23 +22,21 @@ public:
     static ChartModel_c* instance();
 
 public slots:
-    const QLineSeries &line() const;
-
+    const QBarSeries &bar() const;
     const QStringList &names() const;
-
     void update(QAbstractSeries *series);
     void updateBar(QBarCategoryAxis* bars);
 
 signals:
     void lineChanged();
-
     void namesChanged();
 
 private:
     QMap<QString, int> mChart;
 
-    QLineSeries mLine;
+    QBarSeries mBar;
     QStringList mNames;
+    QVector<int> mScore;
     static ChartModel_c* mInstance_ptr;
 };
 

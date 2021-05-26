@@ -30,7 +30,7 @@ HEADERS += \
     testcreator/testmodel.h
 
 RESOURCES += qml.qrc \
-    ../teachers_part/UI/chat/shared/shared.qrc
+    ../CPPLearn_for_teachers/UI/chat/shared/shared.qrc
 
 include($${_PRO_FILE_PWD_}/../Common/common.pri)
 

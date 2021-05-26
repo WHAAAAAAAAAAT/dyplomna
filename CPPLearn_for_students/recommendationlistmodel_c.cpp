@@ -83,7 +83,7 @@ void RecommendationListModel_c::createRecommendations(const QVector<TestListItem
             }
         }
     }
-    testScore = static_cast<int>(counter/_tests.size() * 100);
+    testScore = static_cast<int>(100.0 * counter/_tests.size());
     result = QString::number(counter) + "/" + QString::number(_tests.size());
     emit dataChanged(index(0,0), index(mRecommendations.size() - 1, 0));
 }

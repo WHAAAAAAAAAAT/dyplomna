@@ -4,7 +4,7 @@ ChartModel_c* ChartModel_c::mInstance_ptr = nullptr;
 
 ChartModel_c::ChartModel_c(QObject *parent) : QObject(parent)
 {
-    mLine.append(0, 0);
+
 }
 
 QObject *ChartModel_c::qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
@@ -23,9 +23,9 @@ ChartModel_c *ChartModel_c::instance()
     return mInstance_ptr;
 }
 
-const QLineSeries &ChartModel_c::line() const
+const QBarSeries &ChartModel_c::bar() const
 {
-    return mLine;
+    return mBar;
 }
 
 const QStringList &ChartModel_c::names() const
@@ -36,12 +36,15 @@ const QStringList &ChartModel_c::names() const
 void ChartModel_c::update(QAbstractSeries *series)
 {
     if (series) {
-        QLineSeries *xySeries = static_cast<QLineSeries *>(series);
-
+        QBarSeries *xySeries = static_cast<QBarSeries *>(series);
         QBarCategoryAxis *axisX = new QBarCategoryAxis();
         axisX->append(mNames);
         xySeries->attachAxis(axisX);
-        xySeries->replace(mLine.points());
+        QBarSet *tempBarSet = new QBarSet("");
+        for(int i{0}; i < mScore.size(); ++i)
+            *tempBarSet << mScore.at(i);
+        xySeries->clear();
+        xySeries->append(tempBarSet);
     }
 }
 
@@ -59,7 +62,7 @@ void ChartModel_c::addDataToChart(const QString &_lectureName, const int &_testS
     {
         mChart.insert(_lectureName, _testScore);
         mNames.append(_lectureName);
-        mLine.append(mChart.size(), _testScore);
+        mScore.append(_testScore);
     }
     else {
         int position{0};
@@ -72,7 +75,7 @@ void ChartModel_c::addDataToChart(const QString &_lectureName, const int &_testS
             }
             else {
                 mChart[_lectureName] = _testScore;
-                mLine.append(position, _testScore);
+                mScore[position] = _testScore;
             }
         }
     }

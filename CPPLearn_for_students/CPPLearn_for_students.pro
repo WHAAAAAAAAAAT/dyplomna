@@ -38,7 +38,7 @@ HEADERS += \
     documenthandler.h
 
 RESOURCES += qml.qrc \
-    ../students_part/UI/chat/shared/shared.qrc
+    ../CPPLearn_for_students/UI/chat/shared/shared.qrc
 
 include($${_PRO_FILE_PWD_}/../Common/common.pri)
 

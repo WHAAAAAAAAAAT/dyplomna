@@ -9,7 +9,7 @@
 
 #include <QTextCharFormat>
 
-LectureController_c::LectureController_c(QObject *parent) : QObject(parent)
+LectureController_c::LectureController_c(QObject *parent) : QObject(parent), mDocument_ptr(nullptr)
 {
     connect(NotificationModel_c::instance(), &NotificationModel_c::lectureRecieved, this, &LectureController_c::onLectureRecieved);
     connect(CourseListModel_c::instance(), &CourseListModel_c::lectureRecived, this, &LectureController_c::onLectureRecieved);
@@ -42,8 +42,13 @@ QQuickTextDocument *LectureController_c::document()
 
 void LectureController_c::setDocument(QQuickTextDocument *_doc)
 {
+    if (mDocument_ptr == _doc)
+        return;
+    if (mDocument_ptr)
+        mDocument_ptr->textDocument()->disconnect(this);
     mDocument_ptr = _doc;
-    m_searchHighLight = new SearchHighLight(mDocument_ptr->textDocument());
+
+//    m_searchHighLight = new SearchHighLight(mDocument_ptr->textDocument());
 }
 
 void LectureController_c::selectText(const QString &_linkToText)

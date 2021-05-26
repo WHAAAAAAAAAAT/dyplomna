@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    server \
-    teachers_part \
-    students_part \
+    CPPLearn_server \
+    CPPLearn_for_students \
+    CPPLearn_for_teachers

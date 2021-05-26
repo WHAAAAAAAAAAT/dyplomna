@@ -73,6 +73,7 @@ ApplicationWindow {
                     lecturesView.chosenCourse = courseName
                     lecturesOffView.visible = false
                     lecturesView.visible = true
+                    startTestButton.opacity = 1
                 }
             }
         }
@@ -139,7 +140,7 @@ ApplicationWindow {
             fontSize: 20
             text: qsTr("Пройти тест")
             font.bold: true
-            opacity: 1                              //поставити 0 і міняти на 1, коли відрито лекцію
+            opacity: 0
             Connections {
                 target: startTestButton
                 function onClicked() {

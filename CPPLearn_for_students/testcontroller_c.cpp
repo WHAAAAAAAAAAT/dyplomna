@@ -14,11 +14,12 @@ TestController_c::TestController_c(QObject *parent) : QObject(parent)
 void TestController_c::saveTestList(QString _lectureName, QString _courseName)
 {
     TestList *list = TestModel::instance()->list();
-    QJsonObject answersDoc = JsonConverter::fromAnswersToJson(_courseName, _lectureName, list->answers());
+    RecommendationListModel_c::instance()->createRecommendations(list->items(), list->answers());
+    QJsonObject answersDoc = JsonConverter::fromAnswersToJson(_courseName, _lectureName, list->answers(),
+                                                              RecommendationListModel_c::instance()->score());
     if(NetworkModel_c::instance()->sendJson(answersDoc))
     {
         qDebug() << "answers send";
-        RecommendationListModel_c::instance()->createRecommendations(list->items(), list->answers());
         ChartModel_c::instance()->addDataToChart(_lectureName, RecommendationListModel_c::instance()->score());
         clearAnswers();
         clearTest();

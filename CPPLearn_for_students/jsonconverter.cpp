@@ -57,14 +57,15 @@ QJsonObject JsonConverter::fromTestToJson(const QString &_courseName, const QStr
     return jsonObj;
 }
 
-QJsonObject JsonConverter::fromAnswersToJson(const QString &_courseName, const QString &_lectureName, const QVector<AnswerItem> &_test)
+QJsonObject JsonConverter::fromAnswersToJson(const QString &_courseName, const QString &_lectureName, const QVector<AnswerItem> &_test,
+                                             const int &_score)
 {
     QJsonObject jsonObj;
     jsonObj[jsonKeys::title] = jsonValues::answers;
     jsonObj["LectureName"] = _lectureName;
     jsonObj["CourseName"] = _courseName;
     jsonObj["Username"] = UserInfoModel_c::instance()->username();
-
+    jsonObj["Score"] = _score;
     QJsonObject jsonTestQuestions;
     for(int i{0}; i < _test.size(); ++i)
     {
