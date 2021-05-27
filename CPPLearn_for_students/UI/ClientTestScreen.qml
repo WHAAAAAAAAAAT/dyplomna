@@ -93,20 +93,27 @@ Window {
             color: "#0E0E0E"
             font.bold: true
             anchors.top: parent.top
-            anchors.topMargin: parent.height * 0.1
+            anchors.topMargin: 30
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: 27
             font.family: ClientLoginConstants.font.family
         }
-        Text {
+        Rectangle {
             id: testsView
-            text: currentQuestion
-            color: "#272727"
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: questionNumber.bottom
-            anchors.topMargin: parent.height * 0.3
-            font.pixelSize: 25
-            font.family: "Corbel"
+            anchors.top: parent.top
+            anchors.topMargin: questionNumber.paintedHeight + 45
+            width: parent.width
+            height: 160
+            color: "transparent"
+            Text {
+                id: testsViewText
+                text: currentQuestion
+                color: "#272727"
+                anchors.centerIn: testsView
+                font.pixelSize: 25
+                font.family: "Corbel"
+            }
         }
         Component.onCompleted: {
             currentQuestionNumber = 0

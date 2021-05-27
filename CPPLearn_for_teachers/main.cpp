@@ -38,7 +38,7 @@ static void connectToChatDatabase()
             qFatal("Cannot add database: %s", qPrintable(database.lastError().text()));
     }
 
-    const QDir writeDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    const QDir writeDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     if (!writeDir.mkpath("."))
         qFatal("Failed to create writable directory at %s", qPrintable(writeDir.absolutePath()));
 

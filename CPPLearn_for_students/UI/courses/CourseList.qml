@@ -25,6 +25,7 @@ Rectangle {
             id: courseNameRectangle
             property var currentModel: model
             property var currentListModel: model.lecturesList
+            property real listHeight: 30
             width: parent.width * 0.9
             height: 50
             radius: 10
@@ -50,19 +51,37 @@ Rectangle {
                 anchors.left: courseNameRectangle.left
                 spacing: 10
                 model: currentModel.lecturesList
-                height: courseNameRectangle.height - 70
+                height: courseNameRectangle.listHeight
                 visible: currentModel.aVisible
+                Component.onCompleted: {
+                    lecturesListView.height = courseNameRectangle.listHeight
+                }
                 delegate: Rectangle {
                     id: lectureRectangle
                     width: courseNameRectangle.width
-                    height: 30
+                    height: h
                     color: "transparent"
+                    property real h: lecture.paintedHeight
+                    property real w: width * 0.9
+
+                    Component.onCompleted: {
+                        if (lecture.paintedWidth > 200) {
+                            w = 200
+                        } else {
+                            w = lecture.paintedWidth
+                        }
+                        courseNameRectangle.listHeight = courseNameRectangle.listHeight + h
+                        lecturesListView.height = courseNameRectangle.listHeight
+                    }
                     Text {
                         id: lecture
                         text: qsTr(model.modelData)
+                        height: parent.h
+                        width: parent.w
                         anchors.left: parent.left
                         anchors.leftMargin: parent.width * 0.1
                         anchors.verticalCenter: parent.verticalCenter
+                        verticalAlignment: Text.AlignVCenter
                         font.pixelSize: 20
                         font.bold: true
                         color: "#FFFFFF"
@@ -91,7 +110,6 @@ Rectangle {
                             CourseModel.loadLectures(currentModel.course, lecture.text)
                             testController.clearTest()
                             testController.loadTest(lecture.text, currentModel.course)
-                            model.aVisible = false
                         }
                     }
                     PropertyAnimation {
@@ -180,7 +198,7 @@ Rectangle {
                 id: courseMouseClickedOpen
                 target: courseNameRectangle
                 properties: "height"
-                to: 50 + 40 * currentListModel.length
+                to: 50 + courseNameRectangle.listHeight
                 duration: 100
             }
             PropertyAnimation {

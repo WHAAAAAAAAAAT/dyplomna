@@ -74,6 +74,9 @@ Rectangle {
                         }
                         courseNameRectangle.listHeight = courseNameRectangle.listHeight + h
                         lecturesListView.height = courseNameRectangle.listHeight
+                        model.aVisible = false
+                        lecturesListView.height = 0
+                        courseMouseClickedClose.start()
                     }
 
                     Text {

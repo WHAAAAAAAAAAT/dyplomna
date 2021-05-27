@@ -78,6 +78,9 @@ Rectangle {
             bottomPadding: 6
             background: null
             readOnly: true
+            onTextChanged: {
+                lectureScroll.position = 0.0
+            }
             MouseArea {
                 acceptedButtons: Qt.RightButton
                 anchors.fill: parent
@@ -85,7 +88,9 @@ Rectangle {
             }
             onLinkActivated: Qt.openUrlExternally(link)
         }
-        ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: ScrollBar {
+            id: lectureScroll
+        }
     }
     Menu {
         id: contextMenu

@@ -28,18 +28,6 @@
         <file>UI/chat/ContactPage.qml</file>
         <file>UI/chat/ConversationPage.qml</file>
         <file>UI/chat/qtquickcontrols2.conf</file>
-        <file>UI/chat/shared/Albert_Einstein.png</file>
-        <file>UI/chat/shared/Albert_Einstein@2x.png</file>
-        <file>UI/chat/shared/Albert_Einstein@3x.png</file>
-        <file>UI/chat/shared/Albert_Einstein@4x.png</file>
-        <file>UI/chat/shared/Ernest_Hemingway.png</file>
-        <file>UI/chat/shared/Ernest_Hemingway@2x.png</file>
-        <file>UI/chat/shared/Ernest_Hemingway@3x.png</file>
-        <file>UI/chat/shared/Ernest_Hemingway@4x.png</file>
-        <file>UI/chat/shared/Hans_Gude.png</file>
-        <file>UI/chat/shared/Hans_Gude@2x.png</file>
-        <file>UI/chat/shared/Hans_Gude@3x.png</file>
-        <file>UI/chat/shared/Hans_Gude@4x.png</file>
         <file>UI/courses/CourseList.qml</file>
         <file>UI/images/windowIcon.ico</file>
         <file>UI/TestResultScreen.qml</file>

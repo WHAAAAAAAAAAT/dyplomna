@@ -20,7 +20,7 @@ static void createTable()
         qFatal("Failed to query database: %s", qPrintable(query.lastError().text()));
     }
 
-    query.exec("INSERT INTO Contacts VALUES('Ольга Гошко')");
+    query.exec("INSERT INTO Contacts VALUES('Юлія Брошко')");
 }
 
 SqlContactModel::SqlContactModel(QObject *parent) :

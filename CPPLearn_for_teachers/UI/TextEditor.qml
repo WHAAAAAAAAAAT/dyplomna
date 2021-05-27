@@ -298,7 +298,6 @@ Rectangle {
             textFormat: Qt.RichText
             wrapMode: TextArea.Wrap
             focus: true
-            cursorPosition: 0
             selectByMouse: true
             persistentSelection: true
             leftPadding: 6
@@ -306,6 +305,9 @@ Rectangle {
             topPadding: 6
             bottomPadding: 6
             background: null
+            onTextChanged: {
+                lectureScroll.position = 0.0
+            }
             MouseArea {
                 acceptedButtons: Qt.RightButton
                 anchors.fill: parent
@@ -313,7 +315,9 @@ Rectangle {
             }
             onLinkActivated: Qt.openUrlExternally(link)
         }
-        ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: ScrollBar {
+            id: lectureScroll
+        }
     }
     Menu {
         id: contextMenu
