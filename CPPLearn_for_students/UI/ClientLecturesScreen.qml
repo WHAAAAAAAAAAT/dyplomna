@@ -102,7 +102,17 @@ ApplicationWindow {
                 Connections {
                     target: settingsButton
                     function onClicked() {
-
+                        var component = Qt.createComponent("ClientProfileScreen.qml")
+                        if( component.status !== Component.Ready )
+                        {
+                            if( component.status === Component.Error )
+                                console.debug("Error:"+ component.errorString());
+                            return;
+                        }
+                        var profileWindow = component.createObject(windowMenu)
+                        profileWindow.title = qsTr("CPPLearn/Profile")
+                        profileWindow.show()
+                        windowLectures.close()
                     }
                 }
             }
@@ -115,7 +125,7 @@ ApplicationWindow {
                 Connections {
                     target: menuButton
                     function onClicked() {
-                        windowLectures.hide()
+                        windowLectures.close()
                         menuWindow.show()
                     }
                 }
@@ -150,6 +160,7 @@ ApplicationWindow {
                     testWindow.lecName = lecturesView.chosenLecture
                     testWindow.courseName = lecturesView.chosenCourse
                     testWindow.ctrl = controller
+                    testWindow.testCtrl = testController
                     testWindow.show()
                     windowLectures.hide()
                 }

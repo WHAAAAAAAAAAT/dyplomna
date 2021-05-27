@@ -70,6 +70,9 @@ ApplicationWindow {
                 anchors.fill: parent
                 color: parent.color
                 visible: true
+                Component.onCompleted: {
+                    ctrl = testController
+                }
                 onSendLectureName: {
                     lecturesView.chosenLecture = lecName
                     lecturesView.chosenCourse = courseName

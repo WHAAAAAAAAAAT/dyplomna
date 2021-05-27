@@ -5,7 +5,6 @@
 #include "notificationmodel_c.h"
 #include "courselistmodel_c.h"
 #include "recommendationlistmodel_c.h"
-#include "searchhightlight.h"
 
 #include <QTextCharFormat>
 
@@ -34,6 +33,7 @@ void LectureController_c::onLectureRecieved(const QString &_lecture)
     if (mDocument_ptr)
     {
         mDocument_ptr->textDocument()->setHtml(_lecture);
+        QFont font = mDocument_ptr->textDocument()->toHtml();
         emit lectureRecieved();
     }
 }
@@ -50,23 +50,22 @@ void LectureController_c::setDocument(QQuickTextDocument *_doc)
     if (mDocument_ptr)
         mDocument_ptr->textDocument()->disconnect(this);
     mDocument_ptr = _doc;
-
-    //    m_searchHighLight = new SearchHighLight(mDocument_ptr->textDocument());
 }
 
 void LectureController_c::selectText(const QString &_linkToText)
 {
-    //    m_searchHighLight->searchText(_linkToText);
+    QTextCursor cr;
+    cr.setPosition(mDocument_ptr->textDocument()->toHtml().length() / 2);
     QTextCursor highlightCursor(mDocument_ptr->textDocument());
     QTextCursor cursor(mDocument_ptr->textDocument());
 
-    cursor.beginEditBlock();
-
     bool found = false;
 
-    QTextCharFormat plainFormat(highlightCursor.charFormat());
+    cursor.beginEditBlock();
+
+    QTextCharFormat plainFormat(cr.charFormat());
     QTextCharFormat colorFormat = plainFormat;
-    colorFormat.setForeground(Qt::red);
+    colorFormat.setBackground(Qt::yellow);
 
     while (!highlightCursor.isNull() && !highlightCursor.atEnd()) {
         highlightCursor = mDocument_ptr->textDocument()->find(_linkToText, highlightCursor, QTextDocument::FindWholeWords);

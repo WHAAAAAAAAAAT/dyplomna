@@ -8,22 +8,19 @@
 static void createTable()
 {
     if (QSqlDatabase::database().tables().contains(QStringLiteral("Contacts"))) {
-        // Таблиця вже існує
         return;
     }
 
     QSqlQuery query;
     if (!query.exec(
-        "CREATE TABLE IF NOT EXISTS 'Contacts' ("
-        "   'name' TEXT NOT NULL,"
-        "   PRIMARY KEY(name)"
-        ")")) {
+                "CREATE TABLE IF NOT EXISTS 'Contacts' ("
+                "   'name' TEXT NOT NULL,"
+                "   PRIMARY KEY(name)"
+                ")")) {
         qFatal("Failed to query database: %s", qPrintable(query.lastError().text()));
     }
 
     query.exec("INSERT INTO Contacts VALUES('Ольга Гошко')");
-    query.exec("INSERT INTO Contacts VALUES('Дарина Мовчій')");
-//    query.exec("INSERT INTO Contacts VALUES('Hans Gude')");
 }
 
 SqlContactModel::SqlContactModel(QObject *parent) :

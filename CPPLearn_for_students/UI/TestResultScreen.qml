@@ -114,7 +114,7 @@ Window {
                     onClicked: {
                         controller.selectText(model.linkToText)
                         windowLectures.show()
-                        windowTestResultScreen.hide()
+//                        windowTestResultScreen.hide()
                         windowMenu.hide()
                     }
                 }

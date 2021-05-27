@@ -102,4 +102,5 @@ void TestList::clearTestList()
         mItems.removeAt(i);
         emit postItemRemoved();
     }
+    mItems.clear();
 }

@@ -43,12 +43,10 @@ void TestController_c::loadTest(QString _lectureName, QString _courseName)
 
 void TestController_c::clearTest()
 {
-    TestList *list = TestModel::instance()->list();
-    list->clearTestList();
+    TestModel::instance()->list()->clearTestList();
 }
 
 void TestController_c::clearAnswers()
 {
-    TestList *list = TestModel::instance()->list();
-    list->clearAnswersList();
+    TestModel::instance()->list()->clearAnswersList();
 }

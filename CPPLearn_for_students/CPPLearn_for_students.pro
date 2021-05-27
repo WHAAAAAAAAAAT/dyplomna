@@ -13,7 +13,6 @@ SOURCES += \
         networkmodel_c.cpp \
         notificationmodel_c.cpp \
         recommendationlistmodel_c.cpp \
-        searchhightlight.cpp \
         testcontroller_c.cpp \
         testlist.cpp \
         testmodel.cpp \
@@ -30,7 +29,6 @@ HEADERS += \
     networkmodel_c.h \
     notificationmodel_c.h \
     recommendationlistmodel_c.h \
-    searchhightlight.h \
     testcontroller_c.h \
     testlist.h \
     testmodel.h \

@@ -23,10 +23,7 @@ Window {
     property string thirdAnswer: qsTr("");
     property string fourthAnswer: qsTr("");
     property LectureController ctrl: null
-
-    TestController {
-        id: testControlles
-    }
+    property TestController testCtrl: null
 
     function setTask()
     {
@@ -39,8 +36,7 @@ Window {
             fourthAnswer = TestModel.getTestAnswerD(currentQuestionNumber)
         }
         else {
-            testControlles.saveTestList(lecName, courseName)
-
+            testCtrl.saveTestList(lecName, courseName)
             var component = Qt.createComponent("TestResultScreen.qml")
             if( component.status !== Component.Ready )
             {

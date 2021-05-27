@@ -12,7 +12,6 @@ static const char *conversationsTableName = "Conversations";
 static void createTable()
 {
     if (QSqlDatabase::database().tables().contains(conversationsTableName)) {
-        // Таблиця вже існує
         return;
     }
 
@@ -29,11 +28,6 @@ static void createTable()
         qFatal("Failed to query database: %s", qPrintable(query.lastError().text()));
     }
 
-    query.exec("INSERT INTO Conversations VALUES('Me', 'Ольга Гошко', '2021-05-01T14:36:06', 'Привіт!')");
-    query.exec("INSERT INTO Conversations VALUES('Ольга Гошко', 'Me', '2021-05-01T14:36:20', 'Привіт :)')");
-    query.exec("INSERT INTO Conversations VALUES('Дарина Мовчій', 'Me', '2021-05-01T14:40:10', 'Добрий день.')");
-    query.exec("INSERT INTO Conversations VALUES('Me', 'Дарина Мовчій', '2021-05-01T14:45:14', 'Добрий!')");
-
 //    query.exec("INSERT INTO Conversations VALUES('Me', 'Ernest Hemingway', '2016-01-07T14:36:06', 'Hello!')");
 //    query.exec("INSERT INTO Conversations VALUES('Ernest Hemingway', 'Me', '2016-01-07T14:36:16', 'Good afternoon.')");
 //    query.exec("INSERT INTO Conversations VALUES('Me', 'Albert Einstein', '2016-01-01T11:24:53', 'Hi!')");
@@ -49,7 +43,6 @@ SqlConversationModel::SqlConversationModel(QObject *parent) :
     createTable();
     setTable(conversationsTableName);
     setSort(2, Qt::DescendingOrder);
-    // Ensures that the model is sorted correctly after submitting a new row.
     setEditStrategy(QSqlTableModel::OnManualSubmit);
 }
 
@@ -105,6 +98,5 @@ void SqlConversationModel::sendMessage(const QString &recipient, const QString &
         qWarning() << "Failed to send message:" << lastError().text();
         return;
     }
-
     submitAll();
 }

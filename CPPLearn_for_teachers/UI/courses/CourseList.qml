@@ -6,12 +6,14 @@ import QtGraphicalEffects 1.15
 import "qrc:/UI"
 
 import Models 1.0
+import Controllers 1.0
 
 Rectangle {
     id: courseListRect
     anchors.fill: parent
     color: "transparent"
     signal sendLectureName(string lecName, string courseName)
+    property TestController ctrl: null
 
     ListView {
         id: view
@@ -25,6 +27,7 @@ Rectangle {
             id: courseNameRectangle
             property var currentModel: model
             property var currentListModel: model.lecturesList
+            property real listHeight: 30
             width: parent.width * 0.9
             height: 50
             radius: 10
@@ -50,19 +53,38 @@ Rectangle {
                 anchors.left: courseNameRectangle.left
                 spacing: 10
                 model: currentModel.lecturesList
-                height: courseNameRectangle.height - 110
+                height: courseNameRectangle.listHeight
                 visible: currentModel.aVisible
+                Component.onCompleted: {
+                    lecturesListView.height = courseNameRectangle.listHeight
+                }
                 delegate: Rectangle {
                     id: lectureRectangle
                     width: courseNameRectangle.width
-                    height: 30
+                    height: h
                     color: "transparent"
+                    property real h: lecture.paintedHeight
+                    property real w: width * 0.9
+
+                    Component.onCompleted: {
+                        if (lecture.paintedWidth > width * 0.9) {
+                            w = width * 0.9
+                        } else {
+                            w = lecture.paintedWidth
+                        }
+                        courseNameRectangle.listHeight = courseNameRectangle.listHeight + h
+                        lecturesListView.height = courseNameRectangle.listHeight
+                    }
+
                     Text {
                         id: lecture
                         text: qsTr(model.modelData)
                         anchors.left: parent.left
+                        height: parent.h
+                        width: parent.w
                         anchors.leftMargin: parent.width * 0.1
                         anchors.verticalCenter: parent.verticalCenter
+                        verticalAlignment: Text.AlignVCenter
                         font.pixelSize: 20
                         font.bold: true
                         color: "#FFFFFF"
@@ -90,6 +112,7 @@ Rectangle {
                         onClicked: {
                             courseListRect.sendLectureName(lecture.text, currentModel.course)
                             CourseModel.loadLectures(currentModel.course, lecture.text)
+                            ctrl.clearTest()
                         }
                     }
                     PropertyAnimation {
@@ -117,10 +140,13 @@ Rectangle {
                 Rectangle {
                     id: addLectureRectangle
                     width: courseNameRectangle.width
-                    height: 30
+                    height: addLecture.paintedHeight
                     color: "transparent"
                     anchors.bottom: lecturesListView.bottom
-                    anchors.bottomMargin: -50
+                    anchors.bottomMargin: 10
+                    Component.onCompleted: {
+                        courseNameRectangle.listHeight = courseNameRectangle.listHeight + height + 5
+                    }
                     Text {
                         id: addLecture
                         text: qsTr("> Додати лекцію")
@@ -236,7 +262,7 @@ Rectangle {
                 id: courseMouseClickedOpen
                 target: courseNameRectangle
                 properties: "height"
-                to: 50 + 40 * (currentListModel.length + 1)
+                to: 50 + courseNameRectangle.listHeight
                 duration: 100
             }
             PropertyAnimation {

@@ -19,22 +19,35 @@ T.Button {
     background: buttonBackground
     contentItem: textItem
 
-    property int answerFontSize: 23
+    property int answerFontSize: 20
     property color buttonColor: "#A078F1"
+    property real h: textItem.paintedHeight
+    property real w: width * 0.9
+
+    Component.onCompleted: {
+        if (textItem.paintedWidth > width * 0.9) {
+            w = width * 0.9
+        } else {
+            w = textItem.paintedWidth
+        }
+    }
 
     Text {
         id: textItem
         text: control.text
         opacity: enabled ? 1 : 0.3
         color: "#F9F9F9"
+        height: parent.h
+        width: parent.w
         font.family: "Candara"
         font.pixelSize: answerFontSize
         anchors.left: parent.left
         anchors.leftMargin: parent.width * 0.05
-        horizontalAlignment: Text.AlignLeft
+        anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         font.bold: true
         elide: Text.ElideRight
+        wrapMode: Text.WordWrap
     }
 
     Rectangle {

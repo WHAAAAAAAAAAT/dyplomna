@@ -298,6 +298,7 @@ Rectangle {
             textFormat: Qt.RichText
             wrapMode: TextArea.Wrap
             focus: true
+            cursorPosition: 0
             selectByMouse: true
             persistentSelection: true
             leftPadding: 6

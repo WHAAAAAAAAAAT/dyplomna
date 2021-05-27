@@ -63,6 +63,7 @@ RecommendationListModel_c *RecommendationListModel_c::instance()
 
 void RecommendationListModel_c::createRecommendations(const QVector<TestListItem> &_tests, const QVector<AnswerItem> &_answers)
 {
+    clearRecommendations();
     int counter{0};
     for (auto currentQuestion : _answers)
     {

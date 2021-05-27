@@ -65,19 +65,11 @@ void ChartModel_c::addDataToChart(const QString &_lectureName, const int &_testS
         mScore.append(_testScore);
     }
     else {
-        int position{0};
-        QMapIterator<QString, int> i(mChart);
-        while (i.hasNext()) {
-            if(i.key() != _lectureName)
-            {
-                ++position;
-                i.next();
-            }
-            else {
-                mChart[_lectureName] = _testScore;
-                mScore[position] = _testScore;
-            }
-        }
+        QMap<QString, int>::iterator i = mChart.find(_lectureName);
+        int index = std::distance(mChart.begin(), i);
+        mChart.remove(_lectureName);
+        mChart.insert(_lectureName, _testScore);
+        mScore[index] = _testScore;
     }
     emit lineChanged();
     emit namesChanged();
